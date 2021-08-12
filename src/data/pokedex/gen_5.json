@@ -1,0 +1,626 @@
+[
+    {
+        "id": 494,
+        "species": "victini"
+    },
+    {
+        "id": 495,
+        "species": "snivy"
+    },
+    {
+        "id": 496,
+        "species": "servine"
+    },
+    {
+        "id": 497,
+        "species": "serperior"
+    },
+    {
+        "id": 498,
+        "species": "tepig"
+    },
+    {
+        "id": 499,
+        "species": "pignite"
+    },
+    {
+        "id": 500,
+        "species": "emboar"
+    },
+    {
+        "id": 501,
+        "species": "oshawott"
+    },
+    {
+        "id": 502,
+        "species": "dewott"
+    },
+    {
+        "id": 503,
+        "species": "samurott"
+    },
+    {
+        "id": 504,
+        "species": "patrat"
+    },
+    {
+        "id": 505,
+        "species": "watchog"
+    },
+    {
+        "id": 506,
+        "species": "lillipup"
+    },
+    {
+        "id": 507,
+        "species": "herdier"
+    },
+    {
+        "id": 508,
+        "species": "stoutland"
+    },
+    {
+        "id": 509,
+        "species": "purrloin"
+    },
+    {
+        "id": 510,
+        "species": "liepard"
+    },
+    {
+        "id": 511,
+        "species": "pansage"
+    },
+    {
+        "id": 512,
+        "species": "simisage"
+    },
+    {
+        "id": 513,
+        "species": "pansear"
+    },
+    {
+        "id": 514,
+        "species": "simisear"
+    },
+    {
+        "id": 515,
+        "species": "panpour"
+    },
+    {
+        "id": 516,
+        "species": "simipour"
+    },
+    {
+        "id": 517,
+        "species": "munna"
+    },
+    {
+        "id": 518,
+        "species": "musharna"
+    },
+    {
+        "id": 519,
+        "species": "pidove"
+    },
+    {
+        "id": 520,
+        "species": "tranquill"
+    },
+    {
+        "id": 521,
+        "species": "unfezant"
+    },
+    {
+        "id": 522,
+        "species": "blitzle"
+    },
+    {
+        "id": 523,
+        "species": "zebstrika"
+    },
+    {
+        "id": 524,
+        "species": "roggenrola"
+    },
+    {
+        "id": 525,
+        "species": "boldore"
+    },
+    {
+        "id": 526,
+        "species": "gigalith"
+    },
+    {
+        "id": 527,
+        "species": "woobat"
+    },
+    {
+        "id": 528,
+        "species": "swoobat"
+    },
+    {
+        "id": 529,
+        "species": "drilbur"
+    },
+    {
+        "id": 530,
+        "species": "excadrill"
+    },
+    {
+        "id": 531,
+        "species": "audino"
+    },
+    {
+        "id": 532,
+        "species": "timburr"
+    },
+    {
+        "id": 533,
+        "species": "gurdurr"
+    },
+    {
+        "id": 534,
+        "species": "conkeldurr"
+    },
+    {
+        "id": 535,
+        "species": "tympole"
+    },
+    {
+        "id": 536,
+        "species": "palpitoad"
+    },
+    {
+        "id": 537,
+        "species": "seismitoad"
+    },
+    {
+        "id": 538,
+        "species": "throh"
+    },
+    {
+        "id": 539,
+        "species": "sawk"
+    },
+    {
+        "id": 540,
+        "species": "sewaddle"
+    },
+    {
+        "id": 541,
+        "species": "swadloon"
+    },
+    {
+        "id": 542,
+        "species": "leavanny"
+    },
+    {
+        "id": 543,
+        "species": "venipede"
+    },
+    {
+        "id": 544,
+        "species": "whirlipede"
+    },
+    {
+        "id": 545,
+        "species": "scolipede"
+    },
+    {
+        "id": 546,
+        "species": "cottonee"
+    },
+    {
+        "id": 547,
+        "species": "whimsicott"
+    },
+    {
+        "id": 548,
+        "species": "petilil"
+    },
+    {
+        "id": 549,
+        "species": "lilligant"
+    },
+    {
+        "id": 550,
+        "species": "basculin"
+    },
+    {
+        "id": 551,
+        "species": "sandile"
+    },
+    {
+        "id": 552,
+        "species": "krokorok"
+    },
+    {
+        "id": 553,
+        "species": "krookodile"
+    },
+    {
+        "id": 554,
+        "species": "darumaka"
+    },
+    {
+        "id": 555,
+        "species": "darmanitan"
+    },
+    {
+        "id": 556,
+        "species": "maractus"
+    },
+    {
+        "id": 557,
+        "species": "dwebble"
+    },
+    {
+        "id": 558,
+        "species": "crustle"
+    },
+    {
+        "id": 559,
+        "species": "scraggy"
+    },
+    {
+        "id": 560,
+        "species": "scrafty"
+    },
+    {
+        "id": 561,
+        "species": "sigilyph"
+    },
+    {
+        "id": 562,
+        "species": "yamask"
+    },
+    {
+        "id": 563,
+        "species": "cofagrigus"
+    },
+    {
+        "id": 564,
+        "species": "tirtouga"
+    },
+    {
+        "id": 565,
+        "species": "carracosta"
+    },
+    {
+        "id": 566,
+        "species": "archen"
+    },
+    {
+        "id": 567,
+        "species": "archeops"
+    },
+    {
+        "id": 568,
+        "species": "trubbish"
+    },
+    {
+        "id": 569,
+        "species": "garbodor"
+    },
+    {
+        "id": 570,
+        "species": "zorua"
+    },
+    {
+        "id": 571,
+        "species": "zoroark"
+    },
+    {
+        "id": 572,
+        "species": "minccino"
+    },
+    {
+        "id": 573,
+        "species": "cinccino"
+    },
+    {
+        "id": 574,
+        "species": "gothita"
+    },
+    {
+        "id": 575,
+        "species": "gothorita"
+    },
+    {
+        "id": 576,
+        "species": "gothitelle"
+    },
+    {
+        "id": 577,
+        "species": "solosis"
+    },
+    {
+        "id": 578,
+        "species": "duosion"
+    },
+    {
+        "id": 579,
+        "species": "reuniclus"
+    },
+    {
+        "id": 580,
+        "species": "ducklett"
+    },
+    {
+        "id": 581,
+        "species": "swanna"
+    },
+    {
+        "id": 582,
+        "species": "vanillite"
+    },
+    {
+        "id": 583,
+        "species": "vanillish"
+    },
+    {
+        "id": 584,
+        "species": "vanilluxe"
+    },
+    {
+        "id": 585,
+        "species": "deerling"
+    },
+    {
+        "id": 586,
+        "species": "sawsbuck"
+    },
+    {
+        "id": 587,
+        "species": "emolga"
+    },
+    {
+        "id": 588,
+        "species": "karrablast"
+    },
+    {
+        "id": 589,
+        "species": "escavalier"
+    },
+    {
+        "id": 590,
+        "species": "foongus"
+    },
+    {
+        "id": 591,
+        "species": "amoonguss"
+    },
+    {
+        "id": 592,
+        "species": "frillish"
+    },
+    {
+        "id": 593,
+        "species": "jellicent"
+    },
+    {
+        "id": 594,
+        "species": "alomomola"
+    },
+    {
+        "id": 595,
+        "species": "joltik"
+    },
+    {
+        "id": 596,
+        "species": "galvantula"
+    },
+    {
+        "id": 597,
+        "species": "ferroseed"
+    },
+    {
+        "id": 598,
+        "species": "ferrothorn"
+    },
+    {
+        "id": 599,
+        "species": "klink"
+    },
+    {
+        "id": 600,
+        "species": "klang"
+    },
+    {
+        "id": 601,
+        "species": "klinklang"
+    },
+    {
+        "id": 602,
+        "species": "tynamo"
+    },
+    {
+        "id": 603,
+        "species": "eelektrik"
+    },
+    {
+        "id": 604,
+        "species": "eelektross"
+    },
+    {
+        "id": 605,
+        "species": "elgyem"
+    },
+    {
+        "id": 606,
+        "species": "beheeyem"
+    },
+    {
+        "id": 607,
+        "species": "litwick"
+    },
+    {
+        "id": 608,
+        "species": "lampent"
+    },
+    {
+        "id": 609,
+        "species": "chandelure"
+    },
+    {
+        "id": 610,
+        "species": "axew"
+    },
+    {
+        "id": 611,
+        "species": "fraxure"
+    },
+    {
+        "id": 612,
+        "species": "haxorus"
+    },
+    {
+        "id": 613,
+        "species": "cubchoo"
+    },
+    {
+        "id": 614,
+        "species": "beartic"
+    },
+    {
+        "id": 615,
+        "species": "cryogonal"
+    },
+    {
+        "id": 616,
+        "species": "shelmet"
+    },
+    {
+        "id": 617,
+        "species": "accelgor"
+    },
+    {
+        "id": 618,
+        "species": "stunfisk"
+    },
+    {
+        "id": 619,
+        "species": "mienfoo"
+    },
+    {
+        "id": 620,
+        "species": "mienshao"
+    },
+    {
+        "id": 621,
+        "species": "druddigon"
+    },
+    {
+        "id": 622,
+        "species": "golett"
+    },
+    {
+        "id": 623,
+        "species": "golurk"
+    },
+    {
+        "id": 624,
+        "species": "pawniard"
+    },
+    {
+        "id": 625,
+        "species": "bisharp"
+    },
+    {
+        "id": 626,
+        "species": "bouffalant"
+    },
+    {
+        "id": 627,
+        "species": "rufflet"
+    },
+    {
+        "id": 628,
+        "species": "braviary"
+    },
+    {
+        "id": 629,
+        "species": "vullaby"
+    },
+    {
+        "id": 630,
+        "species": "mandibuzz"
+    },
+    {
+        "id": 631,
+        "species": "heatmor"
+    },
+    {
+        "id": 632,
+        "species": "durant"
+    },
+    {
+        "id": 633,
+        "species": "deino"
+    },
+    {
+        "id": 634,
+        "species": "zweilous"
+    },
+    {
+        "id": 635,
+        "species": "hydreigon"
+    },
+    {
+        "id": 636,
+        "species": "larvesta"
+    },
+    {
+        "id": 637,
+        "species": "volcarona"
+    },
+    {
+        "id": 638,
+        "species": "cobalion"
+    },
+    {
+        "id": 639,
+        "species": "terrakion"
+    },
+    {
+        "id": 640,
+        "species": "virizion"
+    },
+    {
+        "id": 641,
+        "species": "tornadus"
+    },
+    {
+        "id": 642,
+        "species": "thundurus"
+    },
+    {
+        "id": 643,
+        "species": "reshiram"
+    },
+    {
+        "id": 644,
+        "species": "zekrom"
+    },
+    {
+        "id": 645,
+        "species": "landorus"
+    },
+    {
+        "id": 646,
+        "species": "kyurem"
+    },
+    {
+        "id": 647,
+        "species": "keldeo"
+    },
+    {
+        "id": 648,
+        "species": "meloetta"
+    },
+    {
+        "id": 649,
+        "species": "genesect"
+    }
+]
