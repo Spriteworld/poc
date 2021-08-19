@@ -1,22 +1,20 @@
 import Phaser from 'phaser';
-import {gen3inside, gen3outside} from '@Tileset';
-import {player as red} from '@Tileset';
+import {gen3inside, gen3outside, frlgPlayer, frlg_outside2} from '@Tileset';
 
-export default class Preload extends Phaser.Scene {
+export default class extends Phaser.Scene {
   constructor() {
     super({ key: 'Preload' });
-    console.log('loaded preload');
   }
 
   preload () {
-    console.log('loaded preload::preload');
     this.load.image('gen3_outside', gen3outside);
     this.load.image('gen3_inside', gen3inside);
-    this.load.spritesheet('red', red, { frameWidth: 32, frameHeight: 40 });
+    this.load.image('frlg_outside2', frlg_outside2);
+    this.load.spritesheet('red', frlgPlayer, { frameWidth: 24, frameHeight: 32 });
   }
 
   create () {
-    console.log('loaded preload::create');
-    this.scene.run('Test');
+    this.scene.start('UI');
+    this.scene.start('Test');
   }
 }

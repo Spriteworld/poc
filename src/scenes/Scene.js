@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import {PalletMap, TestMap} from '@Maps';
 import {Player} from '@Objects';
 
-export default class Scene extends Phaser.Scene {
+export default class extends Phaser.Scene {
   constructor(map, inside, x, y) {
     super({ key: map });
     this.config = {};

@@ -1,0 +1,39 @@
+[
+    {
+        "color": "#ffa0a0a4",
+        "name": "sign",
+        "properties": [
+            {
+                "name": "text",
+                "type": "string",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "color": "#ffa0a0a4",
+        "name": "warp",
+        "properties": [
+            {
+                "name": "warp",
+                "type": "string",
+                "value": ""
+            },
+            {
+                "name": "warp-dir",
+                "type": "string",
+                "value": ""
+            },
+            {
+                "name": "warp-x",
+                "type": "int",
+                "value": 0
+            },
+            {
+                "name": "warp-y",
+                "type": "int",
+                "value": 0
+            }
+        ]
+    }
+]

@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import {PalletTownMap} from '@Maps';
 import {Player} from '@Objects';
 
-export default class PalletTown extends Phaser.Scene {
+export default class extends Phaser.Scene {
   constructor() {
     super({ key: 'PalletTown' });
   }

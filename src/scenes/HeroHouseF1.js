@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import {HeroHouseF1Map} from '@Maps';
 import {Player} from '@Objects';
 
-export default class HeroHouseF1 extends Phaser.Scene {
+export default class extends Phaser.Scene {
   constructor() {
     super({ key: 'HeroHouseF1' });
   }
@@ -20,7 +20,7 @@ export default class HeroHouseF1 extends Phaser.Scene {
     map.createLayer('top', mapTileset);
     map.createLayer('animation', mapTileset);
 
-    this.player = new Player(this, 8, 6, 'red', map);
+    this.player = new Player(this, 4, 9, 'red', map);
   }
 
   update() {

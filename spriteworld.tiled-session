@@ -1,0 +1,303 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "../spriteworld-2016/public/assets/maps/hero_house_floor1.js": {
+            "scale": 2.669176136363636,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 224.03916768665854,
+                "y": 227.78564206268965
+            }
+        },
+        "../spriteworld-2016/public/assets/maps/hero_house_floor1.js#All Inner Extended": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "../spriteworld-2016/public/assets/maps/hero_house_floor1.json": {
+            "scale": 3,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 224.66666666666666,
+                "y": 177
+            }
+        },
+        "../spriteworld-2016/public/assets/maps/hero_house_floor1.json#All Inner Extended": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "../spriteworld-2016/public/assets/maps/hero_house_floor1.json#gen3_outside": {
+            "scaleInDock": 1
+        },
+        "../spriteworld-2016/public/assets/maps/pallet.js": {
+            "scale": 1.3981398809523808,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 383.3665052418711,
+                "y": 434.8634984833165
+            }
+        },
+        "../spriteworld-2016/public/assets/maps/pallet.js#Outside (Hoenn)": {
+            "scaleInDock": 1
+        },
+        "C:/wip/www/PokeMMO-Online-Realtime-Multiplayer-Game-fixes-v2-singleplayer/client/src/assets/tilemaps/route1.tmx": {
+            "scale": 1.9512109374999997,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 212.43218353986907,
+                "y": 142.7318772396949
+            }
+        },
+        "C:/wip/www/PokeMMO-Online-Realtime-Multiplayer-Game-fixes-v2-singleplayer/client/src/assets/tilemaps/route1.tmx#tuxmon-sample-32px-extruded": {
+            "scaleInDock": 1
+        },
+        "C:/wip/www/PokeMMO-Online-Realtime-Multiplayer-Game-fixes-v2-singleplayer/client/src/assets/tilemaps/town.tmx": {
+            "scale": 1.4480078125,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 62.49966279101136,
+                "y": 399.51441905635437
+            }
+        },
+        "C:/wip/www/PokeMMO-Online-Realtime-Multiplayer-Game-fixes-v2-singleplayer/client/src/assets/tilemaps/town.tmx#tuxmon-sample-32px-extruded": {
+            "scaleInDock": 1
+        },
+        "C:/wip/www/phaser3-projects/ragin-mages-master/game/src/assets/maps/dungeon_map.json": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 6382.333333333333,
+                "y": 4046.666666666666
+            }
+        },
+        "C:/wip/www/phaser3-projects/ragin-mages-master/game/src/assets/maps/dungeon_map.json#stone-tiles": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/wip/www/phaser3-projects/ragin-mages-master/game/src/assets/maps/map.json": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 9454,
+                "y": 11052
+            }
+        },
+        "C:/wip/www/phaser3-projects/ragin-mages-master/game/src/assets/maps/map.json#Map_tileset": {
+            "scaleInDock": 1
+        },
+        "C:/wip/www/phaser3-tilemap-pack-master/assets/maps/level1.json": {
+            "scale": 1.698125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400.44166359955835,
+                "y": 304.45344129554655
+            }
+        },
+        "C:/wip/www/phaser3-tilemap-pack-master/assets/maps/level1.json#objects": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "C:/wip/www/phaser3-tilemap-pack-master/assets/maps/level1.json#tiles": {
+            "scaleInDock": 1
+        },
+        "C:/wip/www/phaser3-tilemap-pack-master/assets/maps/level2.json": {
+            "scale": 1.698125,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 399.8527788001472,
+                "y": 303.86455649613544
+            }
+        },
+        "C:/wip/www/phaser3-tilemap-pack-master/assets/maps/level2.json#objects": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "C:/wip/www/phaser3-tilemap-pack-master/assets/maps/level2.json#tiles": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "C:/wip/www/reldens-4.0.0/theme/default/assets/maps/reldens-town.json": {
+            "scale": 0.5294270833333333,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 768.7555336940482,
+                "y": 449.5425479586819
+            }
+        },
+        "C:/wip/www/reldens-4.0.0/theme/default/assets/maps/reldens-town.json#reldens-town": {
+            "scaleInDock": 1
+        },
+        "src/maps/frlg_outside2.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/hero_house_floor1.json": {
+            "scale": 3,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 365,
+                "y": 166.66666666666663
+            }
+        },
+        "src/maps/hero_house_floor1.json#All Inner Extended": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/hero_house_floor1.json#gen3_inside": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/hero_house_floor2.json": {
+            "scale": 2.669176136363636,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 224.22649140546005,
+                "y": 176.45894311106383
+            }
+        },
+        "src/maps/hero_house_floor2.json#All Inner Extended": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/pallet.json": {
+            "scale": 1.3981398809523808,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 267.498270448619,
+                "y": 352.61135650045236
+            }
+        },
+        "src/maps/pallet.json#Outside (Hoenn)": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/pallet.json#gen3_outside": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/prof_lab.json": {
+            "scale": 1.9573958333333334,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 224.02213825767654,
+                "y": 310.10590176148156
+            }
+        },
+        "src/maps/prof_lab.json#All Inner Extended": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/route1.json": {
+            "scale": 0.6990699404761904,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 384.0817412591135,
+                "y": 868.2965249321485
+            }
+        },
+        "src/maps/route1.json#Outside (Hoenn)": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/test.json": {
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 614.6666666666665,
+                "y": 369.33333333333326
+            }
+        },
+        "src/maps/test.json#FRLG Outside A1C": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/test.json#frlg_outside2": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/test.json#gen3_outside": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/test.json#red": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/maps/test2.json": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2,
+                "y": 18.5
+            }
+        },
+        "src/tileset/frlg_outside2.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/tileset/gen3_outside.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/tileset/gen3_outside.tmx": {
+            "scale": 1.3981398809523808,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 678.7589803629397,
+                "y": 652.2952477249747
+            }
+        },
+        "src/tileset/gen3_outside.tmx#gen3_outside": {
+            "scaleInDock": 1
+        },
+        "src/tileset/gen3_outside.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "C:/wip/www/spriteworld/src/maps",
+    "last.externalTilesetPath": "C:/wip/www/spriteworld/src/tileset",
+    "last.imagePath": "C:/wip/www/spriteworld/src/tileset",
+    "last.objectTypesPath": "C:/wip/www/spriteworld/src/tileset/objecttypes.json",
+    "last.worldFilePath": "C:/wip/www/spriteworld/src/maps",
+    "loadedWorlds": [
+    ],
+    "map.fixedSize": false,
+    "map.lastUsedExportFilter": "JSON map files (*.json)",
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+    ],
+    "project": "spriteworld.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "src/maps/hero_house_floor1.json",
+        "src/tileset/gen3_outside.json",
+        "src/maps/test.json",
+        "src/maps/pallet.json",
+        "src/tileset/frlg_outside2.json",
+        "src/maps/frlg_outside2.json",
+        "C:/wip/www/phaser3-projects/ragin-mages-master/game/src/assets/maps/map.json",
+        "C:/wip/www/phaser3-projects/ragin-mages-master/game/src/assets/maps/dungeon_map.json",
+        "C:/wip/www/reldens-4.0.0/theme/default/assets/maps/reldens-town.json",
+        "C:/wip/www/phaser3-tilemap-pack-master/assets/maps/level1.json",
+        "C:/wip/www/phaser3-tilemap-pack-master/assets/maps/level2.json",
+        "src/tileset/gen3_outside.tsx"
+    ],
+    "resizeMap.removeObjects": true,
+    "tileset.embedInMap": false,
+    "tileset.lastUsedFilter": "All Files (*)",
+    "tileset.lastUsedFormat": "json"
+}
