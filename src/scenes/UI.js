@@ -43,11 +43,11 @@ export default class extends Phaser.Scene {
 
   interactTile(map, obj, color) {
     this.registry.get('interactions').push({x: obj.x, y: obj.y, obj: obj});
-    this.tintTile(map, obj.x,    obj.y,     color); // actual
-    this.tintTile(map, obj.x -1, obj.y,     color); // left
-    this.tintTile(map, obj.x +1, obj.y,     color); // right
-    this.tintTile(map, obj.x,    obj.y -1,  color); // up
-    this.tintTile(map, obj.x,    obj.y +1,  color); // down
+    // this.tintTile(map, obj.x,    obj.y,     color); // actual
+    // this.tintTile(map, obj.x -1, obj.y,     color); // left
+    // this.tintTile(map, obj.x +1, obj.y,     color); // right
+    // this.tintTile(map, obj.x,    obj.y -1,  color); // up
+    // this.tintTile(map, obj.x,    obj.y +1,  color); // down
   }
 
   tintTile(tilemap, col, row, color) {

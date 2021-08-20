@@ -59,50 +59,9 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   update() {
-    const duration = 120;
-    if (this.cursors.left.isDown) {
-      this.cursors.left.getDuration() >= duration
-        ? this.move('left')
-        : this.look('left');
-    } else if (this.cursors.right.isDown) {
-      this.cursors.right.getDuration() >= duration
-        ? this.move('right')
-        : this.look('right');
-    } else if (this.cursors.up.isDown) {
-      this.cursors.up.getDuration() >= duration
-        ? this.move('up')
-        : this.look('up');
-    } else if (this.cursors.down.isDown) {
-      this.cursors.down.getDuration() >= duration
-        ? this.move('down')
-        : this.look('down');
-    }
+    this.handleMovement();
 
-    const interactions = this.scene.registry.get('interactions');
-
-    // get the dir player is facing
-    const position = this.getPosInFacingDirection();
-
-    // check if the player is facing an interaction
-    const hasInteraction = interactions.some(function(interaction) {
-      return position.x == interaction.x && position.y == interaction.y;
-    });
-
-    const activator = this.scene.input.keyboard.addKey('Z');
-    if (hasInteraction && activator.isDown) {
-      // get said interaction
-      const interaction = this.config.map.filterObjects('interactions', (obj) => position.x == obj.x && position.y == obj.y)[0];
-
-      // alert the type
-      console.log(interaction);
-      switch (interaction.type) {
-        case 'sign':
-          alert(interaction.properties[0].value);
-        break;
-        default:
-          alert(interaction.type);
-      }
-    }
+    this.handleInteractables();
 
   }
 
@@ -142,6 +101,55 @@ export default class extends Phaser.GameObjects.Sprite {
 
   getGridEngine() {
     return this.scene.gridEngine;
+  }
+
+  handleMovement() {
+    const duration = 120;
+    if (this.cursors.left.isDown) {
+      this.cursors.left.getDuration() >= duration
+        ? this.move('left')
+        : this.look('left');
+    } else if (this.cursors.right.isDown) {
+      this.cursors.right.getDuration() >= duration
+        ? this.move('right')
+        : this.look('right');
+    } else if (this.cursors.up.isDown) {
+      this.cursors.up.getDuration() >= duration
+        ? this.move('up')
+        : this.look('up');
+    } else if (this.cursors.down.isDown) {
+      this.cursors.down.getDuration() >= duration
+        ? this.move('down')
+        : this.look('down');
+    }
+  }
+
+  handleInteractables() {
+    const interactions = this.scene.registry.get('interactions');
+
+    // get the direction player is facing
+    const position = this.getPosInFacingDirection();
+
+    // check if the player is facing an interaction
+    const hasInteraction = interactions.some(function(interaction) {
+      return position.x == interaction.x && position.y == interaction.y;
+    });
+
+    const activator = this.scene.input.keyboard.addKey('Z');
+    if (hasInteraction && activator.isDown) {
+      // get said interaction
+      const interaction = this.config.map.filterObjects('interactions', (obj) => position.x == obj.x && position.y == obj.y)[0];
+
+      // alert the type
+      console.log(interaction);
+      switch (interaction.type) {
+        case 'sign':
+          alert(interaction.properties[0].value);
+        break;
+        default:
+          alert(interaction.type);
+      }
+    }
   }
 
 }

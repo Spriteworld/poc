@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {UI, Preload, Test, PalletTown, HeroHouseF1} from '@Scenes';
+import {UI, Preload, Test, PalletTown, HeroHouseF1, StarterTown} from '@Scenes';
 
 export default class extends Phaser.Game {
   constructor(config) {
@@ -10,6 +10,7 @@ export default class extends Phaser.Game {
     this.scene.add('Test', Test);
     this.scene.add('PalletTown', PalletTown);
     this.scene.add('HeroHouseF1', HeroHouseF1);
+    this.scene.add('StarterTown', StarterTown);
 
     this.scene.start('Preload');
   }
