@@ -12,49 +12,29 @@ export default class extends Phaser.Scene {
   }
 
   create () {
+    console.log('Test::create');
     const map = this.make.tilemap({key: 'TestMap'});
+    this.registry.set('scene', 'Test');
     var mapTileset = map.addTilesetImage('gen3_outside', 'gen3_outside');
 
-    map.createLayer('floor', mapTileset).setDepth(1).setName('floor');
-    map.createLayer('ground', mapTileset).setDepth(2).setName('ground');
-    map.createLayer('top', mapTileset).setDepth('2000').setName('top');
+    map.createLayer('floor', mapTileset).setName('floor');
+    map.createLayer('ground', mapTileset).setName('ground');
+    map.createLayer('top', mapTileset).setName('top');
 
 
     this.player = new Player(this, 16, 16, 'red', map);
+    this.registry.set('player', this.player);
 
     this.objects = map.getObjectLayer('interactions');
     this.scene.get('UI').initSigns(map);
-    this.createInteractions(this.objects);
+    console.log(this.registry);
+    console.log(this.registry.get('interactions'));
 
-    PhaserGUIAction(this);
+    // PhaserGUIAction(this);
   }
 
   update() {
-    const cursors = this.input.keyboard.createCursorKeys();
-    this.player.update(cursors);
-
-    // console.log({
-    //   x: this.player.getPositionX(),
-    //   y: this.player.getPositionY()
-    // });
+    this.player.update();
   }
 
-  createInteractions(objects) {
-    objects.objects.forEach((object) => {
-      console.log(object.type+' found');
-      switch (object.type) {
-        case 'sign':
-          console.log(object.properties[0].value);
-        break;
-
-        case 'warp':
-          // new Warp(this, object);
-        break;
-
-        default:
-          console.log(object.type+ ' not implemented');
-      }
-
-    })
-  }
 }

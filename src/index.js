@@ -4,4 +4,4 @@ import registerTiledJSONExternalLoader from 'phaser-tiled-json-external-loader';
 
 registerTiledJSONExternalLoader(Phaser);
 
-new Game(config);
+window.spriteworld = new Game(config);

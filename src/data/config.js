@@ -13,7 +13,10 @@ const config = {
     mode: Phaser.Scale.NONE,
     autoCenter: Phaser.Scale.CENTER_BOTH
   },
-  physics: { default: false },
+  physics: {
+    default: 'arcade',
+    arcade: {debug: true}
+  },
   plugins: {
     global: [
       //{ key: 'SceneWatcher', plugin: SceneWatcherPlugin, start: true }

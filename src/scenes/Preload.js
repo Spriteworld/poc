@@ -14,7 +14,8 @@ export default class extends Phaser.Scene {
   }
 
   create () {
+    console.log('Preload::create');
     this.scene.start('UI');
-    this.scene.start('Test');
+    this.scene.run('Test');
   }
 }

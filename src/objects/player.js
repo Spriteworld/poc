@@ -12,6 +12,8 @@ export default class extends Phaser.GameObjects.Sprite {
     this.config.map = map;
     this.debugText = {};
 
+    this.cursors = {};
+
     this.playerSprite = scene.add.sprite(0, 0, this.config.texture);
     this.playerSprite.setScale(2);
 
@@ -21,6 +23,8 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   create() {
+    this.cursors = this.scene.input.keyboard.createCursorKeys();
+
     const gridEngineConfig = {
       characters: [{
         id: 'player',
@@ -54,16 +58,52 @@ export default class extends Phaser.GameObjects.Sprite {
     this.scene.gridEngine.create(this.config.map, gridEngineConfig);
   }
 
-  update(cursors) {
-    if (cursors.left.isDown) {
-      this.scene.gridEngine.move('player', 'left');
-    } else if (cursors.right.isDown) {
-      this.scene.gridEngine.move('player', 'right');
-    } else if (cursors.up.isDown) {
-      this.scene.gridEngine.move('player', 'up');
-    } else if (cursors.down.isDown) {
-      this.scene.gridEngine.move('player', 'down');
+  update() {
+    const duration = 120;
+    if (this.cursors.left.isDown) {
+      this.cursors.left.getDuration() >= duration
+        ? this.move('left')
+        : this.look('left');
+    } else if (this.cursors.right.isDown) {
+      this.cursors.right.getDuration() >= duration
+        ? this.move('right')
+        : this.look('right');
+    } else if (this.cursors.up.isDown) {
+      this.cursors.up.getDuration() >= duration
+        ? this.move('up')
+        : this.look('up');
+    } else if (this.cursors.down.isDown) {
+      this.cursors.down.getDuration() >= duration
+        ? this.move('down')
+        : this.look('down');
     }
+
+    const interactions = this.scene.registry.get('interactions');
+
+    // get the dir player is facing
+    const position = this.getPosInFacingDirection();
+
+    // check if the player is facing an interaction
+    const hasInteraction = interactions.some(function(interaction) {
+      return position.x == interaction.x && position.y == interaction.y;
+    });
+
+    const activator = this.scene.input.keyboard.addKey('Z');
+    if (hasInteraction && activator.isDown) {
+      // get said interaction
+      const interaction = this.config.map.filterObjects('interactions', (obj) => position.x == obj.x && position.y == obj.y)[0];
+
+      // alert the type
+      console.log(interaction);
+      switch (interaction.type) {
+        case 'sign':
+          alert(interaction.properties[0].value);
+        break;
+        default:
+          alert(interaction.type);
+      }
+    }
+
   }
 
   getPositionX() {
@@ -72,6 +112,36 @@ export default class extends Phaser.GameObjects.Sprite {
 
   getPositionY() {
     return this.y;
+  }
+
+  look(dir) {
+    return this.scene.gridEngine.turnTowards('player', dir);
+  }
+
+  move(dir) {
+    return this.scene.gridEngine.move('player', dir);
+  }
+
+  moveTo(x, y) {
+    return this.scene.gridEngine.moveTo('player', {x:x, y:y});
+  }
+
+  getPosInFacingDirection() {
+    const pos = this.scene.gridEngine.getPosition('player');
+    const dir = this.scene.gridEngine.getFacingDirection('player');
+    if (dir === 'up') {
+      return { ...pos, y: pos.y - 1 };
+    } else if (dir === 'down') {
+      return { ...pos, y: pos.y + 1 };
+    } else if (dir === 'left') {
+      return { ...pos, x: pos.x - 1 };
+    } else if (dir === 'right') {
+      return { ...pos, x: pos.x + 1 };
+    }
+  }
+
+  getGridEngine() {
+    return this.scene.gridEngine;
   }
 
 }
