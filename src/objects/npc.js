@@ -3,12 +3,11 @@ import {Character} from '@Objects';
 export default class extends Character {
   constructor(config) {
     super(config);
-    this.spinRate = this.config.spinRate || 600;
-    this.spinTimer = 0;
-
-    this.config.scene.gridEngine.addCharacter(
-      this.characterDef(this.config)
-    );
+    this.config.facingDirection = config.facingDirection || 'down';
+    this.config.spin = config.spin || false;
+    this.config.spinRate = config.spinRate || 600;
+    this.config.move = config.move || null;
+    this.spinRate = this.config.spinRate;
   }
 
   update(time, delta) {
@@ -16,7 +15,7 @@ export default class extends Character {
       this.setSpinner(delta, this.spinRate);
     }
     if (this.config.move === 'random') {
-      this.config.scene.gridEngine.moveRandomly(this.config.id, 250, 1);
+      this.config.scene.gridEngine.moveRandomly(this.config.name, 250, 1);
     }
   }
 

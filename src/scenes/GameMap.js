@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {Player, NPC} from '@Objects';
 
 export default class extends Phaser.Scene {
   constructor(config) {
@@ -10,7 +11,12 @@ export default class extends Phaser.Scene {
     this.config.map = config.map || {};
     this.config.mapName = config.mapName || '';
     this.config.tilemap = {};
-    console.log(['Loading Scene', config.mapName]);
+    this.characters = [];
+    // console.log(['Loading Scene', config.mapName]);
+
+    // this.events.on('ready', () => {
+    //   this.createCharacters();
+    // });
   }
 
   preloadMap () {
@@ -33,6 +39,7 @@ export default class extends Phaser.Scene {
     this.objects = tilemap.getObjectLayer('interactions');
     if (this.objects !== null) {
       this.initSigns(tilemap);
+      this.initNpcs(tilemap);
     }
 
     this.animatedTiles.init(tilemap);
@@ -46,13 +53,41 @@ export default class extends Phaser.Scene {
     }
 
     signs.map((sign) => {
-      sign.x /= 32;
-      sign.y /= 32;
       this.interactTile(map, sign, 0x00afe4);
     });
   }
 
+
+  initNpcs(map) {
+    const npcs = map.filterObjects('interactions', (obj) => obj.type === 'npc');
+    if (npcs.length === 0) {
+      return;
+    }
+
+    this.npcs = this.add.group();
+    this.npcs.runChildUpdate = true;
+    npcs.map((npc) => {
+      console.log(npc);
+      let npcObj = new NPC({
+        id: npc.name,
+        texture: this.getPropertyValue(npc.properties, 'texture'),
+        x: npc.x / 32,
+        y: npc.y / 32,
+        scene: this,
+        spin: this.getPropertyValue(npc.properties, 'spin'),
+        spinRate: this.getPropertyValue(npc.properties, 'spinRate'),
+        facingDirection: this.getPropertyValue(npc.properties, 'facingDirection', 'down'),
+      //   move: 'random'
+      });
+      this.npcs.add(npcObj);
+      this.interactTile(map, npc, 0x00afe4);
+    });
+  }
+
   interactTile(map, obj, color) {
+    obj.x /= 32;
+    obj.y /= 32;
+
     this.registry.get('interactions').push({x: obj.x, y: obj.y, obj: obj});
     // this.tintTile(map, obj.x,    obj.y,     color); // actual
     // this.tintTile(map, obj.x -1, obj.y,     color); // left
@@ -65,6 +100,22 @@ export default class extends Phaser.Scene {
     for (let i = 0; i < tilemap.layers.length; i++) {
       tilemap.layers[i].tilemapLayer.layer.data[row][col].tint = color;
     }
+  }
+
+  addCharacter(character) {
+    this.characters.push(character);
+  }
+
+  createCharacters() {
+    console.log(this.characters);
+    this.gridEngine.create(this.config.tilemap, {
+      characters: this.characters
+    });
+  }
+
+  getPropertyValue(props, id, defValue) {
+    let property = props.find(p => p.name === id);
+    return typeof property === 'undefined' ? defValue : property.value;
   }
 
   debugRegistry() {

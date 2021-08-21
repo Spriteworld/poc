@@ -6,7 +6,10 @@ export default class extends Phaser.GameObjects.Sprite {
     this.config = config;
     this.config.sprite = this.config.scene.add.sprite(0, 0, this.config.texture);
 
-    this.config.scene.add.existing(this);
+    this.config.scene.addCharacter(
+      this.characterDef(this.config)
+    );
+    // this.config.scene.add.existing(this);
   }
 
   characterFramesDef() {

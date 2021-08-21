@@ -142,8 +142,8 @@
             "scale": 0.8897253787878787,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 496.22053110531635,
-                "y": 475.42759831834405
+                "x": 234.34197222074397,
+                "y": 471.49380022351124
             }
         },
         "src/maps/frlg_outside2.json": {
@@ -247,8 +247,8 @@
             "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 368.33333333333337,
-                "y": 348.6666666666667
+                "x": 462.99999999999994,
+                "y": 377.33333333333326
             }
         },
         "src/tileset/frlg_outside2.json": {
@@ -300,9 +300,10 @@
     "project": "spriteworld.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "src/maps/test.json",
+        "src/maps/hero_house_floor2.json",
         "src/maps/prof_lab.json",
         "src/maps/route1.json",
-        "src/maps/test.json",
         "src/maps/pallet.json",
         "src/maps/test2.json",
         "src/tileset/gen3_outside.json",
@@ -310,8 +311,7 @@
         "src/maps/StarterTown.json",
         "src/tileset/gen3_inside.json",
         "src/tileset/frlg_outside2.json",
-        "src/maps/frlg_outside2.json",
-        "C:/wip/www/phaser3-projects/ragin-mages-master/game/src/assets/maps/map.json"
+        "src/maps/frlg_outside2.json"
     ],
     "resizeMap.removeObjects": true,
     "tileset.embedInMap": false,

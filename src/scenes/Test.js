@@ -1,5 +1,5 @@
 import {GameMap} from '@Scenes';
-import {Player, NPC} from '@Objects';
+import {Player} from '@Objects';
 import {TestMap} from '@Maps';
 
 export default class extends GameMap {
@@ -27,19 +27,7 @@ export default class extends GameMap {
     this.cameras.main.zoom = 1.6;
     this.cameras.main.startFollow(this.player.config.sprite, true);
 
-    // this.npcs = this.add.group();
-    // this.npcs.runChildUpdate = true;
-    // this.npcs.add(new NPC({
-    //   id: 'npc1',
-    //   texture: 'ace_trainer',
-    //   x: 16,
-    //   y: 16,
-    //   scene: this,
-    //   facingDirection: 'up',
-    //   // spin: true,
-    //   move: 'random'
-    // }));
-
+    this.createCharacters();
     // PhaserGUIAction(this);
   }
 

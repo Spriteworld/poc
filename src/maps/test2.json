@@ -140,11 +140,6 @@
                  "name":"npc1",
                  "properties":[
                         {
-                         "name":"id",
-                         "type":"string",
-                         "value":"npc1"
-                        }, 
-                        {
                          "name":"spin",
                          "type":"bool",
                          "value":true
@@ -184,7 +179,7 @@
                         {
                          "name":"texture",
                          "type":"string",
-                         "value":"ace_trainer"
+                         "value":"red"
                         }],
                  "rotation":0,
                  "type":"npc",
@@ -192,17 +187,6 @@
                  "width":32,
                  "x":384,
                  "y":320
-                }, 
-                {
-                 "height":0,
-                 "id":11,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":-32,
-                 "y":0
                 }],
          "opacity":1,
          "type":"objectgroup",
