@@ -5,7 +5,7 @@ export default class extends Character {
     super(config);
     this.config.cursors = this.config.scene.input.keyboard.createCursorKeys();
 
-    this.config.scene.gridEngine.create(this.config.map, {
+    this.config.scene.gridEngine.create(this.config.scene.config.tilemap, {
       characters: [this.characterDef(this.config)],
     });
   }

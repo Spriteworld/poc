@@ -1,5 +1,31 @@
 [
     {
+        "color": "#ff550000",
+        "name": "npc",
+        "properties": [
+            {
+                "name": "facingDirection",
+                "type": "string",
+                "value": "down"
+            },
+            {
+                "name": "spin",
+                "type": "bool",
+                "value": false
+            },
+            {
+                "name": "spinRate",
+                "type": "int",
+                "value": 500
+            },
+            {
+                "name": "texture",
+                "type": "string",
+                "value": ""
+            }
+        ]
+    },
+    {
         "color": "#ffa0a0a4",
         "name": "sign",
         "properties": [
@@ -11,7 +37,7 @@
         ]
     },
     {
-        "color": "#ffa0a0a4",
+        "color": "#ff00ffff",
         "name": "warp",
         "properties": [
             {
