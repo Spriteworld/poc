@@ -1,30 +1,34 @@
-import Phaser from 'phaser';
+import {GameMap} from '@Scenes';
+import {Player, NPC} from '@Objects';
 import {PalletTownMap} from '@Maps';
-import {Player} from '@Objects';
 
-export default class extends Phaser.Scene {
+export default class extends GameMap {
   constructor() {
-    super({ key: 'PalletTown' });
+    super({
+      mapName: 'PalletTown',
+      map: PalletTownMap
+    });
   }
 
-  preload () {
-    this.load.tilemapTiledJSON('PalletTownMap', PalletTownMap);
+  preload() {
+    this.preloadMap();
   }
 
   create () {
-    const map = this.make.tilemap({key: 'PalletTownMap'});
-    var mapTileset = map.addTilesetImage('gen3_outside', 'gen3_outside');
-
-    map.createLayer('floor', mapTileset);
-    map.createLayer('ground', mapTileset);
-    map.createLayer('top', mapTileset);
-    map.createLayer('animation', mapTileset);
-
-    this.player = new Player(this, 6, 8, 'red', map);
+    this.loadMap();
+    this.player = new Player({
+      id: 'player',
+      texture: 'red',
+      x: 6,
+      y: 8,
+      scene: this,
+    });
+    this.registry.set('player', this.player);
+    this.cameras.main.zoom = 1.6;
+    this.cameras.main.startFollow(this.player.config.sprite, true);
   }
 
   update() {
-    const cursors = this.input.keyboard.createCursorKeys();
-    this.player.update(cursors);
+    this.player.update();
   }
 }

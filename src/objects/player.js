@@ -18,6 +18,9 @@ export default class extends Character {
 
   handleInteractables() {
     const interactions = this.config.scene.registry.get('interactions');
+    if (typeof interactions === 'undefined') {
+      return;
+    }
 
     // get the direction player is facing
     const position = this.getPosInFacingDirection();
@@ -30,12 +33,16 @@ export default class extends Character {
     const activator = this.config.scene.input.keyboard.addKey('Z');
     if (hasInteraction && activator.isDown) {
       // get said interaction
-      const interaction = this.config.map.filterObjects('interactions', (obj) => position.x == obj.x && position.y == obj.y)[0];
+      const interaction = this.config.scene.config.
+        tilemap.filterObjects('interactions', (obj) => position.x == obj.x && position.y == obj.y)[0];
 
       // alert the type
       switch (interaction.type) {
         case 'sign':
           alert(interaction.properties[0].value);
+        break;
+        case 'npc':
+          alert(interaction.name);
         break;
         default:
           alert(interaction.type);

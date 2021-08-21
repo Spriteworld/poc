@@ -1,30 +1,35 @@
-import Phaser from 'phaser';
+import {GameMap} from '@Scenes';
+import {Player, NPC} from '@Objects';
 import {HeroHouseF1Map} from '@Maps';
-import {Player} from '@Objects';
 
-export default class extends Phaser.Scene {
+export default class extends GameMap {
   constructor() {
-    super({ key: 'HeroHouseF1' });
+    super({
+      mapName: 'HeroHouseF1',
+      map: HeroHouseF1Map,
+      inside: true
+    });
   }
 
-  preload () {
-    this.load.tilemapTiledJSON('HeroHouseF1Map', HeroHouseF1Map);
+  preload() {
+    this.preloadMap();
   }
 
   create () {
-    const map = this.make.tilemap({key: 'HeroHouseF1Map'});
-    var mapTileset = map.addTilesetImage('gen3_inside', 'gen3_inside');
-
-    map.createLayer('floor', mapTileset);
-    map.createLayer('ground', mapTileset);
-    map.createLayer('top', mapTileset);
-    map.createLayer('animation', mapTileset);
-
-    this.player = new Player(this, 4, 9, 'red', map);
+    this.loadMap();
+    this.player = new Player({
+      id: 'player',
+      texture: 'red',
+      x: 4,
+      y: 9,
+      scene: this,
+    });
+    this.registry.set('player', this.player);
+    this.cameras.main.zoom = 1.6;
+    this.cameras.main.startFollow(this.player.config.sprite, true);
   }
 
   update() {
-    const cursors = this.input.keyboard.createCursorKeys();
-    this.player.update(cursors);
+    this.player.update();
   }
 }

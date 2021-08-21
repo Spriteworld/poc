@@ -20,7 +20,7 @@ export default class extends Phaser.Scene {
 
   create () {
     this.scene.start('UI');
-    this.scene.run('Test');
-    // this.scene.run('StarterTown');
+    // this.scene.run('Test');
+    this.scene.run('PalletTown');
   }
 }

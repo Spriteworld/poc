@@ -76,17 +76,8 @@
  "tileheight":32,
  "tilesets":[
         {
-         "columns":8,
          "firstgid":1,
-         "image":"..\/tileset\/gen3_inside.png",
-         "imageheight":31942,
-         "imagewidth":256,
-         "margin":0,
-         "name":"All Inner Extended",
-         "spacing":0,
-         "tilecount":7984,
-         "tileheight":32,
-         "tilewidth":32
+         "source":"..\/tileset\/gen3_inside.json"
         }],
  "tilewidth":32,
  "type":"map",

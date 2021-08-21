@@ -7,9 +7,10 @@ export default class extends Phaser.Scene {
     this.config.inside = config.inside || false;
     this.config.x = config.x || 0;
     this.config.y = config.y || 0;
-    this.config.tilemap = {};
     this.config.map = config.map || {};
     this.config.mapName = config.mapName || '';
+    this.config.tilemap = {};
+    console.log(['Loading Scene', config.mapName]);
   }
 
   preloadMap () {
@@ -17,20 +18,25 @@ export default class extends Phaser.Scene {
   }
 
   loadMap () {
-    this.config.tilemap = this.make.tilemap({key: this.config.mapName});
-    this.registry.set('scene', this.name);
+    var tilemap = this.make.tilemap({key: this.config.mapName});
+    // this.registry.set('scene', this.name);
 
-    var mapInside = this.config.tilemap.addTilesetImage('gen3_inside', 'gen3_inside');
-    var mapOutside = this.config.tilemap.addTilesetImage('gen3_outside', 'gen3_outside');
+    var mapInside = tilemap.addTilesetImage('gen3_inside', 'gen3_inside');
+    var mapOutside = tilemap.addTilesetImage('gen3_outside', 'gen3_outside');
 
-    this.config.tilemap.layers.forEach((layer) => {
-      this.config.tilemap.createLayer(layer.name, this.config.inside ? mapInside : mapOutside).setName(layer.name);
+    tilemap.layers.forEach((layer) => {
+      tilemap
+        .createLayer(layer.name, this.config.inside ? mapInside : mapOutside)
+        .setName(layer.name);
     });
 
-    this.objects = this.config.tilemap.getObjectLayer('interactions');
-    this.initSigns(this.config.tilemap);
+    this.objects = tilemap.getObjectLayer('interactions');
+    if (this.objects !== null) {
+      this.initSigns(tilemap);
+    }
 
-    this.animatedTiles.init(this.config.tilemap);
+    this.animatedTiles.init(tilemap);
+    this.config.tilemap = tilemap;
   }
 
   initSigns(map) {
