@@ -286,7 +286,7 @@
     "openFiles": [
     ],
     "project": "spriteworld.tiled-project",
-    "property.type": "int",
+    "property.type": "string",
     "recentFiles": [
         "src/maps/StarterTown.json",
         "src/maps/hero_house_floor1.json",
