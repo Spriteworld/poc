@@ -11,7 +11,6 @@ export default class extends Phaser.Scene {
   }
 
   create () {
-    console.log('UI::create');
     this.activeScene = this.registry.get('scene');
     if (this.registry.has('interactions') === false) {
       this.registry.set('interactions', []);
@@ -29,7 +28,6 @@ export default class extends Phaser.Scene {
 
   initSigns(map) {
     const signs = map.filterObjects('interactions', (obj) => obj.type === 'sign');
-    console.log(signs);
     if (signs.length === 0) {
       return;
     }

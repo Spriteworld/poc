@@ -1,12 +1,11 @@
-import player from './red.png';
-import frlgPlayer from './FRLG Peds1.png';
+import red from './characters/red.png';
+import ace_trainer from './characters/ace_trainer.png';
 import gen3inside from './gen3_inside.png';
 import gen3outside from './gen3_outside.png';
-import frlg_outside2 from './frlg_outside2.png';
 
 export {
+    red,
+    ace_trainer,
     gen3inside,
-    gen3outside,
-    frlgPlayer,
-    frlg_outside2
+    gen3outside
 };
