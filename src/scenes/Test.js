@@ -6,45 +6,40 @@ import {GameMap} from '@Scenes';
 export default class extends GameMap {
   constructor() {
     super({
-      mapName: 'TestMap',
+      mapName: 'Test',
       map: TestMap
     });
-    console.log('test::constructor');
   }
 
   preload() {
-    console.log('test::preload');
-    // this.preloadMap();
+    this.preloadMap();
   }
 
   create () {
-    console.log('test::create');
-    // this.loadMap();
+    this.loadMap();
     this.player = new Player({
       id: 'player',
       texture: 'red',
       x: 16,
       y: 15,
       scene: this,
-      map: map,
     });
     this.registry.set('player', this.player);
     this.cameras.main.zoom = 1.6;
     this.cameras.main.startFollow(this.player.config.sprite, true);
 
-    // this.npcs = this.add.group();
-    // this.npcs.runChildUpdate = true;
-    // this.npcs.add(new NPC({
-    //   id: 'npc1',
-    //   texture: 'ace_trainer',
-    //   x: 16,
-    //   y: 16,
-    //   scene: this,
-    //   map: map,
-    //   facingDirection: 'up',
-    //   // spin: true,
-    //   move: 'random'
-    // }));
+    this.npcs = this.add.group();
+    this.npcs.runChildUpdate = true;
+    this.npcs.add(new NPC({
+      id: 'npc1',
+      texture: 'ace_trainer',
+      x: 16,
+      y: 16,
+      scene: this,
+      facingDirection: 'up',
+      // spin: true,
+      move: 'random'
+    }));
 
     // PhaserGUIAction(this);
   }

@@ -6,4 +6,4 @@ import Test from './Test.js';
 import HeroHouseF1 from './HeroHouseF1.js';
 import StarterTown from './StarterTown.js';
 
-export {UI, GameMap, Preload, PalletTown, Test, HeroHouseF1, StarterTown};
+export {GameMap, UI, Preload, PalletTown, Test, HeroHouseF1, StarterTown};
