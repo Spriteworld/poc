@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {Player, NPC} from '@Objects';
+import {Player, NPC, PkmnOverworld} from '@Objects';
 
 export default class extends Phaser.Scene {
   constructor(config) {
@@ -13,10 +13,6 @@ export default class extends Phaser.Scene {
     this.config.tilemap = {};
     this.characters = [];
     // console.log(['Loading Scene', config.mapName]);
-
-    // this.events.on('ready', () => {
-    //   this.createCharacters();
-    // });
   }
 
   preloadMap () {
@@ -67,7 +63,6 @@ export default class extends Phaser.Scene {
     this.npcs = this.add.group();
     this.npcs.runChildUpdate = true;
     npcs.map((npc) => {
-      console.log(npc);
       let npcObj = new NPC({
         id: npc.name,
         texture: this.getPropertyValue(npc.properties, 'texture'),
@@ -77,7 +72,9 @@ export default class extends Phaser.Scene {
         spin: this.getPropertyValue(npc.properties, 'spin'),
         spinRate: this.getPropertyValue(npc.properties, 'spinRate'),
         facingDirection: this.getPropertyValue(npc.properties, 'facingDirection', 'down'),
-      //   move: 'random'
+        move: this.getPropertyValue(npc.properties, 'move'),
+        moveRate: this.getPropertyValue(npc.properties, 'moveRate'),
+        moveRadius: this.getPropertyValue(npc.properties, 'moveRadius'),
       });
       this.npcs.add(npcObj);
       this.interactTile(map, npc, 0x00afe4);
@@ -107,9 +104,41 @@ export default class extends Phaser.Scene {
   }
 
   createCharacters() {
-    console.log(this.characters);
     this.gridEngine.create(this.config.tilemap, {
       characters: this.characters
+    });
+  }
+
+
+  addPlayerToScene(x, y) {
+    this.player = new Player({
+      id: 'player',
+      texture: 'red',
+      x: x,
+      y: y,
+      scene: this,
+    });
+    this.registry.set('player', this.player);
+    this.cameras.main.zoom = 1.6;
+    this.cameras.main.startFollow(this.player.config.sprite, true);
+  }
+
+  addPlayerMonToScene(monId, x, y) {
+    if (monId == 'RNG') {
+      monId = (Math.floor(Math.random() * 251) +1)
+        .toString()
+        .padStart(3, '0');
+    }
+
+    this.pokemon = new PkmnOverworld({
+      id: 'playerMon',
+      texture: monId.toString(),
+      x: x,
+      y: y,
+      scene: this,
+      follow: 'player',
+      facingDirection: 'left',
+      collides: false
     });
   }
 
@@ -117,10 +146,4 @@ export default class extends Phaser.Scene {
     let property = props.find(p => p.name === id);
     return typeof property === 'undefined' ? defValue : property.value;
   }
-
-  debugRegistry() {
-    console.log(this.registry.getAll());
-  }
-
-
 }

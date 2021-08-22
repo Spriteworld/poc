@@ -9,6 +9,21 @@
                 "value": "down"
             },
             {
+                "name": "move",
+                "type": "bool",
+                "value": false
+            },
+            {
+                "name": "moveRadius",
+                "type": "int",
+                "value": 1
+            },
+            {
+                "name": "moveRate",
+                "type": "int",
+                "value": 500
+            },
+            {
                 "name": "spin",
                 "type": "bool",
                 "value": false

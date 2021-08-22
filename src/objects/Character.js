@@ -3,13 +3,27 @@ import Phaser from 'phaser';
 export default class extends Phaser.GameObjects.Sprite {
   constructor(config) {
     super(config.scene, config.x, config.y, config.key);
-    this.config = config;
+    this.config = {...{
+      sprite: null,
+      scene: null,
+      id: null,
+      spin: 'down',
+      spinRate: 600,
+      move: false,
+      moveRate: 600,
+      moveRadius: 1,
+      follow: false,
+      collides: true,
+      facingDirection: 'down',
+    }, ...config};
     this.config.sprite = this.config.scene.add.sprite(0, 0, this.config.texture);
+
+    this.ge = this.config.scene.gridEngine;
+    this.spinRate = this.config.spinRate;
 
     this.config.scene.addCharacter(
       this.characterDef(this.config)
     );
-    // this.config.scene.add.existing(this);
   }
 
   characterFramesDef() {
@@ -44,32 +58,29 @@ export default class extends Phaser.GameObjects.Sprite {
       walkingAnimationMapping: this.characterFramesDef(),
       startPosition: { x: def.x, y: def.y },
       facingDirection: def.facingDirection || 'down',
+      collides: def.collides || true,
     };
   }
 
-  getPositionX() {
-    return this.x;
-  }
-
-  getPositionY() {
-    return this.y;
+  getPosition() {
+    return this.ge.getPosition(this.config.id);
   }
 
   look(dir) {
-    return this.config.scene.gridEngine.turnTowards(this.config.id, dir);
+    return this.ge.turnTowards(this.config.id, dir);
   }
 
   move(dir) {
-    return this.config.scene.gridEngine.move(this.config.id, dir);
+    return this.ge.move(this.config.id, dir);
   }
 
   moveTo(x, y) {
-    return this.config.scene.gridEngine.moveTo(this.config.id, {x:x, y:y});
+    return this.ge.moveTo(this.config.id, {x:x, y:y});
   }
 
   getPosInFacingDirection() {
-    const pos = this.config.scene.gridEngine.getPosition(this.config.id);
-    const dir = this.config.scene.gridEngine.getFacingDirection('player');
+    const pos = this.ge.getPosition(this.config.id);
+    const dir = this.ge.getFacingDirection(this.config.id);
     if (dir === 'up') {
       return { ...pos, y: pos.y - 1 };
     } else if (dir === 'down') {
@@ -82,7 +93,7 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   getGridEngine() {
-    return this.config.scene.gridEngine;
+    return this.ge;
   }
 
   handleMovement() {
@@ -106,5 +117,35 @@ export default class extends Phaser.GameObjects.Sprite {
     }
   }
 
+  handleRun() {
+    const activator = this.config.scene.input.keyboard.addKey('X');
+    if (!this.config.scene.inside && activator.isDown) {
+      this.ge.setSpeed(this.config.id, 8);
+    } else {
+      this.ge.setSpeed(this.config.id, 4);
+    }
+  }
 
+  addAutoMove() {
+    if (this.config.move !== true) { return; }
+    this.ge.moveRandomly(this.config.id, this.config.moveRate, 1);
+    this.config.move = false;
+  }
+
+  addAutoSpin(delta) {
+    if (this.config.spin !== true) { return; }
+    this.spinRate -= delta;
+    if (this.spinRate <= 0) {
+      this.spinRate = this.config.spinRate;
+
+      let dir = 'down';
+      switch (Math.floor(Math.random() * 4) +1) {
+        case 1: dir = 'up'; break;
+        case 2: dir = 'down'; break;
+        case 3: dir = 'left'; break;
+        case 4: dir = 'right'; break;
+      }
+      this.look(dir);
+    }
+  }
 }

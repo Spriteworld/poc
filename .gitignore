@@ -14,3 +14,5 @@ dist/
 /npm-debug.log
 
 stuff
+src/tileset/pokemon/*
+src/tileset/pokemon_shiny/*

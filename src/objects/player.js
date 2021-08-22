@@ -8,6 +8,7 @@ export default class extends Character {
 
   update() {
     this.handleMovement();
+    this.handleRun();
 
     this.handleInteractables();
   }

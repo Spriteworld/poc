@@ -86,7 +86,7 @@
                         {
                          "name":"warp",
                          "type":"string",
-                         "value":"HeroHouse"
+                         "value":"HeroHouseF1"
                         }, 
                         {
                          "name":"warp-dir",
@@ -179,14 +179,63 @@
                         {
                          "name":"texture",
                          "type":"string",
-                         "value":"red"
+                         "value":"poke_kid"
                         }],
                  "rotation":0,
                  "type":"npc",
                  "visible":true,
                  "width":32,
                  "x":384,
-                 "y":320
+                 "y":352
+                }, 
+                {
+                 "height":32,
+                 "id":12,
+                 "name":"npc3",
+                 "properties":[
+                        {
+                         "name":"facingDirection",
+                         "type":"string",
+                         "value":"left"
+                        }, 
+                        {
+                         "name":"move",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"poke_kid"
+                        }],
+                 "rotation":0,
+                 "type":"npc",
+                 "visible":true,
+                 "width":32,
+                 "x":352,
+                 "y":544
+                }, 
+                {
+                 "height":32,
+                 "id":13,
+                 "name":"npc4",
+                 "properties":[
+                        {
+                         "name":"move",
+                         "type":"string",
+                         "value":"random"
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"poke_kid"
+                        }],
+                 "rotation":0,
+                 "type":"npc",
+                 "visible":true,
+                 "width":32,
+                 "x":160,
+                 "y":544
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -195,7 +244,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":12,
+ "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",

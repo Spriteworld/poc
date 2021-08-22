@@ -11,5 +11,6 @@ export default class extends Character {
     }
     this.addAutoSpin(delta);
     this.addAutoMove();
+    this.handleRun();
   }
 }
