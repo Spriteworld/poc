@@ -17,7 +17,7 @@ export default class extends Phaser.GameObjects.Sprite {
       facingDirection: 'down',
     }, ...config};
     this.config.sprite = this.config.scene.add.sprite(0, 0, this.config.texture);
-
+    console.log(this.config);
     this.ge = this.config.scene.gridEngine;
     this.spinRate = this.config.spinRate;
 
@@ -57,8 +57,8 @@ export default class extends Phaser.GameObjects.Sprite {
       sprite: def.sprite,
       walkingAnimationMapping: this.characterFramesDef(),
       startPosition: { x: def.x, y: def.y },
-      facingDirection: def.facingDirection || 'down',
-      collides: def.collides || true,
+      facingDirection: def.facingDirection,
+      collides: def.collides,
     };
   }
 

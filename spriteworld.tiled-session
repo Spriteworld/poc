@@ -222,7 +222,7 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 670.5,
+                "x": 670,
                 "y": 575
             }
         },
@@ -247,8 +247,8 @@
             "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 849,
-                "y": 559.6666666666666
+                "x": 848.6666666666666,
+                "y": 559.3333333333334
             }
         },
         "src/tileset/frlg_outside2.json": {
@@ -298,17 +298,17 @@
     "openFiles": [
     ],
     "project": "spriteworld.tiled-project",
-    "property.type": "int",
+    "property.type": "bool",
     "recentFiles": [
+        "src/maps/test.json",
+        "src/maps/test2.json",
         "src/maps/StarterTown.json",
         "src/tileset/gen3_outside.json",
         "src/maps/prof_lab.json",
         "src/maps/route1.json",
         "src/maps/hero_house_floor2.json",
         "src/maps/hero_house_floor1.json",
-        "src/maps/test.json",
         "src/maps/pallet.json",
-        "src/maps/test2.json",
         "src/tileset/gen3_inside.json",
         "src/tileset/frlg_outside2.json",
         "src/maps/frlg_outside2.json"

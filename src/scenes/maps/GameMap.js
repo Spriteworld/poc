@@ -117,6 +117,7 @@ export default class extends Phaser.Scene {
       x: x,
       y: y,
       scene: this,
+      collides: true
     });
     this.registry.set('player', this.player);
     this.cameras.main.zoom = 1.6;

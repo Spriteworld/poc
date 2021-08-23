@@ -4344,7 +4344,7 @@
                 {
                  "name":"ge_collide",
                  "type":"bool",
-                 "value":true
+                 "value":false
                 }]
         }, 
         {
@@ -4371,7 +4371,7 @@
                 {
                  "name":"ge_collide",
                  "type":"bool",
-                 "value":true
+                 "value":false
                 }]
         }, 
         {
@@ -4801,9 +4801,24 @@
          "id":532,
          "properties":[
                 {
-                 "name":"ge_collide",
+                 "name":"ge_collide_down",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"ge_collide_left",
                  "type":"bool",
                  "value":true
+                }, 
+                {
+                 "name":"ge_collide_right",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_up",
+                 "type":"bool",
+                 "value":false
                 }]
         }, 
         {
@@ -5881,7 +5896,22 @@
          "id":652,
          "properties":[
                 {
-                 "name":"ge_collide",
+                 "name":"ge_collide_down",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"ge_collide_left",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_right",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_up",
                  "type":"bool",
                  "value":false
                 }]
@@ -6466,7 +6496,22 @@
          "id":717,
          "properties":[
                 {
-                 "name":"ge_collide",
+                 "name":"ge_collide_down",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"ge_collide_left",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_right",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_up",
                  "type":"bool",
                  "value":false
                 }]
@@ -6475,7 +6520,22 @@
          "id":718,
          "properties":[
                 {
-                 "name":"ge_collide",
+                 "name":"ge_collide_down",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"ge_collide_left",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_right",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_up",
                  "type":"bool",
                  "value":false
                 }]
@@ -6610,7 +6670,22 @@
          "id":733,
          "properties":[
                 {
-                 "name":"ge_collide",
+                 "name":"ge_collide_down",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"ge_collide_left",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_right",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_up",
                  "type":"bool",
                  "value":false
                 }]
@@ -6619,7 +6694,22 @@
          "id":734,
          "properties":[
                 {
-                 "name":"ge_collide",
+                 "name":"ge_collide_down",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"ge_collide_left",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_right",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_up",
                  "type":"bool",
                  "value":false
                 }]
@@ -6754,7 +6844,22 @@
          "id":749,
          "properties":[
                 {
-                 "name":"ge_collide",
+                 "name":"ge_collide_down",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"ge_collide_left",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_right",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_up",
                  "type":"bool",
                  "value":false
                 }]
@@ -6763,7 +6868,22 @@
          "id":750,
          "properties":[
                 {
-                 "name":"ge_collide",
+                 "name":"ge_collide_down",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"ge_collide_left",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_right",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_up",
                  "type":"bool",
                  "value":false
                 }]
@@ -7141,9 +7261,24 @@
          "id":792,
          "properties":[
                 {
-                 "name":"ge_collide",
+                 "name":"ge_collide_down",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_left",
                  "type":"bool",
                  "value":false
+                }, 
+                {
+                 "name":"ge_collide_right",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"ge_collide_up",
+                 "type":"bool",
+                 "value":true
                 }]
         }, 
         {
@@ -7285,9 +7420,24 @@
          "id":808,
          "properties":[
                 {
-                 "name":"ge_collide",
+                 "name":"ge_collide_down",
+                 "type":"bool",
+                 "value":true
+                }, 
+                {
+                 "name":"ge_collide_left",
                  "type":"bool",
                  "value":false
+                }, 
+                {
+                 "name":"ge_collide_right",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"ge_collide_up",
+                 "type":"bool",
+                 "value":true
                 }]
         }, 
         {

@@ -14,7 +14,7 @@ function importAll(r, suffix) {
 
 var pokemon = importAll(require.context('./pokemon', false, /\.(png)$/));
 var pokemon_shiny = importAll(require.context('./pokemon_shiny', false, /\.(png)$/), 's');
-console.log(pokemon_shiny);
+
 export {
   gen3inside,
   gen3outside,

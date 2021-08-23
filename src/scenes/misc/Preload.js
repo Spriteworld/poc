@@ -17,6 +17,18 @@ export default class extends Phaser.Scene {
   }
 
   preload () {
+    var progress = this.add.graphics();
+
+    this.load.on('progress', function (value) {
+        progress.clear();
+        progress.fillStyle(0xffffff, 1);
+        progress.fillRect(0, 270, 800 * value, 60);
+    });
+
+    this.load.on('complete', function () {
+        progress.destroy();
+    });
+
     this.load.image('gen3_outside', gen3outside);
     this.load.image('gen3_inside', gen3inside);
     this.load.spritesheet('red', red, { frameWidth: 32, frameHeight: 40 });
