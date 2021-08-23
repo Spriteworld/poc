@@ -16,3 +16,4 @@ dist/
 stuff
 src/tileset/pokemon/*
 src/tileset/pokemon_shiny/*
+src/maps/region/*

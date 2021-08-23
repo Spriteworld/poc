@@ -21,7 +21,7 @@ export default class extends Phaser.Scene {
 
   loadMap () {
     var tilemap = this.make.tilemap({key: this.config.mapName});
-    // this.registry.set('scene', this.name);
+    this.registry.set('map', this.config.mapName);
 
     var mapInside = tilemap.addTilesetImage('gen3_inside', 'gen3_inside');
     var mapOutside = tilemap.addTilesetImage('gen3_outside', 'gen3_outside');

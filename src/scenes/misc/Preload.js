@@ -7,7 +7,8 @@ import {
   red,
   ace_trainer,
   poke_kid,
-  pokemon
+  pokemon,
+  pokemon_shiny
 } from '@Tileset';
 
 export default class extends Phaser.Scene {
@@ -24,6 +25,10 @@ export default class extends Phaser.Scene {
 
     Object.keys(pokemon).forEach((name) => {
       this.load.spritesheet(name, pokemon[name]
+        , { frameWidth: 64, frameHeight: 64 });
+    });
+    Object.keys(pokemon_shiny).forEach((name) => {
+      this.load.spritesheet(name, pokemon_shiny[name]
         , { frameWidth: 64, frameHeight: 64 });
     });
 

@@ -4,18 +4,17 @@ import red from './characters/red.png';
 import ace_trainer from './characters/ace_trainer.png';
 import poke_kid from './characters/poke_kid.png';
 
-function importAll(r) {
+function importAll(r, suffix) {
   let images = {};
   r.keys().map((item, index) => {
-  images[item.replace('./', '').replace('.png', '')] = r(item);
+  images[item.replace('./', '').replace('.png', '')+(suffix || '')] = r(item);
   });
   return images;
 }
 
 var pokemon = importAll(require.context('./pokemon', false, /\.(png)$/));
-
-
-
+var pokemon_shiny = importAll(require.context('./pokemon_shiny', false, /\.(png)$/), 's');
+console.log(pokemon_shiny);
 export {
   gen3inside,
   gen3outside,
@@ -23,5 +22,6 @@ export {
   ace_trainer,
   poke_kid,
 
-  pokemon
+  pokemon,
+  pokemon_shiny,
 };

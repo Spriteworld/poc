@@ -1,9 +1,15 @@
-import GameMap from './GameMap.js';
-import UI from './UI.js';
-import Preload from './Preload.js';
-import PalletTown from './PalletTown.js';
-import Test from './Test.js';
-import HeroHouseF1 from './HeroHouseF1.js';
-import StarterTown from './StarterTown.js';
+import UI from './misc/UI.js';
+import Preload from './misc/Preload.js';
 
-export {GameMap, UI, Preload, PalletTown, Test, HeroHouseF1, StarterTown};
+import GameMap from './maps/GameMap.js';
+import Test from './maps/Test.js';
+import PalletTown from './maps/kanto/PalletTown.js';
+import HeroHouseF1 from './maps/kanto/HeroHouseF1.js';
+import StarterTown from './maps/region/StarterTown.js';
+
+export {
+    UI, Preload,
+    GameMap,
+    Test,
+    PalletTown, HeroHouseF1, StarterTown
+};
