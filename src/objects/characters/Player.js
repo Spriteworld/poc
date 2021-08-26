@@ -42,7 +42,7 @@ export default class extends Character {
           alert(interaction.name);
         break;
         default:
-          alert(interaction.type);
+          console.log('unknown interaction type', interaction);
       }
     }
   }

@@ -12,8 +12,9 @@ function importAll(r, suffix) {
   return images;
 }
 
-var pokemon = importAll(require.context('./pokemon', false, /\.(png)$/));
-var pokemon_shiny = importAll(require.context('./pokemon_shiny', false, /\.(png)$/), 's');
+var pokemon = importAll(require.context('./overworld/pokemon', false, /\.(png)$/));
+// var pokemon_shiny = importAll(require.context('./overworld/pokemon_shiny', false, /\.(png)$/), 's');
+// var pokemon_home = importAll(require.context('./battlescene/normal/', false, /\.(png)$/), 's');
 
 export {
   gen3inside,
@@ -23,5 +24,6 @@ export {
   poke_kid,
 
   pokemon,
-  pokemon_shiny,
+  // pokemon_shiny,
+  // pokemon_home,
 };

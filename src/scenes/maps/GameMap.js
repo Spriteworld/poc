@@ -11,8 +11,21 @@ export default class extends Phaser.Scene {
     this.config.map = config.map || {};
     this.config.mapName = config.mapName || '';
     this.config.tilemap = {};
+    this.config.playerLocation = {};
+
+    this.player = {};
+    this.playerMon = {};
     this.characters = [];
-    // console.log(['Loading Scene', config.mapName]);
+    this.warps = [];
+
+    this.cameraFade = 150;
+    console.log(['Loading Scene', config.mapName]);
+    console.log(this);
+  }
+
+  init(data) {
+    // console.log(['init data', data]);
+    this.config = { ...this.config, ...data };
   }
 
   preloadMap () {
@@ -20,48 +33,52 @@ export default class extends Phaser.Scene {
   }
 
   loadMap () {
+    this.cameras.main.fadeIn(this.cameraFade, 0, 0, 0)
     var tilemap = this.make.tilemap({key: this.config.mapName});
+    this.config.tilemap = tilemap;
     this.registry.set('map', this.config.mapName);
-
-    var mapInside = tilemap.addTilesetImage('gen3_inside', 'gen3_inside');
-    var mapOutside = tilemap.addTilesetImage('gen3_outside', 'gen3_outside');
 
     tilemap.layers.forEach((layer) => {
       tilemap
-        .createLayer(layer.name, this.config.inside ? mapInside : mapOutside)
+        .createLayer(layer.name, this.config.inside
+          ? tilemap.addTilesetImage('gen3_inside', 'gen3_inside')
+          : tilemap.addTilesetImage('gen3_outside', 'gen3_outside'))
         .setName(layer.name);
     });
 
     this.objects = tilemap.getObjectLayer('interactions');
     if (this.objects !== null) {
-      this.initSigns(tilemap);
-      this.initNpcs(tilemap);
+      this.registry.set('interactions', []);
+      this.registry.set('warps', []);
+      this.initSigns();
+      this.initNpcs();
+      this.initWarps();
     }
 
     this.animatedTiles.init(tilemap);
-    this.config.tilemap = tilemap;
   }
 
-  initSigns(map) {
-    const signs = map.filterObjects('interactions', (obj) => obj.type === 'sign');
+  initSigns() {
+    const signs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'sign');
     if (signs.length === 0) {
       return;
     }
 
     signs.map((sign) => {
-      this.interactTile(map, sign, 0x00afe4);
+      this.interactTile(this.config.tilemap, sign, 0x00afe4);
     });
   }
 
 
-  initNpcs(map) {
-    const npcs = map.filterObjects('interactions', (obj) => obj.type === 'npc');
+  initNpcs() {
+    const npcs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'npc');
     if (npcs.length === 0) {
       return;
     }
 
     this.npcs = this.add.group();
     this.npcs.runChildUpdate = true;
+    let color = this.random_rgba();
     npcs.map((npc) => {
       let npcObj = new NPC({
         id: npc.name,
@@ -77,7 +94,29 @@ export default class extends Phaser.Scene {
         moveRadius: this.getPropertyValue(npc.properties, 'moveRadius'),
       });
       this.npcs.add(npcObj);
-      this.interactTile(map, npc, 0x00afe4);
+      this.interactTile(this.config.tilemap, npc, color);
+    });
+  }
+
+  initWarps() {
+    const warps = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'warp');
+    if (warps.length === 0) {
+      return;
+    }
+
+    let color = this.random_rgba();
+    warps.map((obj) => {
+      obj.x /= 32;
+      obj.y /= 32;
+
+      this.registry.get('warps').push({
+        name: obj.id,
+        x: obj.x,
+        y: obj.y,
+        obj: obj
+      });
+      this.tintTile(this.config.tilemap, obj.x, obj.y, color); // actual
+
     });
   }
 
@@ -85,8 +124,12 @@ export default class extends Phaser.Scene {
     obj.x /= 32;
     obj.y /= 32;
 
-    this.registry.get('interactions').push({x: obj.x, y: obj.y, obj: obj});
-    // this.tintTile(map, obj.x,    obj.y,     color); // actual
+    this.registry.get('interactions').push({
+      x: obj.x,
+      y: obj.y,
+      obj: obj
+    });
+    this.tintTile(map, obj.x,    obj.y,     color); // actual
     // this.tintTile(map, obj.x -1, obj.y,     color); // left
     // this.tintTile(map, obj.x +1, obj.y,     color); // right
     // this.tintTile(map, obj.x,    obj.y -1,  color); // up
@@ -107,21 +150,96 @@ export default class extends Phaser.Scene {
     this.gridEngine.create(this.config.tilemap, {
       characters: this.characters
     });
+
+    // check if we have a playerLocation and warp to it
+    if (typeof this.config.playerLocation.x !== 'undefined') {
+      let pos = {
+        x: this.config.playerLocation.x,
+        y: this.config.playerLocation.y
+      };
+
+      // move the player
+      this.gridEngine.setPosition(this.player.config.id, pos);
+      this.player.look(this.config.playerLocation.dir);
+
+      // get the pokemon to be in the right spot
+      this.gridEngine.setPosition(this.playerMon.config.id, this.player.getPosInBehindDirection());
+
+    }
+
+    // make players pokemon follow em
+    this.gridEngine
+      .positionChangeFinished()
+      .subscribe(({ charId, exitTile, enterTile }) => {
+        if (charId !== this.player.config.id) { return; }
+
+        this.checkTile(enterTile.x, enterTile.y);
+
+        this.playerMon.moveTo(exitTile.x, exitTile.y);
+      });
+
+
+    console.log(this.gridEngine.getAllCharacters());
   }
 
+  updateCharacters(time, delta) {
+    this.player.update(time, delta);
+    this.playerMon.update(time, delta);
+
+    if (this.mon.length > 0) {
+      this.mon.forEach(function(mon) {
+        mon.update(time, delta);
+      });
+    }
+  }
+
+  checkTile(x, y) {
+
+    // warps
+    let warps = this.registry.get('warps');
+    if (warps.length > 0) {
+      // console.log(warps);
+      let warp = warps.find(p => p.x === x && p.y === y);
+      if (typeof warp === 'undefined') { return; }
+      let warpProps = warp.obj.properties;
+      let warpLocation = this.getPropertyValue(warpProps, 'warp');
+      console.log(['transitioning scene', warpLocation, warpProps]);
+      this.cameras.main.fadeOut(this.cameraFade, 0, 0, 0);
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+        this.scene.start(warpLocation, {
+          playerLocation: {
+            x: this.getPropertyValue(warpProps, 'warp-x', 0),
+            y: this.getPropertyValue(warpProps, 'warp-y', 0),
+            dir: this.getPropertyValue(warpProps, 'warp-dir', 'down')
+          }
+        });
+      })
+
+    }
+  }
 
   addPlayerToScene(x, y) {
+    this.tintTile(this.config.tilemap,
+      this.config.playerLocation.length > 0 ? this.config.playerLocation.x : x,
+      this.config.playerLocation.length > 0 ? this.config.playerLocation.y : y,
+      this.random_rgba()
+    );
+
     this.player = new Player({
       id: 'player',
       texture: 'red',
       x: x,
       y: y,
       scene: this,
-      collides: true
+      collides: true,
+      facingDirection: 'down',
     });
     this.registry.set('player', this.player);
     this.cameras.main.zoom = 1.6;
     this.cameras.main.startFollow(this.player.config.sprite, true);
+    this.cameras.main.setFollowOffset(-this.player.config.sprite.width, -this.player.config.sprite.height)
+
+    this.addPlayerMonToScene('RNG', x +1, y);
   }
 
   addPlayerMonToScene(monId, x, y) {
@@ -131,7 +249,7 @@ export default class extends Phaser.Scene {
         .padStart(3, '0');
     }
 
-    this.pokemon = new PkmnOverworld({
+    this.playerMon = new PkmnOverworld({
       id: 'playerMon',
       texture: monId.toString(),
       x: x,
@@ -144,7 +262,24 @@ export default class extends Phaser.Scene {
   }
 
   getPropertyValue(props, id, defValue) {
+    if (typeof props === 'undefined' || props.length === 0) { return defValue; }
     let property = props.find(p => p.name === id);
     return typeof property === 'undefined' ? defValue : property.value;
+  }
+
+  getValue(obj, value, defValue) {
+    return Phaser.Utils.Objects.GetValue(obj, value, defValue);
+  }
+
+  getTileProperties(x, y) {
+    var tile = this.config.tilemap.getTileAt(x, y);
+    if (tile) {
+      return tile.properties.length > 0 ? tile.properties : {};
+    }
+    return {};
+  }
+
+  random_rgba() {
+      return '0x' + Math.floor(Math.random()*16777215).toString(16);
   }
 }

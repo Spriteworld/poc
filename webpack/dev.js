@@ -10,7 +10,7 @@ module.exports = {
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, '../src'),
     open: false,
-    compress: true,
+    compress: false,
     hot: true,
     disableHostCheck: true,
     host: '0.0.0.0',

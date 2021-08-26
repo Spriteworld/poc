@@ -65,6 +65,70 @@
                  "width":32,
                  "x":192,
                  "y":64
+                }, 
+                {
+                 "height":32,
+                 "id":2,
+                 "name":"HeroHouseF2",
+                 "properties":[
+                        {
+                         "name":"warp",
+                         "type":"string",
+                         "value":"HeroHouseF2"
+                        }, 
+                        {
+                         "name":"warp-dir",
+                         "type":"string",
+                         "value":"right"
+                        }, 
+                        {
+                         "name":"warp-x",
+                         "type":"int",
+                         "value":10
+                        }, 
+                        {
+                         "name":"warp-y",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"warp",
+                 "visible":true,
+                 "width":32,
+                 "x":352,
+                 "y":96
+                }, 
+                {
+                 "height":32,
+                 "id":3,
+                 "name":"TestWarp",
+                 "properties":[
+                        {
+                         "name":"warp",
+                         "type":"string",
+                         "value":"Test"
+                        }, 
+                        {
+                         "name":"warp-dir",
+                         "type":"string",
+                         "value":"down"
+                        }, 
+                        {
+                         "name":"warp-x",
+                         "type":"int",
+                         "value":21
+                        }, 
+                        {
+                         "name":"warp-y",
+                         "type":"int",
+                         "value":18
+                        }],
+                 "rotation":0,
+                 "type":"warp",
+                 "visible":true,
+                 "width":32,
+                 "x":128,
+                 "y":288
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -73,7 +137,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":2,
+ "nextobjectid":4,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",
@@ -81,7 +145,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/tileset\/gen3_inside.json"
+         "source":"..\/..\/tileset\/gen3_inside.json"
         }],
  "tilewidth":32,
  "type":"map",

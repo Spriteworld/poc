@@ -16,16 +16,9 @@ export default class extends GameMap {
 
   create () {
     this.loadMap();
-    this.player = new Player({
-      id: 'player',
-      texture: 'red',
-      x: 6,
-      y: 5,
-      scene: this,
-    });
-    this.registry.set('player', this.player);
-    this.cameras.main.zoom = 1.6;
-    this.cameras.main.startFollow(this.player.config.sprite, true);
+    this.addPlayerToScene(6, 5);
+
+    this.createCharacters();
   }
 
   update() {

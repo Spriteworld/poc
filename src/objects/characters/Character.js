@@ -16,11 +16,13 @@ export default class extends Phaser.GameObjects.Sprite {
       collides: true,
       facingDirection: 'down',
     }, ...config};
+
     this.config.sprite = this.config.scene.add.sprite(0, 0, this.config.texture);
-    console.log(this.config);
+    // console.log(this.config);
     this.ge = this.config.scene.gridEngine;
     this.spinRate = this.config.spinRate;
 
+    this.config.scene.add.existing(this);
     this.config.scene.addCharacter(
       this.characterDef(this.config)
     );
@@ -66,6 +68,10 @@ export default class extends Phaser.GameObjects.Sprite {
     return this.ge.getPosition(this.config.id);
   }
 
+  // setPosition(x, y) {
+  //   return this.ge.setPosition(this.config.id, x, y);
+  // }
+
   look(dir) {
     return this.ge.turnTowards(this.config.id, dir);
   }
@@ -92,9 +98,28 @@ export default class extends Phaser.GameObjects.Sprite {
     }
   }
 
+  getPosInBehindDirection() {
+    const pos = this.ge.getPosition(this.config.id);
+    const dir = this.ge.getFacingDirection(this.config.id);
+    if (dir === 'up') {
+      return { ...pos, y: pos.y + 1 };
+    } else if (dir === 'down') {
+      return { ...pos, y: pos.y - 1 };
+    } else if (dir === 'left') {
+      return { ...pos, x: pos.x + 1 };
+    } else if (dir === 'right') {
+      return { ...pos, x: pos.x - 1 };
+    }
+  }
+
   getGridEngine() {
     return this.ge;
   }
+
+  // trying to make you insta move if looking in the right direction
+  // updateLooking() {
+  //   this.playerWasLooking = this.ge.getFacingDirection(this.config.id);
+  // }
 
   handleMovement() {
     const duration = 120;

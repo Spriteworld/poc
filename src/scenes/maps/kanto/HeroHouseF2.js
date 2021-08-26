@@ -1,12 +1,13 @@
 import {GameMap} from '@Scenes';
 import {Player, NPC} from '@Objects';
-import {PalletTownMap} from '@Maps';
+import {HeroHouseF2Map} from '@Maps';
 
 export default class extends GameMap {
   constructor() {
     super({
-      mapName: 'PalletTown',
-      map: PalletTownMap
+      mapName: 'HeroHouseF2',
+      map: HeroHouseF2Map,
+      inside: true
     });
   }
 
@@ -16,7 +17,7 @@ export default class extends GameMap {
 
   create () {
     this.loadMap();
-    this.addPlayerToScene(6, 8);
+    this.addPlayerToScene(6, 7);
 
     this.createCharacters();
   }

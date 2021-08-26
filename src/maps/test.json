@@ -116,6 +116,16 @@
                          "name":"warp-dir",
                          "type":"string",
                          "value":"up"
+                        }, 
+                        {
+                         "name":"warp-x",
+                         "type":"int",
+                         "value":4
+                        }, 
+                        {
+                         "name":"warp-y",
+                         "type":"int",
+                         "value":9
                         }],
                  "rotation":0,
                  "type":"warp",
@@ -246,8 +256,28 @@
                  "properties":[
                         {
                          "name":"move",
-                         "type":"string",
-                         "value":"random"
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"moveRadius",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"moveRate",
+                         "type":"int",
+                         "value":1000
+                        }, 
+                        {
+                         "name":"spin",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"spinRate",
+                         "type":"int",
+                         "value":1
                         }, 
                         {
                          "name":"texture",
@@ -268,7 +298,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":14,
+ "nextobjectid":15,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",

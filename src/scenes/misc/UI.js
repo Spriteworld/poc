@@ -15,6 +15,9 @@ export default class extends Phaser.Scene {
     if (this.registry.has('interactions') === false) {
       this.registry.set('interactions', []);
     }
+    if (this.registry.has('warps') === false) {
+      this.registry.set('warps', []);
+    }
 
 
       // this.textbox = textBox(this, 100, 400, {

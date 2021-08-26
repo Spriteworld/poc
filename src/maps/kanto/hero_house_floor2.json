@@ -51,25 +51,50 @@
          "y":0
         }, 
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 422, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-         "height":11,
-         "id":5,
-         "name":"warps",
-         "opacity":1,
-         "properties":[
+         "draworder":"topdown",
+         "id":6,
+         "name":"interactions",
+         "objects":[
                 {
-                 "name":"9:3",
-                 "type":"string",
-                 "value":"MAP_HERO_HOUSE_FLOOR1=10:3"
+                 "height":32,
+                 "id":1,
+                 "name":"HeroHouseF1",
+                 "properties":[
+                        {
+                         "name":"warp",
+                         "type":"string",
+                         "value":"HeroHouseF1"
+                        }, 
+                        {
+                         "name":"warp-dir",
+                         "type":"string",
+                         "value":"left"
+                        }, 
+                        {
+                         "name":"warp-x",
+                         "type":"int",
+                         "value":10
+                        }, 
+                        {
+                         "name":"warp-y",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"warp",
+                 "visible":true,
+                 "width":32,
+                 "x":288,
+                 "y":96
                 }],
-         "type":"tilelayer",
+         "opacity":1,
+         "type":"objectgroup",
          "visible":true,
-         "width":14,
          "x":0,
          "y":0
         }],
- "nextlayerid":6,
- "nextobjectid":1,
+ "nextlayerid":7,
+ "nextobjectid":2,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",
@@ -77,7 +102,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/tileset\/gen3_inside.json"
+         "source":"..\/..\/tileset\/gen3_inside.json"
         }],
  "tilewidth":32,
  "type":"map",

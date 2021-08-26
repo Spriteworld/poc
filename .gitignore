@@ -14,6 +14,6 @@ dist/
 /npm-debug.log
 
 stuff
-src/tileset/pokemon/*
-src/tileset/pokemon_shiny/*
+src/tileset/overworld/*/*.png
+src/tileset/battlescene/*/*.png
 src/maps/region/*

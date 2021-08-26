@@ -8,7 +8,8 @@ import {
   ace_trainer,
   poke_kid,
   pokemon,
-  pokemon_shiny
+  // pokemon_shiny,
+  // pokemon_home
 } from '@Tileset';
 
 export default class extends Phaser.Scene {
@@ -39,15 +40,68 @@ export default class extends Phaser.Scene {
       this.load.spritesheet(name, pokemon[name]
         , { frameWidth: 64, frameHeight: 64 });
     });
-    Object.keys(pokemon_shiny).forEach((name) => {
-      this.load.spritesheet(name, pokemon_shiny[name]
-        , { frameWidth: 64, frameHeight: 64 });
-    });
+    // Object.keys(pokemon_shiny).forEach((name) => {
+    //   this.load.spritesheet(name, pokemon_shiny[name]
+    //     , { frameWidth: 64, frameHeight: 64 });
+    // });
+    // Object.keys(pokemon_home).forEach((name) => {
+    //   this.load.image(name, pokemon_home[name]);
+    // });
 
   }
 
   create () {
     this.scene.start('UI');
-    this.scene.run('Test');
+    this.scene.start('Test');
+
+
+    // let umbreon = {
+    //   pid: 1,
+    //   nickname: 'Umbreon',
+    //   species: 197,
+    //   speciesName: 'umbreon',
+    //   hp: {
+    //     max: 29,
+    //     current: 29
+    //   },
+    //   moves: [{
+    //     name: 'Tackle',
+    //     pp: {
+    //       max: 10,
+    //       current: 10
+    //     },
+    //   }],
+    //   ivs: {
+    //     atk: 5,
+    //     def: 5,
+    //     spd: 5,
+    //     spatk: 5,
+    //     spdef: 5,
+    //     hp: 5
+    //   },
+    //   evs: {
+    //     atk: 5,
+    //     def: 5,
+    //     spd: 5,
+    //     spatk: 5,
+    //     spdef: 5,
+    //     hp: 5
+    //   },
+    //   exp: 0,
+    //   isShiny: false,
+    // };
+
+    // this.scene.start('BattleScene', {
+    //   player: {
+    //     team: [
+    //       umbreon
+    //     ]
+    //   },
+    //   enemy: {
+    //     team: [
+    //       umbreon
+    //     ]
+    //   }
+    // });
   }
 }
