@@ -23,7 +23,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "grid-engine": "^2.9.0",
+    "grid-engine": "^2.9.1",
     "locutus": "^2.0.15",
     "phaser": "^3.55.2",
     "phaser-animated-tiles": "^2.0.2",

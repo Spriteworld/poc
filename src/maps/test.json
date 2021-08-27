@@ -262,7 +262,7 @@
                         {
                          "name":"moveRadius",
                          "type":"int",
-                         "value":2
+                         "value":10
                         }, 
                         {
                          "name":"moveRate",

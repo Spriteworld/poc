@@ -18,7 +18,7 @@ export default class extends Phaser.GameObjects.Sprite {
     }, ...config};
 
     this.config.sprite = this.config.scene.add.sprite(0, 0, this.config.texture);
-    // console.log(this.config);
+    console.log(this.config);
     this.ge = this.config.scene.gridEngine;
     this.spinRate = this.config.spinRate;
 

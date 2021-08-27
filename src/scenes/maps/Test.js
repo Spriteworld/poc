@@ -8,6 +8,10 @@ export default class extends GameMap {
       mapName: 'Test',
       map: TestMap
     });
+  }
+
+  init(data) {
+    super.init(data);
     this.mon = [];
   }
 

@@ -6,7 +6,7 @@ import {
   PalletTown,
   HeroHouseF1,
   HeroHouseF2,
-  StarterTown
+  // StarterTown
 } from '@Scenes';
 
 export default class extends Phaser.Game {

@@ -13,19 +13,18 @@ export default class extends Phaser.Scene {
     this.config.tilemap = {};
     this.config.playerLocation = {};
 
-    this.player = {};
-    this.playerMon = {};
-    this.characters = [];
-    this.warps = [];
-
     this.cameraFade = 150;
-    console.log(['Loading Scene', config.mapName]);
-    console.log(this);
+    // console.log(['Loading Scene', config.mapName]);
+    // console.log(this);
   }
 
   init(data) {
     // console.log(['init data', data]);
     this.config = { ...this.config, ...data };
+    this.player = {};
+    this.playerMon = {};
+    this.characters = [];
+    this.warps = [];
   }
 
   preloadMap () {
@@ -177,9 +176,6 @@ export default class extends Phaser.Scene {
 
         this.playerMon.moveTo(exitTile.x, exitTile.y);
       });
-
-
-    console.log(this.gridEngine.getAllCharacters());
   }
 
   updateCharacters(time, delta) {
