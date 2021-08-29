@@ -182,8 +182,8 @@
             "scale": 1.8089583333333332,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 207.85442819302085,
-                "y": 112.49568121616949
+                "x": 208.13083035817118,
+                "y": 112.77208338131985
             }
         },
         "src/maps/kanto/hero_house_floor2.json": {
@@ -236,10 +236,10 @@
         },
         "src/maps/test.json": {
             "scale": 1,
-            "selectedLayer": 6,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 688,
-                "y": 559.5
+                "x": 462.5,
+                "y": 369
             }
         },
         "src/maps/test.json#FRLG Outside A1C": {
@@ -299,6 +299,11 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "src/tileset/rse_inside.json": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 2
+        },
         "tileset/gen3_outside.json": {
             "scaleInDock": 1
         }
@@ -306,10 +311,11 @@
     "frame.defaultDuration": 360,
     "last.exportedFilePath": "C:/wip/www/spriteworld/src/maps",
     "last.externalTilesetPath": "C:/wip/www/spriteworld/src/tileset",
-    "last.imagePath": "C:/wip/www/spriteworld/src/tileset",
+    "last.imagePath": "C:/wip/spriteworld/src/tileset",
     "last.objectTypesPath": "C:/wip/www/spriteworld/src/tileset/objecttypes.json",
-    "last.worldFilePath": "C:/wip/www/spriteworld/src/maps",
+    "last.worldFilePath": "C:/wip/spriteworld/src/maps",
     "loadedWorlds": [
+        "C:/wip/spriteworld/src/maps/world.world"
     ],
     "map.fixedSize": false,
     "map.lastUsedExportFilter": "JSON map files (*.json)",
@@ -322,17 +328,17 @@
     "property.type": "bool",
     "recentFiles": [
         "src/tileset/gen3_inside.json",
-        "src/maps/kanto/hero_house_floor2.json",
-        "src/maps/kanto/hero_house_floor1.json",
         "src/tileset/gen3_outside.json",
+        "src/tileset/rse_inside.json",
+        "src/maps/kanto/hero_house_floor1.json",
         "src/maps/test.json",
+        "src/maps/kanto/hero_house_floor2.json",
         "src/maps/test2.json",
         "src/maps/StarterTown.json",
         "src/maps/prof_lab.json",
         "src/maps/route1.json",
         "src/maps/hero_house_floor2.json",
-        "src/maps/hero_house_floor1.json",
-        "src/maps/pallet.json"
+        "src/maps/hero_house_floor1.json"
     ],
     "resizeMap.removeObjects": true,
     "tileset.embedInMap": false,

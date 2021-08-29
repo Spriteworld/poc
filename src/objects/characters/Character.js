@@ -18,7 +18,7 @@ export default class extends Phaser.GameObjects.Sprite {
     }, ...config};
 
     this.config.sprite = this.config.scene.add.sprite(0, 0, this.config.texture);
-    console.log(this.config);
+
     this.ge = this.config.scene.gridEngine;
     this.spinRate = this.config.spinRate;
 
@@ -73,11 +73,15 @@ export default class extends Phaser.GameObjects.Sprite {
   // }
 
   look(dir) {
-    return this.ge.turnTowards(this.config.id, dir);
+    return this.ge.turnTowards(this.config.id, dir.toLowerCase());
+  }
+
+  lookAt(character) {
+    return this.ge.turnTowards(this.config.id, this.ge.getFacingPosition(character.config.id));
   }
 
   move(dir) {
-    return this.ge.move(this.config.id, dir);
+    return this.ge.move(this.config.id, dir.toLowerCase());
   }
 
   moveTo(x, y) {

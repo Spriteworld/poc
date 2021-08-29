@@ -37,11 +37,15 @@ export default class extends Phaser.Scene {
     this.config.tilemap = tilemap;
     this.registry.set('map', this.config.mapName);
 
+    let tilesets = [
+      tilemap.addTilesetImage('gen3_inside', 'gen3_inside'),
+      tilemap.addTilesetImage('gen3_outside', 'gen3_outside'),
+      tilemap.addTilesetImage('rse_inside', 'rse_inside')
+    ];
+
     tilemap.layers.forEach((layer) => {
       tilemap
-        .createLayer(layer.name, this.config.inside
-          ? tilemap.addTilesetImage('gen3_inside', 'gen3_inside')
-          : tilemap.addTilesetImage('gen3_outside', 'gen3_outside'))
+        .createLayer(layer.name, tilesets)
         .setName(layer.name);
     });
 
@@ -58,7 +62,7 @@ export default class extends Phaser.Scene {
   }
 
   initSigns() {
-    const signs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'sign');
+    let signs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'sign');
     if (signs.length === 0) {
       return;
     }
@@ -70,10 +74,8 @@ export default class extends Phaser.Scene {
 
 
   initNpcs() {
-    const npcs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'npc');
-    if (npcs.length === 0) {
-      return;
-    }
+    let npcs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'npc');
+    if (npcs.length === 0) { return; }
 
     this.npcs = this.add.group();
     this.npcs.runChildUpdate = true;
@@ -98,10 +100,8 @@ export default class extends Phaser.Scene {
   }
 
   initWarps() {
-    const warps = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'warp');
-    if (warps.length === 0) {
-      return;
-    }
+    let warps = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'warp');
+    if (warps.length === 0) { return; }
 
     let color = this.random_rgba();
     warps.map((obj) => {
@@ -115,7 +115,39 @@ export default class extends Phaser.Scene {
         obj: obj
       });
       this.tintTile(this.config.tilemap, obj.x, obj.y, color); // actual
+    });
+  }
 
+  handleWarps(enterTile) {
+    let warps = this.registry.get('warps');
+    if (warps.length === 0) { return; }
+
+    let warp = warps.find(p => p.x === enterTile.x && p.y === enterTile.y);
+    if (typeof warp === 'undefined') { return; }
+
+    let warpProps = warp.obj.properties;
+    let warpLocation = this.getPropertyValue(warpProps, 'warp', null);
+    if (warpLocation === null || warpLocation === ''){ return; }
+
+    this.cameras.main.fadeOut(this.cameraFade, 0, 0, 0);
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+      let playerLocation = {
+        x: this.getPropertyValue(warpProps, 'warp-x', 0),
+        y: this.getPropertyValue(warpProps, 'warp-y', 0),
+        dir: this.getPropertyValue(warpProps, 'warp-dir', 'down')
+      };
+
+      // same map, we dont need to move scene
+      if (this.registry.get('map') === warpLocation) {
+        this.warpPlayerInMap(playerLocation);
+        this.cameras.main.fadeIn(this.cameraFade, 0, 0, 0);
+        return;
+      }
+
+      // new map!
+      this.scene.start(warpLocation, {
+        playerLocation: playerLocation
+      });
     });
   }
 
@@ -152,18 +184,7 @@ export default class extends Phaser.Scene {
 
     // check if we have a playerLocation and warp to it
     if (typeof this.config.playerLocation.x !== 'undefined') {
-      let pos = {
-        x: this.config.playerLocation.x,
-        y: this.config.playerLocation.y
-      };
-
-      // move the player
-      this.gridEngine.setPosition(this.player.config.id, pos);
-      this.player.look(this.config.playerLocation.dir);
-
-      // get the pokemon to be in the right spot
-      this.gridEngine.setPosition(this.playerMon.config.id, this.player.getPosInBehindDirection());
-
+      this.warpPlayerInMap(this.config.playerLocation);
     }
 
     // make players pokemon follow em
@@ -172,9 +193,12 @@ export default class extends Phaser.Scene {
       .subscribe(({ charId, exitTile, enterTile }) => {
         if (charId !== this.player.config.id) { return; }
 
-        this.checkTile(enterTile.x, enterTile.y);
+        this.handleWarps(enterTile);
+        this.handleObservers(enterTile, exitTile);
 
+        // make the playerMon follow the player
         this.playerMon.moveTo(exitTile.x, exitTile.y);
+        // this.playerMon.lookAt(this.player.config.id);
       });
   }
 
@@ -189,29 +213,15 @@ export default class extends Phaser.Scene {
     }
   }
 
-  checkTile(x, y) {
+  handleObservers(enterTile, exitTile) {
+    // if we dont have any custom properties on the tile, nope out
+    let tile = this.config.tilemap.getTileAt(enterTile.x, enterTile.y);
+    if (tile === null) { return; }
+    console.log(tile);
+    let tileProps = tile.properties;
+    if (tileProps.length === 0) { return; }
 
-    // warps
-    let warps = this.registry.get('warps');
-    if (warps.length > 0) {
-      // console.log(warps);
-      let warp = warps.find(p => p.x === x && p.y === y);
-      if (typeof warp === 'undefined') { return; }
-      let warpProps = warp.obj.properties;
-      let warpLocation = this.getPropertyValue(warpProps, 'warp');
-      console.log(['transitioning scene', warpLocation, warpProps]);
-      this.cameras.main.fadeOut(this.cameraFade, 0, 0, 0);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-        this.scene.start(warpLocation, {
-          playerLocation: {
-            x: this.getPropertyValue(warpProps, 'warp-x', 0),
-            y: this.getPropertyValue(warpProps, 'warp-y', 0),
-            dir: this.getPropertyValue(warpProps, 'warp-dir', 'down')
-          }
-        });
-      })
 
-    }
   }
 
   addPlayerToScene(x, y) {
@@ -240,7 +250,7 @@ export default class extends Phaser.Scene {
 
   addPlayerMonToScene(monId, x, y) {
     if (monId == 'RNG') {
-      monId = (Math.floor(Math.random() * 251) +1)
+      monId = (Math.floor(Math.random() * 12) +1)
         .toString()
         .padStart(3, '0');
     }
@@ -273,6 +283,20 @@ export default class extends Phaser.Scene {
       return tile.properties.length > 0 ? tile.properties : {};
     }
     return {};
+  }
+
+  warpPlayerInMap(playerLocation) {
+    let pos = {
+      x: playerLocation.x,
+      y: playerLocation.y
+    };
+
+    // move the player
+    this.gridEngine.setPosition(this.player.config.id, pos);
+    this.player.look(playerLocation.dir);
+
+    // get the pokemon to be in the right spot
+    this.gridEngine.setPosition(this.playerMon.config.id, this.player.getPosInBehindDirection());
   }
 
   random_rgba() {
