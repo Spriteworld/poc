@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import {Character} from '@Objects';
 
 export default class extends Character {
@@ -6,9 +7,7 @@ export default class extends Character {
   }
 
   update(time, delta) {
-    if (this.ge.created === false) {
-      return;
-    }
+    if (this.ge.created === false) { return; }
     this.addAutoSpin(delta);
     this.addAutoMove();
     this.handleRun();

@@ -1,23 +1,41 @@
-import {Character} from '@Objects';
+import {Character, NPCScripts} from '@Objects';
+import {textBox} from '@Utilities';
 
 export default class extends Character {
   constructor(config) {
     super(config);
     this.config.cursors = this.config.scene.input.keyboard.createCursorKeys();
+    this.textbox = this.config.scene.scene.get('UI').textbox;
   }
 
   update() {
     this.handleMovement();
     this.handleRun();
 
+    // this.handleMovementTiles();
+
     this.handleInteractables();
   }
 
+  disableMovement() {
+    console.log('player::disableMovement');
+    this.config.scene.registry.set('player_input', false);
+  }
+
+  enableMovement() {
+    console.log('player::enableMovement');
+    this.config.scene.registry.set('player_input', true);
+  }
+
   handleInteractables() {
-    const interactions = this.config.scene.registry.get('interactions');
-    if (typeof interactions === 'undefined') {
+    // ignore the showing textbox code if were still typing shiz
+    // console.log(this.textbox);
+    if (this.scene.registry.get('interaction-active') === true) {
       return;
     }
+
+    const interactions = this.config.scene.registry.get('interactions');
+    if (typeof interactions === 'undefined') { return; }
 
     // get the direction player is facing
     const position = this.getPosInFacingDirection();
@@ -33,18 +51,40 @@ export default class extends Character {
       const interaction = this.config.scene.config.
         tilemap.filterObjects('interactions', (obj) => position.x == obj.x && position.y == obj.y)[0];
 
+      console.log('interaction!', interaction);
       // alert the type
+      var text = null;
       switch (interaction.type) {
         case 'sign':
-          alert(interaction.properties[0].value);
+          text = interaction.properties[0].value;
         break;
         case 'npc':
-          alert(interaction.name);
+          text = NPCScripts[interaction.name] || interaction.name;
+        break;
+        case 'pkmn':
+          text = interaction.name;
         break;
         default:
           console.log('unknown interaction type', interaction);
       }
+
+      if (text === null) { return; }
+      this.scene.registry.set('interaction-active', true);
+      this.textbox.start(text, 450);
     }
+  }
+
+  handleMovementTiles() {
+    let playerPos = this.getPosInFacingDirection();
+    let tile = this.config.scene.getTileProperties(playerPos.x, playerPos.y);
+    if (tile.length === 0) { return; }
+    // console.log(tile);
+    // check for ice
+
+    // check for spinners
+    // check for rapids(water)
+
+    //
   }
 
 }

@@ -1,10 +1,21 @@
 [
     {
+        "color": "#ffa0a0a4",
+        "name": "encounters",
+        "properties": [
+            {
+                "name": "table-id",
+                "type": "string",
+                "value": ""
+            }
+        ]
+    },
+    {
         "color": "#ff550000",
         "name": "npc",
         "properties": [
             {
-                "name": "facingDirection",
+                "name": "facing-direction",
                 "type": "string",
                 "value": "down"
             },
@@ -14,12 +25,12 @@
                 "value": false
             },
             {
-                "name": "moveRadius",
+                "name": "move-radius",
                 "type": "int",
                 "value": 1
             },
             {
-                "name": "moveRate",
+                "name": "move-rate",
                 "type": "int",
                 "value": 500
             },
@@ -29,7 +40,48 @@
                 "value": false
             },
             {
-                "name": "spinRate",
+                "name": "spin-rate",
+                "type": "int",
+                "value": 500
+            },
+            {
+                "name": "texture",
+                "type": "string",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "color": "#ff550000",
+        "name": "pkmn",
+        "properties": [
+            {
+                "name": "facing-direction",
+                "type": "string",
+                "value": "down"
+            },
+            {
+                "name": "move",
+                "type": "bool",
+                "value": false
+            },
+            {
+                "name": "move-radius",
+                "type": "int",
+                "value": 1
+            },
+            {
+                "name": "move-rate",
+                "type": "int",
+                "value": 500
+            },
+            {
+                "name": "spin",
+                "type": "bool",
+                "value": false
+            },
+            {
+                "name": "spin-rate",
                 "type": "int",
                 "value": 500
             },

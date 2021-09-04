@@ -4,12 +4,15 @@ import {
   gen3inside,
   gen3outside,
   rseinside,
+  rseoutside,
+
   // characters
   red,
-  ace_trainer,
-  poke_kid,
+  trainers,
+
+  // pokemon
   pokemon,
-  // pokemon_shiny,
+  pokemon_shiny,
   // pokemon_home
 } from '@Tileset';
 
@@ -31,21 +34,24 @@ export default class extends Phaser.Scene {
         progress.destroy();
     });
 
-    this.load.image('gen3_outside', gen3outside);
     this.load.image('gen3_inside', gen3inside);
+    this.load.image('gen3_outside', gen3outside);
     this.load.image('rse_inside', rseinside);
+    this.load.image('rse_outside', rseoutside);
     this.load.spritesheet('red', red, { frameWidth: 32, frameHeight: 40 });
-    this.load.spritesheet('ace_trainer', ace_trainer, { frameWidth: 32, frameHeight: 42 });
-    this.load.spritesheet('poke_kid', poke_kid, { frameWidth: 32, frameHeight: 42 });
+    Object.keys(trainers).forEach((name) => {
+      this.load.spritesheet(name, trainers[name]
+        , { frameWidth: 32, frameHeight: 42 });
+    });
 
     Object.keys(pokemon).forEach((name) => {
       this.load.spritesheet(name, pokemon[name]
         , { frameWidth: 64, frameHeight: 64 });
     });
-    // Object.keys(pokemon_shiny).forEach((name) => {
-    //   this.load.spritesheet(name, pokemon_shiny[name]
-    //     , { frameWidth: 64, frameHeight: 64 });
-    // });
+    Object.keys(pokemon_shiny).forEach((name) => {
+      this.load.spritesheet(name, pokemon_shiny[name]
+        , { frameWidth: 64, frameHeight: 64 });
+    });
     // Object.keys(pokemon_home).forEach((name) => {
     //   this.load.image(name, pokemon_home[name]);
     // });
@@ -53,9 +59,9 @@ export default class extends Phaser.Scene {
   }
 
   create () {
-    this.scene.start('UI');
     this.scene.start('Test');
-
+    this.scene.start('UI');
+    this.scene.bringToTop('UI');
 
     // let umbreon = {
     //   pid: 1,

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {textBox} from '@Utilities';
+import {textBox, toast} from '@Utilities';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -12,21 +12,54 @@ export default class extends Phaser.Scene {
 
   create () {
     this.activeScene = this.registry.get('scene');
-    if (this.registry.has('interactions') === false) {
-      this.registry.set('interactions', []);
-    }
-    if (this.registry.has('warps') === false) {
-      this.registry.set('warps', []);
-    }
 
+    // init some events
+    let events = {
+      'interactions': [],
+      'warps': [],
+      'interaction-active': false
+    };
+    Object.keys(events).forEach(eventKey => {
+      if (this.registry.has(eventKey) === false) {
+        this.registry.set(eventKey, events[eventKey]);
+      }
+    })
 
-      // this.textbox = textBox(this, 100, 400, {
-      //   wrapWidth: 500,
-      //   fixedWidth: 500,
-      //   fixedHeight: 65
-      // });
+    // toast
+    this.toast = toast(this, 10, 10, {});
 
-      // this.textbox.setDepth(100);
+    // textbox
+    this.textbox = textBox(this, 100, 400, {
+      wrapWidth: 500,
+      fixedWidth: 500,
+      fixedHeight: 65
+    });
+    this.textbox.setVisible(false);
+
+    this.handleEvents();
   }
 
+  getValue(obj, value, defValue) {
+    return Phaser.Utils.Objects.GetValue(obj, value, defValue);
+  }
+
+  handleEvents() {
+    // this should trigger on map change
+    this.registry.events.on('changedata-triggerToast', function(parent, value) {
+      this.showMessage(value);
+    }.bind(this.toast));
+
+    //
+    // do something if interaction == false
+    this.registry.events.on('changedata-interaction-active', function(parent, value) {
+      let activeScene = this.scene.get(this.registry.get('scene'));
+      if (value === true) {
+        this.textbox.setVisible(true);
+        activeScene.player.disableMovement();
+      } else {
+        this.textbox.setVisible(false);
+        activeScene.player.enableMovement();
+      }
+    }.bind(this));
+  }
 }

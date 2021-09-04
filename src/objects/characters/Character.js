@@ -8,19 +8,19 @@ export default class extends Phaser.GameObjects.Sprite {
       scene: null,
       id: null,
       spin: 'down',
-      spinRate: 600,
+      'spin-rate': 600,
       move: false,
-      moveRate: 600,
-      moveRadius: 1,
+      'move-rate': 600,
+      'move-radius': 1,
       follow: false,
       collides: true,
-      facingDirection: 'down',
+      'facing-direction': 'down',
     }, ...config};
 
     this.config.sprite = this.config.scene.add.sprite(0, 0, this.config.texture);
 
     this.ge = this.config.scene.gridEngine;
-    this.spinRate = this.config.spinRate;
+    this.spinRate = this.config['spin-rate'];
 
     this.config.scene.add.existing(this);
     this.config.scene.addCharacter(
@@ -64,6 +64,12 @@ export default class extends Phaser.GameObjects.Sprite {
     };
   }
 
+  getCharacter() {
+    let characters = this.ge.getAllCharacters();
+
+    return characters.some((char) => char.id === this.config.id);
+  }
+
   getPosition() {
     return this.ge.getPosition(this.config.id);
   }
@@ -86,6 +92,10 @@ export default class extends Phaser.GameObjects.Sprite {
 
   moveTo(x, y) {
     return this.ge.moveTo(this.config.id, {x:x, y:y});
+  }
+
+  stop() {
+    return this.ge.stopMovement(this.config.id);
   }
 
   getPosInFacingDirection() {
@@ -126,6 +136,9 @@ export default class extends Phaser.GameObjects.Sprite {
   // }
 
   handleMovement() {
+    let allowed = this.config.scene.registry.get('player_input');
+    if (allowed === false) { return; }
+
     const duration = 120;
     if (this.config.cursors.left.isDown) {
       this.config.cursors.left.getDuration() >= duration
@@ -147,17 +160,29 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   handleRun() {
-    const activator = this.config.scene.input.keyboard.addKey('X');
+    let activator = this.config.scene.input.keyboard.addKey('X');
     if (!this.config.scene.inside && activator.isDown) {
       this.ge.setSpeed(this.config.id, 8);
     } else {
       this.ge.setSpeed(this.config.id, 4);
     }
+    let activator2 = this.config.scene.input.keyboard.addKey('C');
+    if (!this.config.scene.inside && activator2.isDown) {
+      this.ge.setSpeed(this.config.id, 20);
+    } else {
+      this.ge.setSpeed(this.config.id, 4);
+    }
+  }
+
+  moveUntilBlocked() {
+    if (this.config.move !== true) { return; }
+    this.ge.moveUntilBlocked(this.config.id, this.config['move-rate'], 1);
+    this.config.move = false;
   }
 
   addAutoMove() {
     if (this.config.move !== true) { return; }
-    this.ge.moveRandomly(this.config.id, this.config.moveRate, 1);
+    this.ge.moveRandomly(this.config.id, this.config['move-rate'], 1);
     this.config.move = false;
   }
 
@@ -165,7 +190,7 @@ export default class extends Phaser.GameObjects.Sprite {
     if (this.config.spin !== true) { return; }
     this.spinRate -= delta;
     if (this.spinRate <= 0) {
-      this.spinRate = this.config.spinRate;
+      this.spinRate = this.config['spin-rate'];
 
       let dir = 'down';
       switch (Math.floor(Math.random() * 4) +1) {

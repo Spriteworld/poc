@@ -13,7 +13,9 @@ export default class extends Phaser.Scene {
     this.config.tilemap = {};
     this.config.playerLocation = {};
 
+    this.debug = true;
     this.cameraFade = 150;
+    this.totalMon = 386;
     // console.log(['Loading Scene', config.mapName]);
     // console.log(this);
   }
@@ -24,6 +26,7 @@ export default class extends Phaser.Scene {
     this.player = {};
     this.playerMon = {};
     this.characters = [];
+    this.mon = [];
     this.warps = [];
   }
 
@@ -35,14 +38,18 @@ export default class extends Phaser.Scene {
     this.cameras.main.fadeIn(this.cameraFade, 0, 0, 0)
     var tilemap = this.make.tilemap({key: this.config.mapName});
     this.config.tilemap = tilemap;
-    this.registry.set('map', this.config.mapName);
+    this.registry.set('scene', this.config.mapName);
+    this.registry.set('triggerToast', this.config.mapName);
 
+    // all the tilesets!
     let tilesets = [
       tilemap.addTilesetImage('gen3_inside', 'gen3_inside'),
       tilemap.addTilesetImage('gen3_outside', 'gen3_outside'),
-      tilemap.addTilesetImage('rse_inside', 'rse_inside')
+      tilemap.addTilesetImage('rse_inside', 'rse_inside'),
+      tilemap.addTilesetImage('rse_outside', 'rse_outside')
     ];
 
+    // load all the layers!
     tilemap.layers.forEach((layer) => {
       tilemap
         .createLayer(layer.name, tilesets)
@@ -63,9 +70,7 @@ export default class extends Phaser.Scene {
 
   initSigns() {
     let signs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'sign');
-    if (signs.length === 0) {
-      return;
-    }
+    if (signs.length === 0) { return; }
 
     signs.map((sign) => {
       this.interactTile(this.config.tilemap, sign, 0x00afe4);
@@ -88,11 +93,11 @@ export default class extends Phaser.Scene {
         y: npc.y / 32,
         scene: this,
         spin: this.getPropertyValue(npc.properties, 'spin'),
-        spinRate: this.getPropertyValue(npc.properties, 'spinRate'),
-        facingDirection: this.getPropertyValue(npc.properties, 'facingDirection', 'down'),
+        'spin-rate': this.getPropertyValue(npc.properties, 'spin-rate'),
+        'facing-direction': this.getPropertyValue(npc.properties, 'facing-direction', 'down'),
         move: this.getPropertyValue(npc.properties, 'move'),
-        moveRate: this.getPropertyValue(npc.properties, 'moveRate'),
-        moveRadius: this.getPropertyValue(npc.properties, 'moveRadius'),
+        'move-rate': this.getPropertyValue(npc.properties, 'move-rate'),
+        'move-radius': this.getPropertyValue(npc.properties, 'move-radius'),
       });
       this.npcs.add(npcObj);
       this.interactTile(this.config.tilemap, npc, color);
@@ -129,6 +134,7 @@ export default class extends Phaser.Scene {
     let warpLocation = this.getPropertyValue(warpProps, 'warp', null);
     if (warpLocation === null || warpLocation === ''){ return; }
 
+    this.player.disableMovement();
     this.cameras.main.fadeOut(this.cameraFade, 0, 0, 0);
     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
       let playerLocation = {
@@ -141,6 +147,7 @@ export default class extends Phaser.Scene {
       if (this.registry.get('map') === warpLocation) {
         this.warpPlayerInMap(playerLocation);
         this.cameras.main.fadeIn(this.cameraFade, 0, 0, 0);
+        this.player.enableMovement();
         return;
       }
 
@@ -148,6 +155,7 @@ export default class extends Phaser.Scene {
       this.scene.start(warpLocation, {
         playerLocation: playerLocation
       });
+      this.player.enableMovement();
     });
   }
 
@@ -160,11 +168,7 @@ export default class extends Phaser.Scene {
       y: obj.y,
       obj: obj
     });
-    this.tintTile(map, obj.x,    obj.y,     color); // actual
-    // this.tintTile(map, obj.x -1, obj.y,     color); // left
-    // this.tintTile(map, obj.x +1, obj.y,     color); // right
-    // this.tintTile(map, obj.x,    obj.y -1,  color); // up
-    // this.tintTile(map, obj.x,    obj.y +1,  color); // down
+    // this.tintTile(map, obj.x, obj.y, color); // actual
   }
 
   tintTile(tilemap, col, row, color) {
@@ -193,6 +197,7 @@ export default class extends Phaser.Scene {
       .subscribe(({ charId, exitTile, enterTile }) => {
         if (charId !== this.player.config.id) { return; }
 
+        // setup handlers etc
         this.handleWarps(enterTile);
         this.handleObservers(enterTile, exitTile);
 
@@ -238,7 +243,7 @@ export default class extends Phaser.Scene {
       y: y,
       scene: this,
       collides: true,
-      facingDirection: 'down',
+      'facing-direction': 'down',
     });
     this.registry.set('player', this.player);
     this.cameras.main.zoom = 1.6;
@@ -248,22 +253,42 @@ export default class extends Phaser.Scene {
     this.addPlayerMonToScene('RNG', x +1, y);
   }
 
-  addPlayerMonToScene(monId, x, y) {
+  addMonToScene(monId, x, y, config) {
     if (monId == 'RNG') {
-      monId = (Math.floor(Math.random() * 12) +1)
+      monId = (Math.floor(Math.random() * this.totalMon) +1)
         .toString()
         .padStart(3, '0');
     }
 
-    this.playerMon = new PkmnOverworld({
-      id: 'playerMon',
-      texture: monId.toString(),
+    // check for shiny
+    let texture = monId.toString();
+    if (this.getValue(config, 'shiny', false)) {
+      texture += 's';
+    }
+
+    let pkmnDef = {...{
+      id: 'mon'+this.mon.length,
+      texture: texture,
       x: x,
       y: y,
       scene: this,
-      follow: 'player',
-      facingDirection: 'left',
-      collides: false
+      spin: true,
+      'spin-rate': (Math.floor(Math.random() * 1000) +1)
+    }, ...config };
+
+    let pkmn = new PkmnOverworld(pkmnDef);
+    this.mon.push(pkmn);
+    this.interactTile(this.config.tilemap, pkmnDef, 0x000000);
+    return pkmn;
+  }
+
+  addPlayerMonToScene(monId, x, y) {
+    this.playerMon = this.addMonToScene(monId, x, y, {
+      id: 'playerMon',
+      follow: this.player.config.id,
+      collides: false,
+      move: false,
+      spin: false,
     });
   }
 
@@ -300,6 +325,8 @@ export default class extends Phaser.Scene {
   }
 
   random_rgba() {
-      return '0x' + Math.floor(Math.random()*16777215).toString(16);
+    return '0x' + Math.floor(Math.random()*16777215).toString(16);
   }
+
+
 }
