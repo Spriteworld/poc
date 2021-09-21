@@ -1,47 +1,47 @@
-export const LEVEL_UP = {
+export const evolution = {
     // levels up with friendship ≥ 220
-    EVO_FRIENDSHIP: "evo_friendship",
+    FRIENDSHIP: "friendship",
     // levels up during the day with friendship ≥ 220
-    EVO_FRIENDSHIP_DAY: "evo_friendship_day",
+    FRIENDSHIP_DAY: "friendship_day",
     // levels up at night with friendship ≥ 220
-    EVO_FRIENDSHIP_NIGHT: "evo_friendship_night",
+    FRIENDSHIP_NIGHT: "friendship_night",
     // Pokemon reaches the specified level
-    EVO_LEVEL: "evo_level",
+    LEVEL: "level",
     // Pokemon is traded
-    EVO_TRADE: "evo_trade",
+    TRADE: "trade",
     // Pokemon is traded while it's holding the specified item
-    EVO_TRADE_ITEM: "evo_trade_item",
+    TRADE_ITEM: "trade_item",
     // specified item is used on Pokemon
-    EVO_ITEM: "evo_item",
+    ITEM: "item",
     // Pokemon reaches the specified level with attack > defense
-    EVO_LEVEL_ATK_GT_DEF: "evo_level_atk_gt_def",
+    LEVEL_ATK_GT_DEF: "level_atk_gt_def",
     // Pokemon reaches the specified level with attack = defense
-    EVO_LEVEL_ATK_EQ_DEF: "evo_level_atk_eq_def",
+    LEVEL_ATK_EQ_DEF: "level_atk_eq_def",
     // Pokemon reaches the specified level with attack < defense
-    EVO_LEVEL_ATK_LT_DEF: "evo_level_atk_lt_def",
+    LEVEL_ATK_LT_DEF: "level_atk_lt_def",
     // Pokemon reaches the specified level with a Silcoon personality value
-    EVO_LEVEL_SILCOON: "evo_level_silcoon",
+    LEVEL_SILCOON: "level_silcoon",
     // Pokemon reaches the specified level with a Cascoon personality value
-    EVO_LEVEL_CASCOON: "evo_level_cascoon",
+    LEVEL_CASCOON: "level_cascoon",
     // Pokemon reaches the specified level (special value for Ninjask)
-    EVO_LEVEL_NINJASK: "evo_level_ninjask",
+    LEVEL_NINJASK: "level_ninjask",
     // Pokemon reaches the specified level (special value for Shedinja)
-    EVO_LEVEL_SHEDINJA: "evo_level_shedinja",
+    LEVEL_SHEDINJA: "level_shedinja",
     // Pokemon levels up with beauty ≥ specified value
-    EVO_BEAUTY: "evo_beauty",
+    BEAUTY: "beauty",
 };
 
-export const colors = {
-    COLOR_RED: "red",
-    COLOR_BLUE: "blue",
-    COLOR_YELLOW: "yellow",
-    COLOR_GREEN: "green",
-    COLOR_BLACK: "black",
-    COLOR_BROWN: "brown",
-    COLOR_PURPLE: "purple",
-    COLOR_GRAY: "gray",
-    COLOR_WHITE: "white",
-    COLOR_PINK: "pink"
+export const color = {
+    RED: "red",
+    BLUE: "blue",
+    YELLOW: "yellow",
+    GREEN: "green",
+    BLACK: "black",
+    BROWN: "brown",
+    PURPLE: "purple",
+    GRAY: "gray",
+    WHITE: "white",
+    PINK: "pink"
 };
 
 export const growth = {
@@ -53,7 +53,7 @@ export const growth = {
     SLOW: "slow",
 };
 
-export const natures = {
+export const nature = {
     HARDY: "hardy",
     LONELY: "lonely",
     BRAVE: "brave",
@@ -82,19 +82,19 @@ export const natures = {
 };
 
 export const weather = {
-    SUN: 'sun',
-    RAIN: 'rain',
-    SANDSTORM: 'sandstorm',
-    HAIL: 'hail',
-    NONE: 'none'
+    SUN: "sun",
+    RAIN: "rain",
+    SANDSTORM: "sandstorm",
+    HAIL: "hail",
+    NONE: "none"
 };
 
 export const status = {
-    SLP: "slp",
-    PSN: "psn",
-    BRN: "brn",
-    FRZ: "frz",
-    PAR: "par",
-    TOX: "tox",
+    SLEEP: "sleep",
+    POISON: "poisoned",
+    BURN: "burned",
+    FROZEN: "frozen",
+    PARALYZE: "paralyzed",
+    TOXIC: "toxic",
 };
 
