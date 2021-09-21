@@ -17,3 +17,4 @@ stuff
 src/tileset/overworld/*/*.png
 src/tileset/battlescene/*/*.png
 src/maps/region/*
+*.tiled-session
