@@ -27,8 +27,10 @@
     "locutus": "^2.0.15",
     "phaser": "^3.55.2",
     "phaser-animated-tiles": "^2.0.2",
-    "phaser-plugin-scene-watcher": "^6.0.0",
+    "phaser-plugin-debug-draw": "^7.0.0",
+    "phaser-plugin-inspector": "^1.0.1",
     "phaser-tiled-json-external-loader": "^0.1.1",
-    "phaser3-rex-plugins": "^1.1.59"
+    "phaser3-rex-plugins": "^1.1.59",
+    "tweakpane": "^3.0.5"
   }
 }

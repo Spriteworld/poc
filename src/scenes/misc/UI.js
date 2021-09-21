@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import {textBox, toast} from '@Utilities';
+import {PauseMenu} from '@Objects';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -35,6 +36,10 @@ export default class extends Phaser.Scene {
       fixedHeight: 65
     });
     this.textbox.setVisible(false);
+
+    // set pause menu
+    this.pauseMenu = new PauseMenu(this, 0, 0);
+    this.pauseMenu.setVisible(false);
 
     this.handleEvents();
   }

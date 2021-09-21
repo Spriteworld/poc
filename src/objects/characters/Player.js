@@ -70,7 +70,7 @@ export default class extends Character {
 
       if (text === null) { return; }
       this.scene.registry.set('interaction-active', true);
-      this.textbox.start(text, 450);
+      this.textbox.start(text, 150);
     }
   }
 

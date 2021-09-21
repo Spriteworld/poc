@@ -22,6 +22,14 @@ export default class extends Phaser.Scene {
   }
 
   preload () {
+    this.load.scripts('inspector', [
+      'https://cdn.jsdelivr.net/npm/tweakpane@3.0.5',
+      'https://cdn.jsdelivr.net/npm/phaser-plugin-inspector@1.0.1',
+    ]);
+    this.load.once('complete', () => {
+      PhaserPluginInspector.Install(this.plugins);
+    });
+
     var progress = this.add.graphics();
 
     this.load.on('progress', function (value) {
