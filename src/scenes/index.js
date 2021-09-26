@@ -1,5 +1,7 @@
-import UI from './misc/UI.js';
+import OverworldUI from './misc/OverworldUI.js';
 import Preload from './misc/Preload.js';
+
+import BattleUI from './misc/BattleUI.js';
 import BattleScene from './misc/BattleScene.js';
 
 import GameMap from './maps/GameMap.js';
@@ -10,7 +12,8 @@ import HeroHouseF2 from './maps/kanto/HeroHouseF2.js';
 // import StarterTown from './maps/region/StarterTown.js';
 
 export {
-    UI, Preload, BattleScene,
+    OverworldUI, Preload,
+    BattleUI, BattleScene,
     GameMap,
     Test,
     PalletTown, HeroHouseF1, HeroHouseF2,
