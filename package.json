@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
     "start": "webpack-dev-server --config webpack/dev.js",
-    "test": "jest"
+    "test": "jest --config jest.config.js"
   },
   "author": "xLink <xLink@cybershade.org>",
   "devDependencies": {
@@ -32,10 +32,9 @@
     "locutus": "^2.0.15",
     "phaser": "^3.55.2",
     "phaser-animated-tiles": "^2.0.2",
-    "phaser-plugin-debug-draw": "^7.0.0",
-    "phaser-plugin-inspector": "^1.0.1",
     "phaser-tiled-json-external-loader": "^0.1.1",
     "phaser3-rex-plugins": "^1.1.59",
+    "source-map-support": "^0.5.20",
     "ts-jest": "^27.0.5",
     "tweakpane": "^3.0.5"
   }
