@@ -2,8 +2,13 @@ import { definitions } from '@Data';
 
 var calcStat = function(pokemon, stat) {
   let level = pokemon.level || 1;
+  if (level > 100) {
+    level = 100;
+  }
   let nature = (pokemon.nature || definitions.NATURE.HARDY.name).toUpperCase();
-  let baseIvEv = pokemon.baseStats[stat] + pokemon.ivs[stat] + pokemon.evs[stat];
+  let baseIvEv = 2 * pokemon.baseStats[stat]
+                    + pokemon.ivs[stat]
+                    + (pokemon.evs[stat] / 4);
 
   let natureCalc = 1;
   if (definitions.NATURE[nature].increase === stat) {
@@ -13,10 +18,10 @@ var calcStat = function(pokemon, stat) {
     natureCalc = 0.9;
   }
 
-  if (stat === 'HP') {
-    return Math.floor((2 * baseIvEv) * level / 100 + Level + 10);
+  if (stat === definitions.STATS.HP) {
+    return Math.floor(baseIvEv * level / 100 + level + 10);
   }
 
-  return Math.floor(Math.floor((2 * baseIvEv) * level / 100 + 5) * natureCalc);
+  return Math.floor(Math.floor(baseIvEv * level / 100 + 5) * natureCalc);
 }
 export { calcStat };

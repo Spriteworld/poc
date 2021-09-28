@@ -6,28 +6,28 @@ let pokemon = {
   level: 53,
   nature: 'modest',
   baseStats: {
+    hp: 60,
     atk: 45,
     def: 50,
-    spd: 70,
-    spatk: 90,
+    spatk: 80,
     spdef: 80,
-    hp: 60
+    spd: 70,
   },
   ivs: {
+    hp: 28,
     atk: 4,
     def: 17,
-    spd: 31,
     spatk: 30,
     spdef: 27,
-    hp: 28
+    spd: 31,
   },
   evs: {
+    hp: 4,
     atk: 0,
     def: 0,
-    spd: 252,
     spatk: 254,
     spdef: 0,
-    hp: 4
+    spd: 252,
   },
 };
 let expected = {
@@ -43,7 +43,7 @@ describe('calcStat should generate correct stats given known info', () => {
 
   test('hp', () => {
     let stat = 'hp';
-    expect(calcStat(pokemon, stat)).toEqual(expected[stat]);
+    expect(calcStat(pokemon, stat)).toBe(expected[stat]);
   });
 
   test('atk', () => {
