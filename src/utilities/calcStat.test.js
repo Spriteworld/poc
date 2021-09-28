@@ -1,4 +1,4 @@
-import { calcStat } from './calcStat.js';
+import {calcStat} from '@Utilities';
 
 let pokemon = {
   species: 12,
@@ -39,32 +39,35 @@ let expected = {
   spd: 129,
 };
 
-test('calcStat generated correct hp', () => {
-  let stat = 'hp';
-  expect(calcStat(pokemon, stat)).toBe(expected[stat]);
-});
+describe('calcStat should generate correct stats given known info', () => {
 
-test('calcStat generated correct atk', () => {
-  let stat = 'atk';
-  expect(calcStat(pokemon, stat)).toBe(expected[stat]);
-});
+  test('hp', () => {
+    let stat = 'hp';
+    expect(calcStat(pokemon, stat)).toEqual(expected[stat]);
+  });
 
-test('calcStat generated correct def', () => {
-  let stat = 'def';
-  expect(calcStat(pokemon, stat)).toBe(expected[stat]);
-});
+  test('atk', () => {
+    let stat = 'atk';
+    expect(calcStat(pokemon, stat)).toEqual(expected[stat]);
+  });
 
-test('calcStat generated correct spatk', () => {
-  let stat = 'spatk';
-  expect(calcStat(pokemon, stat)).toBe(expected[stat]);
-});
+  test('def', () => {
+    let stat = 'def';
+    expect(calcStat(pokemon, stat)).toEqual(expected[stat]);
+  });
 
-test('calcStat generated correct spdef', () => {
-  let stat = 'spdef';
-  expect(calcStat(pokemon, stat)).toBe(expected[stat]);
-});
+  test('spatk', () => {
+    let stat = 'spatk';
+    expect(calcStat(pokemon, stat)).toEqual(expected[stat]);
+  });
 
-test('calcStat generated correct spd', () => {
-  let stat = 'spd';
-  expect(calcStat(pokemon, stat)).toBe(expected[stat]);
+  test('spdef', () => {
+    let stat = 'spdef';
+    expect(calcStat(pokemon, stat)).toEqual(expected[stat]);
+  });
+
+  test('spd', () => {
+    let stat = 'spd';
+    expect(calcStat(pokemon, stat)).toEqual(expected[stat]);
+  });
 });

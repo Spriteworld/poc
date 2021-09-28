@@ -1,22 +1,22 @@
 import { definitions } from '@Data';
 
 var calcStat = function(pokemon, stat) {
-  let Level = pokemon.level || 1;
-  let Nature = pokemon.nature || definitions.nature.HARDY.name;
-  let BaseIvEv = pokemon.baseStats[stat] + pokemon.ivs[stat] + pokemon.evs[stat];
+  let level = pokemon.level || 1;
+  let nature = (pokemon.nature || definitions.NATURE.HARDY.name).toUpperCase();
+  let baseIvEv = pokemon.baseStats[stat] + pokemon.ivs[stat] + pokemon.evs[stat];
 
-  let NatureCalc = 1;
-  if (definitions.nature[Nature].increase === stat) {
-    NatureCalc = 1.1;
+  let natureCalc = 1;
+  if (definitions.NATURE[nature].increase === stat) {
+    natureCalc = 1.1;
   }
-  if (definitions.nature[Nature].decrease === stat) {
-    NatureCalc = 0.9;
+  if (definitions.NATURE[nature].decrease === stat) {
+    natureCalc = 0.9;
   }
 
   if (stat === 'HP') {
-    return Math.floor((2 * BaseIvEv) * Level / 100 + Level + 10);
+    return Math.floor((2 * baseIvEv) * level / 100 + Level + 10);
   }
 
-  return Math.floor(Math.floor((2 * BaseIvEv) * Level / 100 + 5) * NatureCalc);
+  return Math.floor(Math.floor((2 * baseIvEv) * level / 100 + 5) * natureCalc);
 }
 export { calcStat };

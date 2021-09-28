@@ -1,4 +1,4 @@
-export const evolution = {
+export const EVOLUTION = {
   // levels up with friendship ≥ 220
   FRIENDSHIP: 'friendship',
   // levels up during the day with friendship ≥ 220
@@ -31,7 +31,7 @@ export const evolution = {
   BEAUTY: 'beauty',
 };
 
-export const color = {
+export const COLOR = {
   RED: 'red',
   BLUE: 'blue',
   YELLOW: 'yellow',
@@ -44,7 +44,7 @@ export const color = {
   PINK: 'pink'
 };
 
-export const growth = {
+export const GROWTH = {
   MEDIUM_FAST: 'medium_fast',
   ERRATIC: 'erratic',
   FLUCTUATING: 'fluctuating',
@@ -53,7 +53,7 @@ export const growth = {
   SLOW: 'slow',
 };
 
-export const stats = {
+export const STATS = {
   HP: 'hp',
   ATTACK: 'atk',
   DEFENSE: 'def',
@@ -62,7 +62,7 @@ export const stats = {
   SPEED: 'apd',
 };
 
-export const weather = {
+export const WEATHER = {
   SUN: 'sun',
   RAIN: 'rain',
   SANDSTORM: 'sandstorm',
@@ -70,7 +70,7 @@ export const weather = {
   NONE: 'none'
 };
 
-export const status = {
+export const STATUS = {
   SLEEP: 'sleep',
   POISON: 'poisoned',
   BURN: 'burned',
@@ -80,7 +80,7 @@ export const status = {
 };
 
 
-export const form = {
+export const FORM = {
   REGIONAL: {
     ALOLA: 'alolan',
     GALAR: 'galarian',
@@ -88,135 +88,135 @@ export const form = {
   }
 };
 
-export const nature = {
+export const NATURE = {
   HARDY: {
     name: 'hardy',
-    increase: stats.ATTACK,
-    decrease: stats.ATTACK
+    increase: STATS.ATTACK,
+    decrease: STATS.ATTACK
   },
   LONELY: {
     name: 'lonely',
-    increase: stats.ATTACK,
-    decrease: stats.DEFENSE
+    increase: STATS.ATTACK,
+    decrease: STATS.DEFENSE
   },
   BRAVE: {
     name: 'brave',
-    increase: stats.ATTACK,
-    decrease: stats.SPEED
+    increase: STATS.ATTACK,
+    decrease: STATS.SPEED
   },
   ADAMANT: {
     name: 'adamant',
-    increase: stats.ATTACK,
-    decrease: stats.SPECIAL_ATTACK
+    increase: STATS.ATTACK,
+    decrease: STATS.SPECIAL_ATTACK
   },
   NAUGHTY: {
     name: 'naughty',
-    increase: stats.ATTACK,
-    decrease: stats.SPECIAL_DEFENSE
+    increase: STATS.ATTACK,
+    decrease: STATS.SPECIAL_DEFENSE
   },
   BOLD: {
     name: 'bold',
-    increase: stats.DEFENSE,
-    decrease: stats.ATTACK
+    increase: STATS.DEFENSE,
+    decrease: STATS.ATTACK
   },
   DOCILE: {
     name: 'docile',
-    increase: stats.DEFENSE,
-    decrease: stats.DEFENSE
+    increase: STATS.DEFENSE,
+    decrease: STATS.DEFENSE
   },
   RELAXED: {
     name: 'relaxed',
-    increase: stats.DEFENSE,
-    decrease: stats.SPEED
+    increase: STATS.DEFENSE,
+    decrease: STATS.SPEED
   },
   IMPISH: {
     name: 'impish',
-    increase: stats.DEFENSE,
-    decrease: stats.SPECIAL_ATTACK
+    increase: STATS.DEFENSE,
+    decrease: STATS.SPECIAL_ATTACK
   },
   LAX: {
     name: 'lax',
-    increase: stats.DEFENSE,
-    decrease: stats.SPECIAL_DEFENSE
+    increase: STATS.DEFENSE,
+    decrease: STATS.SPECIAL_DEFENSE
   },
   TIMID: {
     name: 'timid',
-    increase: stats.SPEED,
-    decrease: stats.ATTACK
+    increase: STATS.SPEED,
+    decrease: STATS.ATTACK
   },
   HASTY: {
     name: 'hasty',
-    increase: stats.SPEED,
-    decrease: stats.DEFENSE
+    increase: STATS.SPEED,
+    decrease: STATS.DEFENSE
   },
   SERIOUS: {
     name: 'serious',
-    increase: stats.SPEED,
-    decrease: stats.SPEED
+    increase: STATS.SPEED,
+    decrease: STATS.SPEED
   },
   JOLLY: {
     name: 'jolly',
-    increase: stats.SPEED,
-    decrease: stats.SPECIAL_ATTACK
+    increase: STATS.SPEED,
+    decrease: STATS.SPECIAL_ATTACK
   },
   NAIVE: {
     name: 'naive',
-    increase: stats.SPEED,
-    decrease: stats.SPECIAL_DEFENSE
+    increase: STATS.SPEED,
+    decrease: STATS.SPECIAL_DEFENSE
   },
   MODEST: {
     name: 'modest',
-    increase: stats.SPECIAL_ATTACK,
-    decrease: stats.ATTACK
+    increase: STATS.SPECIAL_ATTACK,
+    decrease: STATS.ATTACK
   },
   MILD: {
     name: 'mild',
-    increase: stats.SPECIAL_ATTACK,
-    decrease: stats.DEFENSE
+    increase: STATS.SPECIAL_ATTACK,
+    decrease: STATS.DEFENSE
   },
   QUIET: {
     name: 'quiet',
-    increase: stats.SPECIAL_ATTACK,
-    decrease: stats.SPEED
+    increase: STATS.SPECIAL_ATTACK,
+    decrease: STATS.SPEED
   },
   BASHFUL: {
     name: 'bashful',
-    increase: stats.SPECIAL_ATTACK,
-    decrease: stats.SPECIAL_ATTACK
+    increase: STATS.SPECIAL_ATTACK,
+    decrease: STATS.SPECIAL_ATTACK
   },
   RASH: {
     name: 'rash',
-    increase: stats.SPECIAL_ATTACK,
-    decrease: stats.SPECIAL_DEFENSE
+    increase: STATS.SPECIAL_ATTACK,
+    decrease: STATS.SPECIAL_DEFENSE
   },
   CALM: {
     name: 'calm',
-    increase: stats.SPECIAL_DEFENSE,
-    decrease: stats.ATTACK
+    increase: STATS.SPECIAL_DEFENSE,
+    decrease: STATS.ATTACK
   },
   GENTLE: {
     name: 'gentle',
-    increase: stats.SPECIAL_DEFENSE,
-    decrease: stats.DEFENSE
+    increase: STATS.SPECIAL_DEFENSE,
+    decrease: STATS.DEFENSE
   },
   SASSY: {
     name: 'sassy',
-    increase: stats.SPECIAL_DEFENSE,
-    decrease: stats.SPEED
+    increase: STATS.SPECIAL_DEFENSE,
+    decrease: STATS.SPEED
   },
   CAREFUL: {
     name: 'careful',
-    increase: stats.SPECIAL_DEFENSE,
-    decrease: stats.SPECIAL_ATTACK
+    increase: STATS.SPECIAL_DEFENSE,
+    decrease: STATS.SPECIAL_ATTACK
   },
   QUIRKY: {
     name: 'quirky',
-    increase: stats.SPECIAL_DEFENSE,
-    decrease: stats.SPECIAL_DEFENSE
+    increase: STATS.SPECIAL_DEFENSE,
+    decrease: STATS.SPECIAL_DEFENSE
   },
 };
 
-export const types = {
+export const TYPES = {
   NORMAL: {
     name: 'normal',
     immunity: ['ghost'],
