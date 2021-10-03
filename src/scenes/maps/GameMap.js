@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {Player, NPC, PkmnOverworld} from '@Objects';
+import {Player, NPC, PkmnOverworld, ObjectTypes} from '@Objects';
 
 export default class extends Phaser.Scene {
   constructor(config) {
@@ -63,16 +63,56 @@ export default class extends Phaser.Scene {
       this.initSigns();
       this.initNpcs();
       this.initWarps();
+
+      this.debugObjects();
     }
 
     this.animatedTiles.init(tilemap);
+  }
+
+  debugObjects() {
+    if(this.debug !== true) return;
+
+    let colors = {};
+    Object.values(ObjectTypes).forEach((obj) => {
+      colors[obj.name] = obj.color;
+    });
+
+    let graphics = this.add.graphics()
+    Object.values(this.config.tilemap.getObjectLayer('interactions').objects).forEach((obj) => {
+      obj.x *= 32;
+      obj.y *= 32;
+
+      let text = this.add.text(0, 0, obj.name, {
+          font: '12px',
+          align: 'justify',
+          padding: 3,
+          color: '#fff',
+          backgroundColor: (this.getValue(colors, obj.type, '#000')).substr(0, 7),
+          shadow: {
+            stroke: '#000',
+            offsetX: 1,
+            offsetY: 1,
+          }
+        })
+      ;
+
+      let tile = this.add.rectangle(obj.x, obj.y, 32, 32);
+      tile.setOrigin(0,0);
+      tile.setStrokeStyle(1, 0x1a65ac);
+      var debugObj = this.add.container(0,0, [
+        tile,
+        Phaser.Display.Align.In.TopCenter(text, this.add.zone(obj.x-5, obj.y-15, 42, 42).setOrigin(0,0)),
+      ]);
+      debugObj.depth = 999999999999999;
+    });
   }
 
   initSigns() {
     let signs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'sign');
     if (signs.length === 0) { return; }
 
-    signs.map((sign) => {
+    signs.forEach((sign) => {
       this.interactTile(this.config.tilemap, sign, 0x00afe4);
     });
   }
@@ -85,7 +125,7 @@ export default class extends Phaser.Scene {
     this.npcs = this.add.group();
     this.npcs.runChildUpdate = true;
     let color = this.random_rgba();
-    npcs.map((npc) => {
+    npcs.forEach((npc) => {
       let npcObj = new NPC({
         id: npc.name,
         texture: this.getPropertyValue(npc.properties, 'texture'),
@@ -109,7 +149,7 @@ export default class extends Phaser.Scene {
     if (warps.length === 0) { return; }
 
     let color = this.random_rgba();
-    warps.map((obj) => {
+    warps.forEach((obj) => {
       obj.x /= 32;
       obj.y /= 32;
 
@@ -119,7 +159,24 @@ export default class extends Phaser.Scene {
         y: obj.y,
         obj: obj
       });
-      this.tintTile(this.config.tilemap, obj.x, obj.y, color); // actual
+    });
+  }
+
+  initLayerTransitions() {
+    let transitions = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'layerTransition');
+    if (transitions.length === 0) { return; }
+
+    let color = this.random_rgba();
+    transitions.forEach((obj) => {
+      obj.x /= 32;
+      obj.y /= 32;
+      console.log(['layerTransition', obj.x /32, obj.y /32, obj.name, this.getPropertyValue(obj.properties, 'from'), this.getPropertyValue(obj.properties, 'to'), obj
+      ]);
+      this.gridEngine.setTransition(
+        { x: obj.x /32, y: obj.y /32 },
+        this.getPropertyValue(obj.properties, 'from'),
+        this.getPropertyValue(obj.properties, 'to')
+      );
     });
   }
 
@@ -140,7 +197,8 @@ export default class extends Phaser.Scene {
       let playerLocation = {
         x: this.getPropertyValue(warpProps, 'warp-x', 0),
         y: this.getPropertyValue(warpProps, 'warp-y', 0),
-        dir: this.getPropertyValue(warpProps, 'warp-dir', 'down')
+        dir: this.getPropertyValue(warpProps, 'warp-dir', 'down'),
+        charLayer: this.getPropertyValue(warpProps, 'layer', 'ground')
       };
 
       // same map, we dont need to move scene
@@ -168,7 +226,6 @@ export default class extends Phaser.Scene {
       y: obj.y,
       obj: obj
     });
-    // this.tintTile(map, obj.x, obj.y, color); // actual
   }
 
   tintTile(tilemap, col, row, color) {
@@ -185,6 +242,10 @@ export default class extends Phaser.Scene {
     this.gridEngine.create(this.config.tilemap, {
       characters: this.characters
     });
+
+    if (this.objects !== null) {
+      this.initLayerTransitions();
+    }
 
     // check if we have a playerLocation and warp to it
     if (typeof this.config.playerLocation.x !== 'undefined') {
@@ -317,16 +378,14 @@ export default class extends Phaser.Scene {
     };
 
     // move the player
-    this.gridEngine.setPosition(this.player.config.id, pos);
+    this.gridEngine.setPosition(this.player.config.id, pos, playerLocation.layer);
     this.player.look(playerLocation.dir);
 
     // get the pokemon to be in the right spot
-    this.gridEngine.setPosition(this.playerMon.config.id, this.player.getPosInBehindDirection());
+    this.gridEngine.setPosition(this.playerMon.config.id, this.player.getPosInBehindDirection(), playerLocation.layer);
   }
 
   random_rgba() {
     return '0x' + Math.floor(Math.random()*16777215).toString(16);
   }
-
-
 }

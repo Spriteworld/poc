@@ -61,6 +61,7 @@ export default class extends Phaser.GameObjects.Sprite {
       startPosition: { x: def.x, y: def.y },
       facingDirection: def.facingDirection,
       collides: def.collides,
+      charLayer: 'ground',
     };
   }
 

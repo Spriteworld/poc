@@ -5,7 +5,7 @@ export default class extends Character {
   constructor(config) {
     super(config);
     this.config.cursors = this.config.scene.input.keyboard.createCursorKeys();
-    this.textbox = this.config.scene.scene.get('UI').textbox;
+    this.textbox = this.config.scene.scene.get('OverworldUI').textbox;
   }
 
   update() {

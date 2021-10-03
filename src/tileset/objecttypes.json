@@ -11,6 +11,22 @@
         ]
     },
     {
+        "color": "#ff7f14dd",
+        "name": "layerTransition",
+        "properties": [
+            {
+                "name": "from",
+                "type": "string",
+                "value": "ground"
+            },
+            {
+                "name": "to",
+                "type": "string",
+                "value": ""
+            }
+        ]
+    },
+    {
         "color": "#ff550000",
         "name": "npc",
         "properties": [
@@ -126,6 +142,11 @@
                 "name": "warp-y",
                 "type": "int",
                 "value": 0
+            },
+            {
+                "name": "layer",
+                "type": "string",
+                "value": ""
             }
         ]
     }

@@ -1,20 +1,6 @@
 import Phaser from 'phaser';
-import {
-  // tilesets
-  gen3inside,
-  gen3outside,
-  rseinside,
-  rseoutside,
-
-  // characters
-  red,
-  trainers,
-
-  // pokemon
-  pokemon,
-  pokemon_shiny,
-  // pokemon_home
-} from '@Tileset';
+import * as Tileset from '@Tileset';
+import { GROWTH, NATURES, BasePokemon } from '@pokelinkapp/pokemon-data/src/pokemon';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -42,46 +28,53 @@ export default class extends Phaser.Scene {
         progress.destroy();
     });
 
-    this.load.image('gen3_inside', gen3inside);
-    this.load.image('gen3_outside', gen3outside);
-    this.load.image('rse_inside', rseinside);
-    this.load.image('rse_outside', rseoutside);
-    this.load.spritesheet('red', red, { frameWidth: 32, frameHeight: 40 });
-    // Object.keys(trainers).forEach((name) => {
-    //   this.load.spritesheet(name, trainers[name]
-    //     , { frameWidth: 32, frameHeight: 42 });
-    // });
+    this.load.image('gen3_inside', Tileset.gen3inside);
+    this.load.image('gen3_outside', Tileset.gen3outside);
+    this.load.image('rse_inside', Tileset.rseinside);
+    this.load.image('rse_outside', Tileset.rseoutside);
+    this.load.spritesheet('red', Tileset.red, { frameWidth: 32, frameHeight: 40 });
+    Object.keys(Tileset.trainers).forEach((name) => {
+      this.load.spritesheet(name, Tileset.trainers[name]
+        , { frameWidth: 32, frameHeight: 42 });
+    });
 
-    // Object.keys(pokemon).forEach((name) => {
-    //   this.load.spritesheet(name, pokemon[name]
-    //     , { frameWidth: 64, frameHeight: 64 });
-    // });
-    // Object.keys(pokemon_shiny).forEach((name) => {
-    //   this.load.spritesheet(name, pokemon_shiny[name]
-    //     , { frameWidth: 64, frameHeight: 64 });
-    // });
-    // Object.keys(pokemon_home).forEach((name) => {
-    //   this.load.image(name, pokemon_home[name]);
+    Object.keys(Tileset.pokemon).forEach((name) => {
+      this.load.spritesheet(name, Tileset.pokemon[name]
+        , { frameWidth: 64, frameHeight: 64 });
+    });
+    Object.keys(Tileset.pokemon_shiny).forEach((name) => {
+      this.load.spritesheet(name, Tileset.pokemon_shiny[name]
+        , { frameWidth: 64, frameHeight: 64 });
+    });
+    // Object.keys(Tileset.pokemon_home).forEach((name) => {
+    //   this.load.image(name, Tileset.pokemon_home[name]);
     // });
 
   }
 
   create () {
-    // this.scene.start('Test');
-    // this.scene.start('OverworldUI');
-    // this.scene.bringToTop('OverworldUI');
+    let load = 'overworld';
+    if (load === 'overworld') {
+      this.scene.start('Test');
+      this.scene.start('OverworldUI');
+      this.scene.bringToTop('OverworldUI');
+    } else {
+      this.scene.start('BattleScene', this.battleData());
+    }
+  }
 
-    let umbreon = {
+  battleData() {
+
+    let umbreon = new BasePokemon({
       pid: 1,
       originalTrainer: '',
       nickname: 'Umbreon',
       species: 197,
       speciesName: 'umbreon',
       level: 5,
-      hp: {
-        max: 10,
-        current: 10
-      },
+      growth: GROWTH.MEDIUM_FAST,
+      nature: NATURES.HARDY,
+      currentHp: 10,
       moves: [{
         name: 'Tackle',
         damage: 2,
@@ -91,44 +84,43 @@ export default class extends Phaser.Scene {
         },
       }],
       baseStats: {
+        hp: 95,
         atk: 65,
         def: 110,
-        spd: 65,
         spatk: 60,
         spdef: 130,
-        hp: 95
+        spd: 65,
       },
       ivs: {
+        hp: 5,
         atk: 5,
         def: 5,
-        spd: 5,
         spatk: 5,
         spdef: 5,
-        hp: 5
+        spd: 5,
       },
       evs: {
+        hp: 5,
         atk: 5,
         def: 5,
-        spd: 5,
         spatk: 5,
         spdef: 5,
-        hp: 5
+        spd: 5,
       },
       exp: 0,
       isShiny: false,
-    };
+    });
 
-    let pikachu = {
+    let pikachu = new BasePokemon({
       pid: 1,
       originalTrainer: '',
       nickname: 'Sparky',
       species: 25,
       speciesName: 'pikachu',
       level: 5,
-      hp: {
-        max: 15,
-        current: 15
-      },
+      growth: GROWTH.MEDIUM_FAST,
+      nature: NATURES.HARDY,
+      currentHp: 10,
       moves: [{
         name: 'Tackle',
         damage: 2,
@@ -138,32 +130,32 @@ export default class extends Phaser.Scene {
         },
       }],
       baseStats: {
+        hp: 35,
         atk: 55,
         def: 40,
-        spd: 90,
         spatk: 50,
         spdef: 50,
-        hp: 35
+        spd: 90,
       },
       ivs: {
+        hp: 5,
         atk: 5,
         def: 5,
-        spd: 5,
         spatk: 5,
         spdef: 5,
-        hp: 5
+        spd: 5,
       },
       evs: {
+        hp: 5,
         atk: 5,
         def: 5,
-        spd: 5,
         spatk: 5,
         spdef: 5,
-        hp: 5
+        spd: 5,
       },
       exp: 0,
       isShiny: false,
-    };
+    });
 
     umbreon.originalTrainer = 'xLink';
     umbreon.nickname = 'Luna';
@@ -179,6 +171,6 @@ export default class extends Phaser.Scene {
       team: [{...pikachu}]
     };
 
-    this.scene.start('BattleScene', {player, enemy});
+    return {player, enemy}
   }
 }

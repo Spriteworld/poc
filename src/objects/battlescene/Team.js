@@ -6,7 +6,7 @@ export default class {
 
   getFirstAlive() {
     let idx = this.pokemon.findIndex(mon => {
-      return mon.hp.current > 0;
+      return mon.currentHp > 0;
     });
 
     return this.pokemon[idx];
@@ -14,7 +14,7 @@ export default class {
 
   hasLivingPokemon() {
     return this.pokemon.some(mon => {
-      return mon.hp.current > 0;
+      return mon.currentHp > 0;
     });
   }
 

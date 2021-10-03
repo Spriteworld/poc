@@ -19,6 +19,8 @@ import BagMenu from './menus/BagMenu.js';
 
 import NPCScripts from './scripts/npcs.js';
 
+import * as ObjectTypes from '../tileset/objecttypes.json';
+
 export {
     Game,
     Character,
@@ -39,5 +41,7 @@ export {
     AttackMenu,
     BagMenu,
 
-    NPCScripts
+    NPCScripts,
+
+    ObjectTypes
 };

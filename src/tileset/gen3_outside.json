@@ -7261,24 +7261,9 @@
          "id":792,
          "properties":[
                 {
-                 "name":"ge_collide_down",
-                 "type":"bool",
-                 "value":true
-                }, 
-                {
-                 "name":"ge_collide_left",
+                 "name":"ge_collide",
                  "type":"bool",
                  "value":false
-                }, 
-                {
-                 "name":"ge_collide_right",
-                 "type":"bool",
-                 "value":false
-                }, 
-                {
-                 "name":"ge_collide_up",
-                 "type":"bool",
-                 "value":true
                 }]
         }, 
         {
@@ -7420,24 +7405,9 @@
          "id":808,
          "properties":[
                 {
-                 "name":"ge_collide_down",
-                 "type":"bool",
-                 "value":true
-                }, 
-                {
-                 "name":"ge_collide_left",
+                 "name":"ge_collide",
                  "type":"bool",
                  "value":false
-                }, 
-                {
-                 "name":"ge_collide_right",
-                 "type":"bool",
-                 "value":false
-                }, 
-                {
-                 "name":"ge_collide_up",
-                 "type":"bool",
-                 "value":true
                 }]
         }, 
         {
