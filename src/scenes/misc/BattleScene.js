@@ -100,14 +100,14 @@ export default class extends Phaser.Scene {
     console.log('active trainer: '+this.activeMon[this.playerTurn].trainer);
     // if the mon belongs to the player
     if (this.playerTurn === 'player') {
-      console.log('players '+this.activeMon[this.playerTurn].nickname+'\s turn');
+      console.log('players '+this.activeMon[this.playerTurn].getName()+'\s turn');
       this.events.emit('SelectMenu', 4);
     } else {
-      console.log('enemys '+this.activeMon[this.playerTurn].nickname+'\s turn');
+      console.log('enemys '+this.activeMon[this.playerTurn].getName()+'\s turn');
       // call the enemy's attack function
       let dmg = rnd(1, 6);
       this.activeMon['enemy'].attack(this.activeMon['player'], dmg);
-      console.log(this.activeMon['enemy'].nickname + ' attacks ' + this.activeMon['player'].nickname +' for '+dmg+' damage');
+      console.log(this.activeMon['enemy'].getName() + ' attacks ' + this.activeMon['player'].getName() +' for '+dmg+' damage');
       // add timer for the next turn, so will have smooth gameplay
       this.time.addEvent({ delay: 1000, callback: this.nextTurn, callbackScope: this });
     }
@@ -119,7 +119,7 @@ export default class extends Phaser.Scene {
       console.group('BattleScene::attack');
       let dmg = rnd(1, 6);
       this.activeMon['player'].attack(this.activeMon['enemy'], dmg);
-      console.log(this.activeMon['player'].nickname + ' attacks ' + this.activeMon['enemy'].nickname +' for '+dmg+' damage');
+      console.log(this.activeMon['player'].getName() + ' attacks ' + this.activeMon['enemy'].getName() +' for '+dmg+' damage');
       console.groupEnd();
     }
     this.time.addEvent({ delay: 1000, callback: this.nextTurn, callbackScope: this });

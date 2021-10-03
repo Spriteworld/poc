@@ -1,40 +1,32 @@
+import { STATS } from '@pokelinkapp/pokemon-data/';
+
+
 export default class {
   constructor(config, trainer) {
     this.pid = 0;
     this.originalTrainer = null;
     this.nickname = null;
     this.species = 0;
-    this.speciesName = null;
+    this.level = 1;
     this.exp = 0;
     this.isShiny = false;
-    this.hp = {
-      max: 0,
-      current: 0,
-    };
+    this.currentHp = 0;
     this.moves = [];
-    this.baseStats = {
-      atk: 0,
-      def: 0,
-      spd: 0,
-      spatk: 0,
-      spdef: 0,
-      hp: 0
-    };
     this.ivs = {
-      atk: 0,
-      def: 0,
-      spd: 0,
-      spatk: 0,
-      spdef: 0,
-      hp: 0
+      [STATS.HP]: 0,
+      [STATS.ATTACK]: 0,
+      [STATS.DEFENSE]: 0,
+      [STATS.SPECIAL_ATTACK]: 0,
+      [STATS.SPECIAL_DEFENSE]: 0,
+      [STATS.SPEED]: 0,
     };
     this.evs = {
-      atk: 0,
-      def: 0,
-      spd: 0,
-      spatk: 0,
-      spdef: 0,
-      hp: 0
+      [STATS.HP]: 0,
+      [STATS.ATTACK]: 0,
+      [STATS.DEFENSE]: 0,
+      [STATS.SPECIAL_ATTACK]: 0,
+      [STATS.SPECIAL_DEFENSE]: 0,
+      [STATS.SPEED]: 0,
     };
 
     if (config) {
@@ -43,13 +35,17 @@ export default class {
     this.trainer = trainer;
   }
 
+  getName() {
+    return this.nickname || this.pokemon.species;
+  }
+
   attack(target, damage) {
-    console.log('BattlePokemon: '+this.nickname+' attack!');
+    console.log('BattlePokemon: '+this.getName()+' attack!');
     target.takeDamage(damage);
   }
 
   takeDamage(damage) {
-    this.hp.current -= damage;
+    this.currentHp -= damage;
   }
 
   getAttacks() {

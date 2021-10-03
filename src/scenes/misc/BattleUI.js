@@ -104,9 +104,9 @@ export default class extends Phaser.Scene {
     this.activePokemonMenu.remap(
       [activePokemon['player'], activePokemon['enemy']].map(trainer => {
         let trainerName = trainer.originalTrainer;
-        let nickname = trainer.nickname;
-        let hpCurr = trainer.hp.current;
-        let hpMax = trainer.hp.max;
+        let nickname = trainer.getName();
+        let hpCurr = trainer.currentHp;
+        let hpMax = trainer.stats?.HP;
         return `${trainerName} - ${nickname} (${hpCurr} / ${hpMax})`;
       })
     );

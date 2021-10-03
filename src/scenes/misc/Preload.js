@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import * as Tileset from '@Tileset';
-import { GROWTH, NATURES, BasePokemon } from '@pokelinkapp/pokemon-data/src/pokemon';
+import { STATS } from '@pokelinkapp/pokemon-data/';
+import { NATURES, BasePokemon } from '@pokelinkapp/pokemon-data/src/pokemon';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -53,7 +54,7 @@ export default class extends Phaser.Scene {
   }
 
   create () {
-    let load = 'overworld';
+    let load = 'boverworld';
     if (load === 'overworld') {
       this.scene.start('Test');
       this.scene.start('OverworldUI');
@@ -65,14 +66,12 @@ export default class extends Phaser.Scene {
 
   battleData() {
 
-    let umbreon = new BasePokemon({
+    let pokemon1 = new BasePokemon({
       pid: 1,
-      originalTrainer: '',
-      nickname: 'Umbreon',
-      species: 197,
-      speciesName: 'umbreon',
+      originalTrainer: 'xLink',
+      nickname: 'Bulbasaur',
+      species: 1,
       level: 5,
-      growth: GROWTH.MEDIUM_FAST,
       nature: NATURES.HARDY,
       currentHp: 10,
       moves: [{
@@ -83,42 +82,32 @@ export default class extends Phaser.Scene {
           current: 10
         },
       }],
-      baseStats: {
-        hp: 95,
-        atk: 65,
-        def: 110,
-        spatk: 60,
-        spdef: 130,
-        spd: 65,
-      },
       ivs: {
-        hp: 5,
-        atk: 5,
-        def: 5,
-        spatk: 5,
-        spdef: 5,
-        spd: 5,
+        [STATS.HP]: 5,
+        [STATS.ATTACK]: 5,
+        [STATS.DEFENSE]: 5,
+        [STATS.SPECIAL_ATTACK]: 5,
+        [STATS.SPECIAL_DEFENSE]: 5,
+        [STATS.SPEED]: 5,
       },
       evs: {
-        hp: 5,
-        atk: 5,
-        def: 5,
-        spatk: 5,
-        spdef: 5,
-        spd: 5,
+        [STATS.HP]: 5,
+        [STATS.ATTACK]: 5,
+        [STATS.DEFENSE]: 5,
+        [STATS.SPECIAL_ATTACK]: 5,
+        [STATS.SPECIAL_DEFENSE]: 5,
+        [STATS.SPEED]: 5,
       },
       exp: 0,
       isShiny: false,
     });
 
-    let pikachu = new BasePokemon({
+    let pokemon2 = new BasePokemon({
       pid: 1,
-      originalTrainer: '',
+      originalTrainer: 'Trainer',
       nickname: 'Sparky',
       species: 25,
-      speciesName: 'pikachu',
       level: 5,
-      growth: GROWTH.MEDIUM_FAST,
       nature: NATURES.HARDY,
       currentHp: 10,
       moves: [{
@@ -129,46 +118,34 @@ export default class extends Phaser.Scene {
           current: 10
         },
       }],
-      baseStats: {
-        hp: 35,
-        atk: 55,
-        def: 40,
-        spatk: 50,
-        spdef: 50,
-        spd: 90,
-      },
       ivs: {
-        hp: 5,
-        atk: 5,
-        def: 5,
-        spatk: 5,
-        spdef: 5,
-        spd: 5,
+        [STATS.HP]: 5,
+        [STATS.ATTACK]: 5,
+        [STATS.DEFENSE]: 5,
+        [STATS.SPECIAL_ATTACK]: 5,
+        [STATS.SPECIAL_DEFENSE]: 5,
+        [STATS.SPEED]: 5,
       },
       evs: {
-        hp: 5,
-        atk: 5,
-        def: 5,
-        spatk: 5,
-        spdef: 5,
-        spd: 5,
+        [STATS.HP]: 5,
+        [STATS.ATTACK]: 5,
+        [STATS.DEFENSE]: 5,
+        [STATS.SPECIAL_ATTACK]: 5,
+        [STATS.SPECIAL_DEFENSE]: 5,
+        [STATS.SPEED]: 5,
       },
       exp: 0,
       isShiny: false,
     });
 
-    umbreon.originalTrainer = 'xLink';
-    umbreon.nickname = 'Luna';
     let player = {
       name: 'xLink',
-      team: [{...umbreon}]
+      team: [{...pokemon1}]
     };
 
-    pikachu.originalTrainer = 'Trainer';
-    pikachu.nickname = 'Sparky';
     let enemy = {
       name: 'Trainer',
-      team: [{...pikachu}]
+      team: [{...pokemon2}]
     };
 
     return {player, enemy}
