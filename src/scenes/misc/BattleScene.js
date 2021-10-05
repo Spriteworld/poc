@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { BattlePokemon, BattleTrainer, BattleTeam } from '@Objects';
 import { rnd } from '@Utilities';
+import { STATS } from '@pokelinkapp/pokemon-data/';
 
 export default class extends Phaser.Scene {
   constructor(config) {
@@ -10,6 +11,11 @@ export default class extends Phaser.Scene {
     this.config.enemy = {};
 
     this.setState();
+    this.states = {
+      PLAYER_ACTION: 1,
+      ENEMY_ACTION: 2,
+      ATTACK_PHASE: 3
+    };
   }
 
   setState() {
@@ -22,6 +28,10 @@ export default class extends Phaser.Scene {
       enemy: null
     };
     this.playerTurn = 'player';
+    this.actions = {
+      player: null,
+      enemy: null
+    };
   }
 
   init(data) {
@@ -88,29 +98,71 @@ export default class extends Phaser.Scene {
       return;
     }
 
-    this.index++;
+    // if we dont have 2 actions, we need to get the players to select some actions...
+    if (Object.values(this.actions).filter(n => n).length != 2) {
+      console.log('Not enough actions set...');
 
-    // which one
-    this.playerTurn = this.index % 2 === 0 ? 'enemy' : 'player';
-    console.log('it is '+this.playerTurn+'\'s turn!');
-    // if (!this.activeMon[this.playerTurn]) {
-    //   return;
-    // }
-    // console.log(this.activeMon);
-    console.log('active trainer: '+this.activeMon[this.playerTurn].trainer);
-    // if the mon belongs to the player
-    if (this.playerTurn === 'player') {
-      console.log('players '+this.activeMon[this.playerTurn].getName()+'\s turn');
-      this.events.emit('SelectMenu', 4);
+      this.index++;
+
+      // which one
+      this.playerTurn = this.index % 2 === 0 ? 'enemy' : 'player';
+      console.log('it is '+this.playerTurn+'\'s turn!');
+
+      // console.log(this.activeMon);
+      console.log('active trainer: '+this.activeMon[this.playerTurn].trainer);
+      // if the mon belongs to the player
+      if (this.playerTurn === 'player') {
+        console.log('players '+this.activeMon[this.playerTurn].getName()+'\s turn');
+        this.events.emit('SelectMenu', 4);
+      } else {
+        console.log('enemys '+this.activeMon[this.playerTurn].getName()+'\s turn');
+        // call the enemy's attack function
+        let dmg = rnd(1, 6);
+        this.actions.enemy = {
+          type: 'attack',
+          target: this.activeMon['player'],
+          dmg: dmg
+        };
+        console.log('enemy action set!', this.actions.enemy);
+        // add timer for the next turn, so will have smooth gameplay
+        this.time.addEvent({ delay: 1000, callback: this.nextTurn, callbackScope: this });
+      }
     } else {
-      console.log('enemys '+this.activeMon[this.playerTurn].getName()+'\s turn');
-      // call the enemy's attack function
-      let dmg = rnd(1, 6);
-      this.activeMon['enemy'].attack(this.activeMon['player'], dmg);
-      console.log(this.activeMon['enemy'].getName() + ' attacks ' + this.activeMon['player'].getName() +' for '+dmg+' damage');
-      // add timer for the next turn, so will have smooth gameplay
+      console.log('Both players have set actions...');
+      console.log('Time to attack!');
+
+      let order = [];
+
+      let playerSpeed = this.activeMon['player'].stats[STATS.SPEED];
+      let enemySpeed = this.activeMon['enemy'].stats[STATS.SPEED];
+      // figure out the attack order
+      if (playerSpeed > enemySpeed) { order = ['player', 'enemy']; }
+      if (playerSpeed < enemySpeed) { order = ['enemy', 'player']; }
+      if (playerSpeed == enemySpeed) {
+        order = rnd(1, 2) === 1
+          ? ['player', 'enemy']
+          : ['enemy', 'player']
+        ;
+      }
+
+      console.log('order has been decided!: '+ order.join(','));
+      order.forEach(player => {
+        let enemy = player === 'player' ? 'enemy' : 'player';
+        switch (this.actions[player].type) {
+          case 'attack':
+            console.log(this.activeMon[player].getName() + ' attacks '
+              + this.activeMon[enemy].getName() +' for '
+              + this.actions[player].dmg + ' damage'
+            );
+            this.activeMon[player].attack(this.activeMon[enemy], this.actions[player].dmg);
+          break;
+        }
+      });
+      this.actions = [];
+
       this.time.addEvent({ delay: 1000, callback: this.nextTurn, callbackScope: this });
     }
+
     console.groupEnd();
   }
 
@@ -118,8 +170,14 @@ export default class extends Phaser.Scene {
     if (action == 'attack') {
       console.group('BattleScene::attack');
       let dmg = rnd(1, 6);
-      this.activeMon['player'].attack(this.activeMon['enemy'], dmg);
-      console.log(this.activeMon['player'].getName() + ' attacks ' + this.activeMon['enemy'].getName() +' for '+dmg+' damage');
+      this.actions.player = {
+        type: 'attack',
+        target: this.activeMon['enemy'],
+        dmg: dmg
+      };
+      console.log('player action set!', this.actions.player);
+      // this.activeMon['player'].attack(this.activeMon['enemy'], dmg);
+      // console.log(this.activeMon['player'].getName() + ' attacks ' + this.activeMon['enemy'].getName() +' for '+dmg+' damage');
       console.groupEnd();
     }
     this.time.addEvent({ delay: 1000, callback: this.nextTurn, callbackScope: this });

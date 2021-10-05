@@ -19,8 +19,9 @@ export default class extends GameMap {
   create () {
     this.loadMap();
     // this.addPlayerToScene(16, 16);
-    this.addPlayerToScene(24, 42);
+    // this.addPlayerToScene(24, 42);
     // this.addPlayerToScene(8, 6);
+    this.addPlayerToScene(11, 20);
 
     this.addMonToScene('197', 18, 17, {
       'spin-rate': 600,

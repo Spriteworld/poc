@@ -56,6 +56,9 @@ export default class extends Phaser.Scene {
         .setName(layer.name);
     });
 
+    this.iceTiles = this.getTilesWithProperty('sw_slide');
+    this.spinTiles = this.getTilesWithProperty('sw_spin');
+
     this.objects = tilemap.getObjectLayer('interactions');
     if (this.objects !== null) {
       this.registry.set('interactions', []);
@@ -97,12 +100,12 @@ export default class extends Phaser.Scene {
         })
       ;
 
-      let tile = this.add.rectangle(obj.x, obj.y, 32, 32);
+      let tile = this.add.rectangle(obj.x, obj.y, obj.height, obj.width);
       tile.setOrigin(0,0);
       tile.setStrokeStyle(1, 0x1a65ac);
       var debugObj = this.add.container(0,0, [
         tile,
-        Phaser.Display.Align.In.TopCenter(text, this.add.zone(obj.x-5, obj.y-15, 42, 42).setOrigin(0,0)),
+        Phaser.Display.Align.In.TopCenter(text, this.add.zone(obj.x-5, obj.y-15, obj.height+10, obj.width+10).setOrigin(0,0)),
       ]);
       debugObj.depth = 999999999999999;
     });
@@ -252,6 +255,41 @@ export default class extends Phaser.Scene {
       this.warpPlayerInMap(this.config.playerLocation);
     }
 
+    // handle ice stuffs
+    this.gridEngine
+      .positionChangeStarted()
+      .subscribe(({ charId, exitTile, enterTile }) => {
+        if (![this.player.config.id, this.playerMon.config.id].includes(charId)) {
+          return;
+        }
+
+        let isIceTile = this.iceTiles.some(tile => {
+          return tile[0] == enterTile.x && tile[1] == enterTile.y;
+        });
+
+        if (isIceTile) {
+          let dir = this.gridEngine.getFacingDirection(this.player.config.id);
+          this.player.startSliding(dir);
+          // this.playerMon.startSliding(dir);
+        } else {
+          this.player.stopSliding();
+          // this.playerMon.stopSliding();
+        }
+      });
+
+    this.gridEngine
+      .movementStopped()
+      .subscribe(({ charId, direction }) => {
+        if (this.player.slidingDir === 'none') {
+          return;
+        }
+        if (![this.player.config.id, this.playerMon.config.id].includes(charId)) {
+          return;
+        }
+        this.player.stopSliding();
+        this.playerMon.stopSliding();
+      });
+
     // make players pokemon follow em
     this.gridEngine
       .positionChangeFinished()
@@ -354,7 +392,9 @@ export default class extends Phaser.Scene {
   }
 
   getPropertyValue(props, id, defValue) {
-    if (typeof props === 'undefined' || props.length === 0) { return defValue; }
+    if (typeof props === 'undefined' || Object.values(props).length === 0) {
+      return defValue;
+    }
     let property = props.find(p => p.name === id);
     return typeof property === 'undefined' ? defValue : property.value;
   }
@@ -383,6 +423,22 @@ export default class extends Phaser.Scene {
 
     // get the pokemon to be in the right spot
     this.gridEngine.setPosition(this.playerMon.config.id, this.player.getPosInBehindDirection(), playerLocation.layer);
+  }
+
+  getTilesWithProperty(property) {
+    var tiles = []
+    this.config.tilemap.getTileLayerNames().forEach(layer => {
+      let layerTiles = this.config.tilemap.getTilesWithin(0, 0, this.config.tilemap.width, this.config.tilemap.height, {}, layer);
+
+      layerTiles.forEach(layerTile => {
+        if (layerTile && this.getValue(layerTile.properties, property, false)) {
+          tiles.push([layerTile.x, layerTile.y]);
+          return;
+        }
+      });
+    });
+
+    return tiles;
   }
 
   random_rgba() {

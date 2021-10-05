@@ -54,7 +54,7 @@ export default class extends Phaser.Scene {
   }
 
   create () {
-    let load = 'boverworld';
+    let load = 'overworld';
     if (load === 'overworld') {
       this.scene.start('Test');
       this.scene.start('OverworldUI');
@@ -80,6 +80,13 @@ export default class extends Phaser.Scene {
         pp: {
           max: 10,
           current: 10
+        },
+      },{
+        name: 'Razor Leaf',
+        damage: 2,
+        pp: {
+          max: 5,
+          current: 5
         },
       }],
       ivs: {
@@ -113,6 +120,13 @@ export default class extends Phaser.Scene {
       moves: [{
         name: 'Tackle',
         damage: 2,
+        pp: {
+          max: 10,
+          current: 10
+        },
+      },{
+        name: 'ThunderBolt',
+        damage: 6,
         pp: {
           max: 10,
           current: 10

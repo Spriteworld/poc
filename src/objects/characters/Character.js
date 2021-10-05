@@ -21,6 +21,8 @@ export default class extends Phaser.GameObjects.Sprite {
 
     this.ge = this.config.scene.gridEngine;
     this.spinRate = this.config['spin-rate'];
+    this.slidingDir = 'none';
+    this.spinningDir = 'none';
 
     this.config.scene.add.existing(this);
     this.config.scene.addCharacter(
@@ -30,26 +32,19 @@ export default class extends Phaser.GameObjects.Sprite {
 
   characterFramesDef() {
     return {
-      up: {
-        leftFoot: 13,
-        standing: 12,
-        rightFoot: 15,
-      },
-      down: {
-        leftFoot: 1,
-        standing: 0,
-        rightFoot: 3,
-      },
-      left: {
-        leftFoot: 7,
-        standing: 4,
-        rightFoot: 5,
-      },
-      right: {
-        leftFoot: 9,
-        standing: 8,
-        rightFoot: 11,
-      },
+      up: { leftFoot: 13, standing: 12, rightFoot: 15 },
+      down: { leftFoot: 1, standing: 0, rightFoot: 3 },
+      left: { leftFoot: 7, standing: 4, rightFoot: 5 },
+      right: { leftFoot: 9, standing: 8, rightFoot: 11 },
+    };
+  }
+
+  characterFramesStaticDef() {
+    return {
+      up: { leftFoot: 12, standing: 12, rightFoot: 12 },
+      down: { leftFoot: 0, standing: 0, rightFoot: 0 },
+      left: { leftFoot: 4, standing: 4, rightFoot: 4 },
+      right: { leftFoot: 8, standing: 8, rightFoot: 8 },
     };
   }
 
@@ -131,14 +126,18 @@ export default class extends Phaser.GameObjects.Sprite {
     return this.ge;
   }
 
-  // trying to make you insta move if looking in the right direction
-  // updateLooking() {
-  //   this.playerWasLooking = this.ge.getFacingDirection(this.config.id);
-  // }
-
   handleMovement() {
     let allowed = this.config.scene.registry.get('player_input');
     if (allowed === false) { return; }
+
+    if (this.slidingDir !== 'none') {
+      this.move(this.slidingDir);
+      return;
+    }
+    if (this.spinningDir !== 'none') {
+      this.move(this.spinningDir);
+      return;
+    }
 
     const duration = 120;
     if (this.config.cursors.left.isDown) {
@@ -173,6 +172,30 @@ export default class extends Phaser.GameObjects.Sprite {
     } else {
       this.ge.setSpeed(this.config.id, 4);
     }
+  }
+
+  startSliding(direction) {
+    this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesStaticDef());
+    this.slidingDir = direction;
+    // playerSprite.anims.play('spin', true);
+  }
+
+  stopSliding() {
+    this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesDef());
+    // playerSprite.anims.stop();
+    this.slidingDir = 'none';
+  }
+
+  startSpinning(direction) {
+    this.ge.setWalkingAnimationMapping(this.config.id, undefined);
+    this.spinningDir = direction;
+    // playerSprite.anims.play('spin', true);
+  }
+
+  stopSpinning() {
+    this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesDef());
+    // playerSprite.anims.stop();
+    this.spinningDir = 'none';
   }
 
   moveUntilBlocked() {
