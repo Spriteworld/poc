@@ -21,8 +21,8 @@ export default class extends Phaser.GameObjects.Sprite {
 
     this.ge = this.config.scene.gridEngine;
     this.spinRate = this.config['spin-rate'];
-    this.slidingDir = 'none';
-    this.spinningDir = 'none';
+    this.slidingDir = null;
+    this.spinningDir = null;
 
     this.config.scene.add.existing(this);
     this.config.scene.addCharacter(
@@ -127,17 +127,20 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   handleMovement() {
-    let allowed = this.config.scene.registry.get('player_input');
-    if (allowed === false) { return; }
-
-    if (this.slidingDir !== 'none') {
+    if (this.slidingDir !== null) {
       this.move(this.slidingDir);
       return;
     }
-    if (this.spinningDir !== 'none') {
+    if (this.spinningDir !== null) {
       this.move(this.spinningDir);
       return;
     }
+
+    let allowed = this.config.scene.registry.get('player_input')
+      || this.spinningDir === null
+      || this.slidingDir === null
+    ;
+    if (allowed === false) { return; }
 
     const duration = 120;
     if (this.config.cursors.left.isDown) {
@@ -177,25 +180,23 @@ export default class extends Phaser.GameObjects.Sprite {
   startSliding(direction) {
     this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesStaticDef());
     this.slidingDir = direction;
-    // playerSprite.anims.play('spin', true);
   }
 
   stopSliding() {
     this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesDef());
-    // playerSprite.anims.stop();
-    this.slidingDir = 'none';
+    this.slidingDir = null;
   }
 
   startSpinning(direction) {
-    this.ge.setWalkingAnimationMapping(this.config.id, undefined);
+    this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesStaticDef());
     this.spinningDir = direction;
-    // playerSprite.anims.play('spin', true);
+    // this.anims.play('spin', true);
   }
 
   stopSpinning() {
     this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesDef());
-    // playerSprite.anims.stop();
-    this.spinningDir = 'none';
+    this.spinningDir = null;
+    // this.anims.stop();
   }
 
   moveUntilBlocked() {
