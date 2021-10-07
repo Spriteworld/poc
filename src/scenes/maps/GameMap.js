@@ -90,8 +90,6 @@ export default class extends Phaser.Scene {
 
     let graphics = this.add.graphics()
     Object.values(this.config.tilemap.getObjectLayer('interactions').objects).forEach((obj) => {
-      obj.x *= 32;
-      obj.y *= 32;
 
       let text = this.add.text(0, 0, obj.name, {
           font: '12px',
@@ -108,12 +106,12 @@ export default class extends Phaser.Scene {
       ;
 
       // console.log(obj);
-      let tile = this.add.rectangle(obj.x, obj.y, obj.height, obj.width);
+      let tile = this.add.rectangle(obj.x, obj.y, obj.width, obj.height);
       tile.setOrigin(0,0);
       tile.setStrokeStyle(1, 0x1a65ac);
       var debugObj = this.add.container(0,0, [
         tile,
-        Phaser.Display.Align.In.TopCenter(text, this.add.zone(obj.x-5, obj.y-15, obj.height+10, obj.width+10).setOrigin(0,0)),
+        Phaser.Display.Align.In.TopCenter(text, this.add.zone(obj.x-5, obj.y-15, obj.width+10, obj.height+10).setOrigin(0,0)),
       ]);
       debugObj.setDepth(9999999);
     });
@@ -161,13 +159,10 @@ export default class extends Phaser.Scene {
 
     let color = this.random_rgba();
     warps.forEach((obj) => {
-      obj.x /= 32;
-      obj.y /= 32;
-
       this.registry.get('warps').push({
         name: obj.id,
-        x: obj.x,
-        y: obj.y,
+        x: obj.x / 32,
+        y: obj.y / 32,
         obj: obj
       });
     });
@@ -179,8 +174,6 @@ export default class extends Phaser.Scene {
 
     let color = this.random_rgba();
     transitions.forEach((obj) => {
-      obj.x /= 32;
-      obj.y /= 32;
       console.log(['layerTransition', obj.x /32, obj.y /32, obj.name, this.getPropertyValue(obj.properties, 'from'), this.getPropertyValue(obj.properties, 'to'), obj
       ]);
       this.gridEngine.setTransition(
@@ -229,12 +222,9 @@ export default class extends Phaser.Scene {
   }
 
   interactTile(map, obj, color) {
-    obj.x /= 32;
-    obj.y /= 32;
-
     this.registry.get('interactions').push({
-      x: obj.x,
-      y: obj.y,
+      x: obj.x / 32,
+      y: obj.y / 32,
       obj: obj
     });
   }
@@ -270,6 +260,7 @@ export default class extends Phaser.Scene {
         if (![this.player.config.id].includes(charId)) {
           return;
         }
+        // console.log(['positionChangeStarted', charId, exitTile, enterTile]);
 
         let isIceTile = this.iceTiles.some(tile => {
           return tile[0] == enterTile.x && tile[1] == enterTile.y;
@@ -317,6 +308,7 @@ export default class extends Phaser.Scene {
         if (![this.player.config.id].includes(charId)) {
           return;
         }
+        // console.log(['movementStopped', charId, direction]);
         if (this.player.slidingDir !== null) {
           this.player.stopSliding();
         }
@@ -330,6 +322,7 @@ export default class extends Phaser.Scene {
       .positionChangeFinished()
       .subscribe(({ charId, exitTile, enterTile }) => {
         if (charId !== this.player.config.id) { return; }
+        // console.log(['positionChangeFinished', charId, exitTile, enterTile]);
 
         // setup handlers etc
         this.handleWarps(enterTile);
