@@ -6,9 +6,7 @@ export default class extends Character {
   }
 
   update(time, delta) {
-    if (this.ge.created === false) {
-      return;
-    }
+    if (this.ge.created === false) { return; }
     this.addAutoSpin(delta);
     this.addAutoMove();
   }

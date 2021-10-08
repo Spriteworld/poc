@@ -74,17 +74,4 @@ export default class extends Character {
     }
   }
 
-  handleMovementTiles() {
-    let playerPos = this.getPosInFacingDirection();
-    let tile = this.config.scene.getTileProperties(playerPos.x, playerPos.y);
-    if (tile.length === 0) { return; }
-    // console.log(tile);
-    // check for ice
-
-    // check for spinners
-    // check for rapids(water)
-
-    //
-  }
-
 }

@@ -13,7 +13,7 @@ export default class extends Phaser.Scene {
     this.config.tilemap = {};
     this.config.playerLocation = {};
 
-    this.debug = true;
+    this.debug = false;
     this.cameraFade = 150;
     this.totalMon = 386;
     // console.log(['Loading Scene', config.mapName]);
@@ -66,6 +66,7 @@ export default class extends Phaser.Scene {
       this.registry.set('warps', []);
       this.initSigns();
       this.initNpcs();
+      this.initPkmn();
       this.initWarps();
 
       this.debugObjects();
@@ -153,6 +154,32 @@ export default class extends Phaser.Scene {
     });
   }
 
+  initPkmn() {
+    let pkmn = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'pkmn');
+    if (pkmn.length === 0) { return; }
+
+    this.pkmn = this.add.group();
+    this.pkmn.runChildUpdate = true;
+    pkmn.forEach((npc) => {
+      this.addMonToScene(
+        this.getPropertyValue(npc.properties, 'texture'),
+        npc.x / 32,
+        npc.y / 32,
+        {
+          id: npc.name,
+          scene: this,
+          spin: this.getPropertyValue(npc.properties, 'spin'),
+          'spin-rate': this.getPropertyValue(npc.properties, 'spin-rate'),
+          'facing-direction': this.getPropertyValue(npc.properties, 'facing-direction', 'down'),
+          move: this.getPropertyValue(npc.properties, 'move'),
+          'move-rate': this.getPropertyValue(npc.properties, 'move-rate'),
+          'move-radius': this.getPropertyValue(npc.properties, 'move-radius'),
+          'shiny': this.getPropertyValue(npc.properties, 'shiny', false),
+        }
+      );
+    });
+  }
+
   initWarps() {
     let warps = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'warp');
     if (warps.length === 0) { return; }
@@ -174,8 +201,6 @@ export default class extends Phaser.Scene {
 
     let color = this.random_rgba();
     transitions.forEach((obj) => {
-      console.log(['layerTransition', obj.x /32, obj.y /32, obj.name, this.getPropertyValue(obj.properties, 'from'), this.getPropertyValue(obj.properties, 'to'), obj
-      ]);
       this.gridEngine.setTransition(
         { x: obj.x /32, y: obj.y /32 },
         this.getPropertyValue(obj.properties, 'from'),
@@ -253,26 +278,23 @@ export default class extends Phaser.Scene {
       this.warpPlayerInMap(this.config.playerLocation);
     }
 
-    // handle ice stuffs
+    // handle ice & spin tiles
     this.gridEngine
       .positionChangeStarted()
       .subscribe(({ charId, exitTile, enterTile }) => {
         if (![this.player.config.id].includes(charId)) {
           return;
         }
-        // console.log(['positionChangeStarted', charId, exitTile, enterTile]);
 
         let isIceTile = this.iceTiles.some(tile => {
           return tile[0] == enterTile.x && tile[1] == enterTile.y;
         });
         if (isIceTile) {
           let dir = this.gridEngine.getFacingDirection(this.player.config.id);
-          // console.log(['slide', dir]);
           this.player.stopSpinning();
           this.player.startSliding(dir);
         } else {
           if (this.player.slidingDir !== null) {
-            // console.log(['slide', null]);
             this.player.stopSliding();
           }
         }
@@ -285,7 +307,6 @@ export default class extends Phaser.Scene {
           let props = this.getTileProperties(enterTile.x, enterTile.y);
           let dir = this.getValue(props, 'sw_spin', false);
           if (dir !== false) {
-            // console.log(['spin', dir]);
             this.player.stopSliding();
             this.player.startSpinning(dir);
           }
@@ -296,7 +317,6 @@ export default class extends Phaser.Scene {
         });
         if (isStopTile) {
           if (this.player.spinningDir !== null) {
-            // console.log(['spin', null]);
             this.player.stopSpinning();
           }
         }
@@ -308,21 +328,18 @@ export default class extends Phaser.Scene {
         if (![this.player.config.id].includes(charId)) {
           return;
         }
-        // console.log(['movementStopped', charId, direction]);
         if (this.player.slidingDir !== null) {
           this.player.stopSliding();
         }
-        // if (this.player.spinningDir !== null) {
-        //   this.player.stopSpinning();
-        // }
       });
 
     // make players pokemon follow em
     this.gridEngine
       .positionChangeFinished()
       .subscribe(({ charId, exitTile, enterTile }) => {
-        if (charId !== this.player.config.id) { return; }
-        // console.log(['positionChangeFinished', charId, exitTile, enterTile]);
+        if (![this.player.config.id].includes(charId)) {
+          return;
+        }
 
         // setup handlers etc
         this.handleWarps(enterTile);
@@ -377,24 +394,21 @@ export default class extends Phaser.Scene {
     this.cameras.main.startFollow(this.player.config.sprite, true);
     this.cameras.main.setFollowOffset(-this.player.config.sprite.width, -this.player.config.sprite.height)
 
-    // this.anims.create({
-    //   key: 'spin',
-    //   frames: this.anims.generateFrameNumbers(this.player.config.sprite, {
-    //     frames: [12, 0, 4, 8],
-    //   }),
-    //   frameRate: 7,
-    //   repeat: -1,
-    //   yoyo: false,
-    // });
-
-    this.addPlayerMonToScene('RNG', x +1, y);
+    this.playerMon = this.addMonToScene('RNG', x +1, y, {
+      id: 'playerMon',
+      follow: this.player.config.id,
+      collides: false,
+      move: false,
+      spin: false,
+    });
   }
 
   addMonToScene(monId, x, y, config) {
     if (monId == 'RNG') {
-      monId = (Math.floor(Math.random() * this.totalMon) +1)
-        .toString()
-        .padStart(3, '0');
+      monId = (Math.floor(Math.random() * this.totalMon) +1);
+    }
+    if (monId.length !== 3) {
+      monId = monId.toString().padStart(3, '0');
     }
 
     // check for shiny
@@ -417,16 +431,6 @@ export default class extends Phaser.Scene {
     this.mon.push(pkmn);
     this.interactTile(this.config.tilemap, pkmnDef, 0x000000);
     return pkmn;
-  }
-
-  addPlayerMonToScene(monId, x, y) {
-    this.playerMon = this.addMonToScene(monId, x, y, {
-      id: 'playerMon',
-      follow: this.player.config.id,
-      collides: false,
-      move: false,
-      spin: false,
-    });
   }
 
   getPropertyValue(props, id, defValue) {

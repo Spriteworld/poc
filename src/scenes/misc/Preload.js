@@ -62,6 +62,17 @@ export default class extends Phaser.Scene {
     } else {
       this.scene.start('BattleScene', this.battleData());
     }
+
+    this.createAnimations();
+    PhaserGUIAction(this);
+  }
+
+  createAnimations() {
+    this.anims.create({
+      key: 'red-spin',
+      frames: this.anims.generateFrameNumbers('red', { frames: [12, 0, 4, 8] }),
+      frameRate: 7,
+    });
   }
 
   battleData() {

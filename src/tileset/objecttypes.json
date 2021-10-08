@@ -105,6 +105,11 @@
                 "name": "texture",
                 "type": "string",
                 "value": ""
+            },
+            {
+                "name": "shiny",
+                "type": "bool",
+                "value": false
             }
         ]
     },

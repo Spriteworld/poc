@@ -23,22 +23,6 @@ export default class extends GameMap {
     // this.addPlayerToScene(8, 6);
     this.addPlayerToScene(11, 20);
 
-    this.addMonToScene('197', 18, 17, {
-      'spin-rate': 600,
-    });
-    this.addMonToScene('197', 17, 17, {
-      'spin-rate': 600,
-    });
-    this.addMonToScene('197', 16, 17, {
-      'spin-rate': 600,
-      shiny: true
-    });
-    this.addMonToScene('RNG', 10, 5);
-    this.addMonToScene('RNG', 11, 5);
-    this.addMonToScene('RNG', 12, 5);
-    this.addMonToScene('RNG', 13, 5);
-    this.addMonToScene('RNG', 14, 5);
-
     this.createCharacters();
     // this.player.disableMovement();
   }

@@ -17,6 +17,7 @@ export default class extends Phaser.GameObjects.Sprite {
       'facing-direction': 'down',
     }, ...config};
 
+    this.setName(this.id);
     this.config.sprite = this.config.scene.add.sprite(0, 0, this.config.texture);
 
     this.ge = this.config.scene.gridEngine;
@@ -53,6 +54,7 @@ export default class extends Phaser.GameObjects.Sprite {
       id: def.id,
       sprite: def.sprite,
       walkingAnimationMapping: this.characterFramesDef(),
+      walkingAnimationEnabled: true,
       startPosition: { x: def.x, y: def.y },
       facingDirection: def.facingDirection,
       collides: def.collides,
@@ -92,6 +94,10 @@ export default class extends Phaser.GameObjects.Sprite {
 
   stop() {
     return this.ge.stopMovement(this.config.id);
+  }
+
+  getFacingDirection() {
+    return this.ge.getFacingDirection(this.config.id);
   }
 
   getPosInFacingDirection() {
@@ -166,15 +172,16 @@ export default class extends Phaser.GameObjects.Sprite {
     let activator = this.config.scene.input.keyboard.addKey('X');
     if (!this.config.scene.inside && activator.isDown) {
       this.ge.setSpeed(this.config.id, 8);
-    } else {
-      this.ge.setSpeed(this.config.id, 4);
+      return;
     }
+
     let activator2 = this.config.scene.input.keyboard.addKey('C');
     if (!this.config.scene.inside && activator2.isDown) {
       this.ge.setSpeed(this.config.id, 20);
-    } else {
-      this.ge.setSpeed(this.config.id, 4);
+      return;
     }
+
+    this.ge.setSpeed(this.config.id, 4);
   }
 
   startSliding(direction) {
@@ -188,15 +195,15 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   startSpinning(direction) {
-    this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesStaticDef());
+    this.ge.setWalkingAnimationMapping(this.config.id, undefined);
+    this.anims.play(this.config.texture+'-spin', true);
     this.spinningDir = direction;
-    // this.anims.play('spin', true);
   }
 
   stopSpinning() {
     this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesDef());
+    this.anims.stop();
     this.spinningDir = null;
-    // this.anims.stop();
   }
 
   moveUntilBlocked() {
@@ -212,6 +219,14 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   addAutoSpin(delta) {
+    let lookDir = this.config['facing-direction'];
+    let faceDir = this.getFacingDirection();
+
+    if (faceDir !== lookDir) {
+      this.look(lookDir);
+      return;
+    }
+
     if (this.config.spin !== true) { return; }
     this.spinRate -= delta;
     if (this.spinRate <= 0) {

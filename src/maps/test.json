@@ -418,31 +418,19 @@
                  "y":96
                 }, 
                 {
-                 "height":96,
-                 "id":20,
-                 "name":"grass1",
-                 "properties":[
-                        {
-                         "name":"table-id",
-                         "type":"string",
-                         "value":"1"
-                        }],
-                 "rotation":0,
-                 "type":"encounters",
-                 "visible":true,
-                 "width":256,
-                 "x":608,
-                 "y":64
-                }, 
-                {
                  "height":32,
                  "id":21,
                  "name":"grunt1",
                  "properties":[
                         {
+                         "name":"facing-direction",
+                         "type":"string",
+                         "value":"right"
+                        }, 
+                        {
                          "name":"spin",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }, 
                         {
                          "name":"spin-rate",
@@ -467,9 +455,14 @@
                  "name":"grunt2",
                  "properties":[
                         {
+                         "name":"facing-direction",
+                         "type":"string",
+                         "value":"left"
+                        }, 
+                        {
                          "name":"spin",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }, 
                         {
                          "name":"spin-rate",
@@ -563,6 +556,143 @@
                  "width":32,
                  "x":768,
                  "y":1280
+                }, 
+                {
+                 "height":96,
+                 "id":27,
+                 "name":"grass",
+                 "properties":[
+                        {
+                         "name":"table-id",
+                         "type":"string",
+                         "value":"1"
+                        }],
+                 "rotation":0,
+                 "type":"encounters",
+                 "visible":true,
+                 "width":256,
+                 "x":608,
+                 "y":64
+                }, 
+                {
+                 "height":32,
+                 "id":29,
+                 "name":"poke1",
+                 "properties":[
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"3"
+                        }],
+                 "rotation":0,
+                 "type":"pkmn",
+                 "visible":true,
+                 "width":32,
+                 "x":384,
+                 "y":160
+                }, 
+                {
+                 "height":32,
+                 "id":30,
+                 "name":"poke2",
+                 "properties":[
+                        {
+                         "name":"spin",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"spin-rate",
+                         "type":"int",
+                         "value":250
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"6"
+                        }],
+                 "rotation":0,
+                 "type":"pkmn",
+                 "visible":true,
+                 "width":32,
+                 "x":416,
+                 "y":160
+                }, 
+                {
+                 "height":32,
+                 "id":31,
+                 "name":"poke3",
+                 "properties":[
+                        {
+                         "name":"spin",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"spin-rate",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"9"
+                        }],
+                 "rotation":0,
+                 "type":"pkmn",
+                 "visible":true,
+                 "width":32,
+                 "x":448,
+                 "y":160
+                }, 
+                {
+                 "height":32,
+                 "id":32,
+                 "name":"umbreon",
+                 "properties":[
+                        {
+                         "name":"facing-direction",
+                         "type":"string",
+                         "value":"right"
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"197"
+                        }],
+                 "rotation":0,
+                 "type":"pkmn",
+                 "visible":true,
+                 "width":32,
+                 "x":576,
+                 "y":512
+                }, 
+                {
+                 "height":32,
+                 "id":33,
+                 "name":"shiny-umbreon",
+                 "properties":[
+                        {
+                         "name":"facing-direction",
+                         "type":"string",
+                         "value":"left"
+                        }, 
+                        {
+                         "name":"shiny",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"197"
+                        }],
+                 "rotation":0,
+                 "type":"pkmn",
+                 "visible":true,
+                 "width":32,
+                 "x":608,
+                 "y":512
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -570,8 +700,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":16,
- "nextobjectid":27,
+ "nextlayerid":17,
+ "nextobjectid":34,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
