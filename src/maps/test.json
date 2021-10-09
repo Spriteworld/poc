@@ -695,17 +695,6 @@
                  "y":512
                 }, 
                 {
-                 "height":32,
-                 "id":36,
-                 "name":"player",
-                 "rotation":0,
-                 "type":"playerSpawn",
-                 "visible":true,
-                 "width":32,
-                 "x":448,
-                 "y":320
-                }, 
-                {
                  "height":0,
                  "id":38,
                  "name":"grass 2",
@@ -817,6 +806,17 @@
                  "width":0,
                  "x":544,
                  "y":832
+                }, 
+                {
+                 "height":32,
+                 "id":42,
+                 "name":"player",
+                 "rotation":0,
+                 "type":"playerSpawn",
+                 "visible":true,
+                 "width":32,
+                 "x":416,
+                 "y":448
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -825,7 +825,7 @@
          "y":0
         }],
  "nextlayerid":17,
- "nextobjectid":41,
+ "nextobjectid":43,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",

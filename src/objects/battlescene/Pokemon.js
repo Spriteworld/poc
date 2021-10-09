@@ -1,4 +1,4 @@
-import { STATS } from '@pokelinkapp/pokemon-data/';
+import { STATS } from '@pokelinkapp/pokemon-data';
 
 
 export default class {

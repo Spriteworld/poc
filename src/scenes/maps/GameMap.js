@@ -74,7 +74,7 @@ export default class extends Phaser.Scene {
     }
 
     this.animatedTiles.init(tilemap);
-    // PhaserGUIAction(this);
+    PhaserGUIAction(this);
   }
 
   debugObjects() {
@@ -401,12 +401,12 @@ export default class extends Phaser.Scene {
       y: y,
       scene: this,
       collides: true,
-      'facing-direction': 'down',
+      'facing-direction': 'down'
     });
     this.registry.set('player', this.player);
     this.cameras.main.zoom = 1.6;
-    this.cameras.main.startFollow(this.player.config.sprite, true);
-    this.cameras.main.setFollowOffset(-this.player.config.sprite.width, -this.player.config.sprite.height)
+    this.cameras.main.startFollow(this.player, true);
+    this.cameras.main.setFollowOffset(-this.player.width, -this.player.height)
 
     this.playerMon = this.addMonToScene('RNG', x +1, y, {
       id: 'playerMon',

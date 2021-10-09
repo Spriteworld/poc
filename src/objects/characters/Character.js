@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 export default class extends Phaser.GameObjects.Sprite {
   constructor(config) {
-    super(config.scene, config.x, config.y, config.key);
+    super(config.scene, config.x, config.y, config.texture);
     this.config = {...{
       sprite: null,
       scene: null,
@@ -18,7 +18,6 @@ export default class extends Phaser.GameObjects.Sprite {
     }, ...config};
 
     this.setName(this.id);
-    this.config.sprite = this.config.scene.add.sprite(0, 0, this.config.texture);
 
     this.ge = this.config.scene.gridEngine;
     this.spinRate = this.config['spin-rate'];
@@ -52,7 +51,7 @@ export default class extends Phaser.GameObjects.Sprite {
   characterDef(def) {
     return {
       id: def.id,
-      sprite: def.sprite,
+      sprite: this,
       walkingAnimationMapping: this.characterFramesDef(),
       startPosition: { x: def.x, y: def.y },
       facingDirection: def.facingDirection,
@@ -91,7 +90,7 @@ export default class extends Phaser.GameObjects.Sprite {
     return this.ge.moveTo(this.config.id, {x:x, y:y});
   }
 
-  stop() {
+  stopMovement() {
     return this.ge.stopMovement(this.config.id);
   }
 
@@ -168,12 +167,18 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   handleRun() {
+    if (this.spinningDir !== null || this.slidingDir !== null) {
+      return;
+    }
+
+    // run
     let activator = this.config.scene.input.keyboard.addKey('X');
     if (!this.config.scene.inside && activator.isDown) {
       this.ge.setSpeed(this.config.id, 8);
       return;
     }
 
+    // bike
     let activator2 = this.config.scene.input.keyboard.addKey('C');
     if (!this.config.scene.inside && activator2.isDown) {
       this.ge.setSpeed(this.config.id, 20);
@@ -194,7 +199,7 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   startSpinning(direction) {
-    this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesStaticDef());
+    this.ge.setWalkingAnimationMapping(this.config.id, undefined);
     this.anims.play(this.config.texture+'-spin');
     this.spinningDir = direction;
   }

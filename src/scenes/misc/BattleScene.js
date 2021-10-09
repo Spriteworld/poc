@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { BattlePokemon, BattleTrainer, BattleTeam } from '@Objects';
 import { rnd } from '@Utilities';
-import { STATS } from '@pokelinkapp/pokemon-data/';
+import { STATS } from '@pokelinkapp/pokemon-data';
 
 export default class extends Phaser.Scene {
   constructor(config) {

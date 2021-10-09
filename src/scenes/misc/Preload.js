@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import * as Tileset from '@Tileset';
-import { STATS } from '@pokelinkapp/pokemon-data/';
+import { STATS } from '@pokelinkapp/pokemon-data';
 import { NATURES, BasePokemon } from '@pokelinkapp/pokemon-data/src/pokemon';
 
 export default class extends Phaser.Scene {
@@ -68,9 +68,10 @@ export default class extends Phaser.Scene {
 
   createAnimations() {
     Object.keys(Tileset.trainers).forEach((name) => {
+      console.log('setup '+name+'-spin animation');
       this.anims.create({
         key: name+'-spin',
-        frames: this.anims.generateFrameNumbers(name, { frames: [12, 0, 4, 8] }),
+        frames: this.anims.generateFrameNumbers(name, { frames: [12, 8, 4, 0] }),
         frameRate: 7,
         repeat: -1
       });
