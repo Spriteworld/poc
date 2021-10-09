@@ -92,6 +92,11 @@
                 "value": 500
             },
             {
+                "name": "shiny",
+                "type": "bool",
+                "value": false
+            },
+            {
                 "name": "spin",
                 "type": "bool",
                 "value": false
@@ -105,11 +110,6 @@
                 "name": "texture",
                 "type": "string",
                 "value": ""
-            },
-            {
-                "name": "shiny",
-                "type": "bool",
-                "value": false
             }
         ]
     },
@@ -125,9 +125,25 @@
         ]
     },
     {
+        "color": "#ffff0000",
+        "name": "playerSpawn",
+        "properties": [
+            {
+                "name": "facing-direction",
+                "type": "string",
+                "value": "down"
+            }
+        ]
+    },
+    {
         "color": "#ff00ffff",
         "name": "warp",
         "properties": [
+            {
+                "name": "layer",
+                "type": "string",
+                "value": ""
+            },
             {
                 "name": "warp",
                 "type": "string",
@@ -147,11 +163,6 @@
                 "name": "warp-y",
                 "type": "int",
                 "value": 0
-            },
-            {
-                "name": "layer",
-                "type": "string",
-                "value": ""
             }
         ]
     }

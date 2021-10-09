@@ -64,14 +64,16 @@ export default class extends Phaser.Scene {
     }
 
     this.createAnimations();
-    PhaserGUIAction(this);
   }
 
   createAnimations() {
-    this.anims.create({
-      key: 'red-spin',
-      frames: this.anims.generateFrameNumbers('red', { frames: [12, 0, 4, 8] }),
-      frameRate: 7,
+    Object.keys(Tileset.trainers).forEach((name) => {
+      this.anims.create({
+        key: name+'-spin',
+        frames: this.anims.generateFrameNumbers(name, { frames: [12, 0, 4, 8] }),
+        frameRate: 7,
+        repeat: -1
+      });
     });
   }
 

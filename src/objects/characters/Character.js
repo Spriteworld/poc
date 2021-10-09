@@ -54,7 +54,6 @@ export default class extends Phaser.GameObjects.Sprite {
       id: def.id,
       sprite: def.sprite,
       walkingAnimationMapping: this.characterFramesDef(),
-      walkingAnimationEnabled: true,
       startPosition: { x: def.x, y: def.y },
       facingDirection: def.facingDirection,
       collides: def.collides,
@@ -195,8 +194,8 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   startSpinning(direction) {
-    this.ge.setWalkingAnimationMapping(this.config.id, undefined);
-    this.anims.play(this.config.texture+'-spin', true);
+    this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesStaticDef());
+    this.anims.play(this.config.texture+'-spin');
     this.spinningDir = direction;
   }
 

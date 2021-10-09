@@ -13,7 +13,7 @@ export default class extends Phaser.Scene {
     this.config.tilemap = {};
     this.config.playerLocation = {};
 
-    this.debug = false;
+    this.debug = true;
     this.cameraFade = 150;
     this.totalMon = 386;
     // console.log(['Loading Scene', config.mapName]);
@@ -68,11 +68,13 @@ export default class extends Phaser.Scene {
       this.initNpcs();
       this.initPkmn();
       this.initWarps();
+      this.initPlayer();
 
       this.debugObjects();
     }
 
     this.animatedTiles.init(tilemap);
+    PhaserGUIAction(this);
   }
 
   debugObjects() {
@@ -127,6 +129,13 @@ export default class extends Phaser.Scene {
     });
   }
 
+  initPlayer() {
+    let spawn = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'playerSpawn');
+    if (spawn.length === 0) { throw 'No player spawn found'; }
+    if (spawn.length > 1) { throw 'Only 1 player spawn can be in the map.'; }
+
+    this.addPlayerToScene(spawn[0].x / 32, spawn[0].y / 32);
+  }
 
   initNpcs() {
     let npcs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'npc');

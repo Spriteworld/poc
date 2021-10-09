@@ -18,13 +18,7 @@ export default class extends GameMap {
 
   create () {
     this.loadMap();
-    // this.addPlayerToScene(16, 16);
-    // this.addPlayerToScene(24, 42);
-    // this.addPlayerToScene(8, 6);
-    this.addPlayerToScene(11, 20);
-
     this.createCharacters();
-    // this.player.disableMovement();
   }
 
   update(time, delta) {
