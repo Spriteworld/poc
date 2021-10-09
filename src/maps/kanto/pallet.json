@@ -55,7 +55,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/tileset\/gen3_outside.json"
+         "source":"..\/..\/tileset\/gen3_outside.json"
         }],
  "tilewidth":32,
  "type":"map",

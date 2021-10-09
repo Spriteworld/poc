@@ -74,7 +74,7 @@ export default class extends Phaser.Scene {
     }
 
     this.animatedTiles.init(tilemap);
-    PhaserGUIAction(this);
+    // PhaserGUIAction(this);
   }
 
   debugObjects() {
@@ -130,6 +130,11 @@ export default class extends Phaser.Scene {
   }
 
   initPlayer() {
+    if (Object.keys(this.config.playerLocation).length != 0) {
+      this.addPlayerToScene(this.config.playerLocation.x, this.config.playerLocation.y);
+      return;
+    }
+
     let spawn = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'playerSpawn');
     if (spawn.length === 0) { throw 'No player spawn found'; }
     if (spawn.length > 1) { throw 'Only 1 player spawn can be in the map.'; }
