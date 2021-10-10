@@ -13,15 +13,12 @@ export default class extends Phaser.Scene {
     this.config.tilemap = {};
     this.config.playerLocation = {};
 
-    this.debug = true;
+    this.debug = false;
     this.cameraFade = 150;
     this.totalMon = 386;
-    // console.log(['Loading Scene', config.mapName]);
-    // console.log(this);
   }
 
   init(data) {
-    // console.log(['init data', data]);
     this.config = { ...this.config, ...data };
     this.player = {};
     this.playerMon = {};
@@ -74,7 +71,7 @@ export default class extends Phaser.Scene {
     }
 
     this.animatedTiles.init(tilemap);
-    PhaserGUIAction(this);
+    // PhaserGUIAction(this);
   }
 
   debugObjects() {
@@ -108,7 +105,6 @@ export default class extends Phaser.Scene {
         })
       ;
 
-      // console.log(obj);
       let tile = this.add.rectangle(obj.x, obj.y, obj.width, obj.height);
       tile.setOrigin(0,0);
       tile.setStrokeStyle(1, 0x1a65ac);
@@ -150,21 +146,22 @@ export default class extends Phaser.Scene {
     this.npcs.runChildUpdate = true;
     let color = this.random_rgba();
     npcs.forEach((npc) => {
-      let npcObj = new NPC({
-        id: npc.name,
-        texture: this.getPropertyValue(npc.properties, 'texture'),
-        x: npc.x / 32,
-        y: npc.y / 32,
-        scene: this,
-        spin: this.getPropertyValue(npc.properties, 'spin'),
-        'spin-rate': this.getPropertyValue(npc.properties, 'spin-rate'),
-        'facing-direction': this.getPropertyValue(npc.properties, 'facing-direction', 'down'),
-        move: this.getPropertyValue(npc.properties, 'move'),
-        'move-rate': this.getPropertyValue(npc.properties, 'move-rate'),
-        'move-radius': this.getPropertyValue(npc.properties, 'move-radius'),
-      });
-      this.npcs.add(npcObj);
-      this.interactTile(this.config.tilemap, npc, color);
+      this.addNPCToScene(
+        npc.name,
+        this.getPropertyValue(npc.properties, 'texture'),
+        npc.x / 32,
+        npc.y / 32,
+        {
+          id: npc.name,
+          scene: this,
+          spin: this.getPropertyValue(npc.properties, 'spin'),
+          'spin-rate': this.getPropertyValue(npc.properties, 'spin-rate'),
+          'facing-direction': this.getPropertyValue(npc.properties, 'facing-direction', 'down'),
+          move: this.getPropertyValue(npc.properties, 'move'),
+          'move-rate': this.getPropertyValue(npc.properties, 'move-rate'),
+          'move-radius': this.getPropertyValue(npc.properties, 'move-radius')
+        }
+      );
     });
   }
 
@@ -213,7 +210,6 @@ export default class extends Phaser.Scene {
     let transitions = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'layerTransition');
     if (transitions.length === 0) { return; }
 
-    let color = this.random_rgba();
     transitions.forEach((obj) => {
       this.gridEngine.setTransition(
         { x: obj.x /32, y: obj.y /32 },
@@ -280,7 +276,9 @@ export default class extends Phaser.Scene {
 
   createCharacters() {
     this.gridEngine.create(this.config.tilemap, {
-      characters: this.characters
+      characters: this.characters.map(char => {
+        return char.characterDef();
+      })
     });
 
     if (this.objects !== null) {
@@ -296,20 +294,21 @@ export default class extends Phaser.Scene {
     this.gridEngine
       .positionChangeStarted()
       .subscribe(({ charId, exitTile, enterTile }) => {
-        if (![this.player.config.id].includes(charId)) {
-          return;
-        }
+        let char = this.characters.find(char => {
+          return charId === char.config.id;
+        });
+        if (typeof char === 'undefined') { return; }
 
         let isIceTile = this.iceTiles.some(tile => {
           return tile[0] == enterTile.x && tile[1] == enterTile.y;
         });
         if (isIceTile) {
           let dir = this.gridEngine.getFacingDirection(this.player.config.id);
-          this.player.stopSpinning();
-          this.player.startSliding(dir);
+          char.stopSpinning();
+          char.startSliding(dir);
         } else {
-          if (this.player.slidingDir !== null) {
-            this.player.stopSliding();
+          if (char.slidingDir !== null) {
+            char.stopSliding();
           }
         }
 
@@ -321,29 +320,29 @@ export default class extends Phaser.Scene {
           let props = this.getTileProperties(enterTile.x, enterTile.y);
           let dir = this.getValue(props, 'sw_spin', false);
           if (dir !== false) {
-            this.player.stopSliding();
-            this.player.startSpinning(dir);
+            char.stopSliding();
+            char.startSpinning(dir);
           }
         }
 
         let isStopTile = this.stopTiles.some(tile => {
           return tile[0] == enterTile.x && tile[1] == enterTile.y;
         });
-        if (isStopTile) {
-          if (this.player.spinningDir !== null) {
-            this.player.stopSpinning();
-          }
+        if (isStopTile && char.spinningDir !== null) {
+          char.stopSpinning();
         }
       });
 
     this.gridEngine
       .movementStopped()
       .subscribe(({ charId, direction }) => {
-        if (![this.player.config.id].includes(charId)) {
-          return;
-        }
-        if (this.player.slidingDir !== null) {
-          this.player.stopSliding();
+        let char = this.characters.find(char => {
+          return charId === char.config.id;
+        });
+        if (typeof char === 'undefined') { return; }
+
+        if (char.slidingDir !== null) {
+          char.stopSliding();
         }
       });
 
@@ -357,11 +356,9 @@ export default class extends Phaser.Scene {
 
         // setup handlers etc
         this.handleWarps(enterTile);
-        this.handleObservers(enterTile, exitTile);
 
         // make the playerMon follow the player
-        this.playerMon.moveTo(exitTile.x, exitTile.y);
-        // this.playerMon.lookAt(this.player.config.id);
+        // this.playerMon.moveTo(exitTile.x, exitTile.y);
       });
   }
 
@@ -376,17 +373,6 @@ export default class extends Phaser.Scene {
     }
   }
 
-  handleObservers(enterTile, exitTile) {
-    // if we dont have any custom properties on the tile, nope out
-    let tile = this.config.tilemap.getTileAt(enterTile.x, enterTile.y);
-    if (tile === null) { return; }
-    console.log(tile);
-    let tileProps = tile.properties;
-    if (tileProps.length === 0) { return; }
-
-
-  }
-
   addPlayerToScene(x, y) {
     this.tintTile(this.config.tilemap,
       this.config.playerLocation.length > 0 ? this.config.playerLocation.x : x,
@@ -399,12 +385,10 @@ export default class extends Phaser.Scene {
       texture: 'red',
       x: x,
       y: y,
-      scene: this,
-      collides: true,
-      'facing-direction': 'down'
+      scene: this
     });
     this.registry.set('player', this.player);
-    this.cameras.main.zoom = 1.6;
+    // this.cameras.main.zoom = 1.6;
     this.cameras.main.startFollow(this.player, true);
     this.cameras.main.setFollowOffset(-this.player.width, -this.player.height)
 
@@ -415,6 +399,21 @@ export default class extends Phaser.Scene {
       move: false,
       spin: false,
     });
+  }
+
+  addNPCToScene(name, texture, x, y, config) {
+    let npcDef = {...{
+      id: 'npc_'+name,
+      texture: texture,
+      x: x,
+      y: y,
+      scene: this
+    }, ...config };
+
+    let npcObj = new NPC(npcDef);
+    this.npcs.add(npcObj);
+    this.interactTile(this.config.tilemap, npcDef, 0x000000);
+    return npcObj;
   }
 
   addMonToScene(monId, x, y, config) {

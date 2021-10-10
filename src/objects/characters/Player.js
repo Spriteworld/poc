@@ -9,6 +9,7 @@ export default class extends Character {
   }
 
   update() {
+    this.handleAutoMoveTiles();
     this.handleMovement();
     this.handleRun();
 

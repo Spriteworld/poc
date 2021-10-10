@@ -1,14 +1,11 @@
 import {GameMap} from '@Scenes';
-import {TestMap} from '@Maps';
-import {PkmnOverworld} from '@Objects';
-import { STATS } from '@pokelinkapp/pokemon-data';
-import { GROWTH, NATURES, BasePokemon } from '@pokelinkapp/pokemon-data/src/pokemon';
+import {SkylandMap} from '@Maps';
 
 export default class extends GameMap {
   constructor() {
     super({
-      mapName: 'Test',
-      map: TestMap
+      mapName: 'Skyland',
+      map: SkylandMap
     });
   }
 

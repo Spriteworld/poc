@@ -1,5 +1,4 @@
 import {GameMap} from '@Scenes';
-import {Player, NPC} from '@Objects';
 import {HeroHouseF1Map} from '@Maps';
 
 export default class extends GameMap {
@@ -17,12 +16,10 @@ export default class extends GameMap {
 
   create () {
     this.loadMap();
-    this.addPlayerToScene(4, 9);
-
     this.createCharacters();
   }
 
-  update() {
-    this.player.update();
+  update(time, delta) {
+    this.updateCharacters(time, delta);
   }
 }

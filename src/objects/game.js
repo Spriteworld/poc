@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import {
   OverworldUI, Preload,
-  Test,
+  Test,Skyland,
   BattleUI, BattleScene,
   PalletTown,
   HeroHouseF1,
@@ -17,6 +17,7 @@ export default class extends Phaser.Game {
     this.scene.add('Preload', Preload);
 
     this.scene.add('Test', Test);
+    this.scene.add('Skyland', Skyland);
 
     this.scene.add('BattleUI', BattleUI);
     this.scene.add('BattleScene', BattleScene);

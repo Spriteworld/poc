@@ -7,6 +7,7 @@ export default class extends Character {
 
   update(time, delta) {
     if (this.ge.created === false) { return; }
+    this.handleAutoMoveTiles();
     this.addAutoSpin(delta);
     this.addAutoMove();
   }

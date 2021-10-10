@@ -68,10 +68,25 @@ export default class extends Phaser.Scene {
 
   createAnimations() {
     Object.keys(Tileset.trainers).forEach((name) => {
-      console.log('setup '+name+'-spin animation');
       this.anims.create({
         key: name+'-spin',
-        frames: this.anims.generateFrameNumbers(name, { frames: [12, 8, 4, 0] }),
+        frames: this.anims.generateFrameNumbers(name, { frames: [0, 4, 12, 8] }),
+        frameRate: 7,
+        repeat: -1
+      });
+    });
+    Object.keys(Tileset.pokemon).forEach((name) => {
+      this.anims.create({
+        key: name+'-spin',
+        frames: this.anims.generateFrameNumbers(name, { frames: [0, 4, 12, 8] }),
+        frameRate: 7,
+        repeat: -1
+      });
+    });
+    Object.keys(Tileset.pokemon_shiny).forEach((name) => {
+      this.anims.create({
+        key: name+'-spin',
+        frames: this.anims.generateFrameNumbers(name, { frames: [0, 4, 12, 8] }),
         frameRate: 7,
         repeat: -1
       });

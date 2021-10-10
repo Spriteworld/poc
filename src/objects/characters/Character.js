@@ -4,10 +4,9 @@ export default class extends Phaser.GameObjects.Sprite {
   constructor(config) {
     super(config.scene, config.x, config.y, config.texture);
     this.config = {...{
-      sprite: null,
       scene: null,
       id: null,
-      spin: 'down',
+      spin: false,
       'spin-rate': 600,
       move: false,
       'move-rate': 600,
@@ -19,15 +18,14 @@ export default class extends Phaser.GameObjects.Sprite {
 
     this.setName(this.id);
 
+    this.initalCreation = true;
     this.ge = this.config.scene.gridEngine;
     this.spinRate = this.config['spin-rate'];
     this.slidingDir = null;
     this.spinningDir = null;
 
     this.config.scene.add.existing(this);
-    this.config.scene.addCharacter(
-      this.characterDef(this.config)
-    );
+    this.config.scene.addCharacter(this);
   }
 
   characterFramesDef() {
@@ -48,7 +46,8 @@ export default class extends Phaser.GameObjects.Sprite {
     };
   }
 
-  characterDef(def) {
+  characterDef() {
+    let def = this.config;
     return {
       id: def.id,
       sprite: this,
@@ -78,16 +77,19 @@ export default class extends Phaser.GameObjects.Sprite {
     return this.ge.turnTowards(this.config.id, dir.toLowerCase());
   }
 
-  lookAt(character) {
-    return this.ge.turnTowards(this.config.id, this.ge.getFacingPosition(character.config.id));
+  lookAt(charId) {
+    return this.ge.turnTowards(
+      this.config.id,
+      this.ge.getFacingPosition(charId)
+    );
   }
 
   move(dir) {
     return this.ge.move(this.config.id, dir.toLowerCase());
   }
 
-  moveTo(x, y) {
-    return this.ge.moveTo(this.config.id, {x:x, y:y});
+  moveTo(x, y, config) {
+    return this.ge.moveTo(this.config.id, {x:x, y:y}, config);
   }
 
   stopMovement() {
@@ -99,8 +101,8 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   getPosInFacingDirection() {
-    const pos = this.ge.getPosition(this.config.id);
-    const dir = this.ge.getFacingDirection(this.config.id);
+    let pos = this.getPosition();
+    let dir = this.getFacingDirection();
     if (dir === 'up') {
       return { ...pos, y: pos.y - 1 };
     } else if (dir === 'down') {
@@ -113,8 +115,8 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   getPosInBehindDirection() {
-    const pos = this.ge.getPosition(this.config.id);
-    const dir = this.ge.getFacingDirection(this.config.id);
+    let pos = this.getPosition();
+    let dir = this.getFacingDirection();
     if (dir === 'up') {
       return { ...pos, y: pos.y + 1 };
     } else if (dir === 'down') {
@@ -130,7 +132,7 @@ export default class extends Phaser.GameObjects.Sprite {
     return this.ge;
   }
 
-  handleMovement() {
+  handleAutoMoveTiles() {
     if (this.slidingDir !== null) {
       this.move(this.slidingDir);
       return;
@@ -139,11 +141,12 @@ export default class extends Phaser.GameObjects.Sprite {
       this.move(this.spinningDir);
       return;
     }
+  }
 
-    let allowed = this.config.scene.registry.get('player_input')
-      || this.spinningDir === null
-      || this.slidingDir === null
-    ;
+  handleMovement() {
+    let allowed = this.config.scene.registry.get('player_input');
+    if (this.spinningDir !== null) { allowed = false; }
+    if (this.slidingDir !== null) { allowed = false; }
     if (allowed === false) { return; }
 
     const duration = 120;
@@ -223,12 +226,15 @@ export default class extends Phaser.GameObjects.Sprite {
   }
 
   addAutoSpin(delta) {
-    let lookDir = this.config['facing-direction'];
-    let faceDir = this.getFacingDirection();
+    if (this.initalCreation) {
+      let lookDir = this.config['facing-direction'];
+      let faceDir = this.getFacingDirection();
 
-    if (faceDir !== lookDir) {
-      this.look(lookDir);
-      return;
+      if (faceDir !== lookDir) {
+        this.look(lookDir);
+        return;
+      }
+      this.initalCreation = !this.initalCreation;
     }
 
     if (this.config.spin !== true) { return; }
