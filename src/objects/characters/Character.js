@@ -14,6 +14,7 @@ export default class extends Phaser.GameObjects.Sprite {
       follow: false,
       collides: true,
       'facing-direction': 'down',
+      'seen-radius': 0
     }, ...config};
 
     this.setName(this.id);
@@ -26,6 +27,21 @@ export default class extends Phaser.GameObjects.Sprite {
 
     this.config.scene.add.existing(this);
     this.config.scene.addCharacter(this);
+
+    // seen-radius config
+    this.color = {
+      debug: true,
+      normal: 0x1d7196,
+      selected: 0xff0000
+    };
+    this.seenRect = this.config.scene.add
+      .rectangle(this.config.x * 32, this.config.y * 32, 0, 0, this.color.normal, this.color.debug ? 0.4 : 0);
+    this.seenRectClone = Phaser.Geom.Rectangle.Clone(this.seenRect);
+    this.playerRect = this.config.scene.add
+      .rectangle(this.config.x * 32, this.config.y * 32, 30, 30, this.color.normal, this.color.debug ? 0.5 : 0);
+
+    this.seenRect.setOrigin(0, 0);
+    this.playerRect.setOrigin(0, 0);
   }
 
   characterFramesDef() {
@@ -203,13 +219,17 @@ export default class extends Phaser.GameObjects.Sprite {
 
   startSpinning(direction) {
     this.ge.setWalkingAnimationMapping(this.config.id, undefined);
-    this.anims.play(this.config.texture+'-spin');
+    if (this.config.scene.scene.get('Preload').enableAnimations) {
+      this.anims.play(this.config.texture+'-spin');
+    }
     this.spinningDir = direction;
   }
 
   stopSpinning() {
     this.ge.setWalkingAnimationMapping(this.config.id, this.characterFramesDef());
-    this.anims.stop();
+    if (this.config.scene.scene.get('Preload').enableAnimations) {
+      this.anims.stop();
+    }
     this.spinningDir = null;
   }
 
@@ -251,5 +271,55 @@ export default class extends Phaser.GameObjects.Sprite {
       }
       this.look(dir);
     }
+  }
+
+  canSeePlayer() {
+    if (this.config['seen-radius'] === 0) { return; }
+
+    // move the clone
+    let characterBounds = this.getBounds();
+    this.seenRectClone.x = characterBounds.x;
+    this.seenRectClone.y = characterBounds.y+8;
+
+    let faceDir = this.getPosInFacingDirection();
+    let seenRadiusInTiles = this.config['seen-radius']*32;
+    switch(this.getFacingDirection()) {
+      case 'left':
+        this.seenRect.x = ((faceDir.x+1) * 32) - seenRadiusInTiles;
+        this.seenRect.y = this.seenRectClone.y;
+        this.seenRect.width = seenRadiusInTiles;
+        this.seenRect.height = 32;
+      break;
+
+      case 'right':
+        this.seenRect.x = faceDir.x * 32;
+        this.seenRect.y = this.seenRectClone.y;
+        this.seenRect.width = seenRadiusInTiles;
+        this.seenRect.height = 32;
+      break;
+
+      case 'up':
+        this.seenRect.x = this.seenRectClone.x;
+        this.seenRect.y = ((faceDir.y+1) * 32) - seenRadiusInTiles;
+        this.seenRect.width = 32;
+        this.seenRect.height = seenRadiusInTiles;
+      break;
+
+      case 'down':
+        this.seenRect.x = this.seenRectClone.x;
+        this.seenRect.y = faceDir.y * 32;
+        this.seenRect.width = 32;
+        this.seenRect.height = seenRadiusInTiles;
+      break;
+    }
+
+    let playerBounds = this.config.scene.player.getBounds();
+    this.playerRect.x = (playerBounds.x+1);
+    this.playerRect.y = (playerBounds.y+1)+8;
+    let isInside = Phaser.Geom.Rectangle.ContainsPoint(this.seenRect, this.playerRect);
+    if (isInside) {
+      console.log(this.config.id +' saw the player!');
+    }
+    this.seenRect.fillColor = isInside ? this.color.selected : this.color.normal;
   }
 }

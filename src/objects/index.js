@@ -1,4 +1,6 @@
 import Game from './Game.js';
+import GameMap from './GameMap.js';
+
 import Character from './characters/Character.js';
 import Player from './characters/Player.js';
 import NPC from './characters/Npc.js';
@@ -23,6 +25,8 @@ import * as ObjectTypes from '../tileset/objecttypes.json';
 
 export {
     Game,
+    GameMap,
+
     Character,
     Player,
     NPC,

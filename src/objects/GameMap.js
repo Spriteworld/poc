@@ -159,7 +159,8 @@ export default class extends Phaser.Scene {
           'facing-direction': this.getPropertyValue(npc.properties, 'facing-direction', 'down'),
           move: this.getPropertyValue(npc.properties, 'move'),
           'move-rate': this.getPropertyValue(npc.properties, 'move-rate'),
-          'move-radius': this.getPropertyValue(npc.properties, 'move-radius')
+          'move-radius': this.getPropertyValue(npc.properties, 'move-radius'),
+          'seen-radius': this.getPropertyValue(npc.properties, 'seen-radius')
         }
       );
     });
@@ -349,7 +350,7 @@ export default class extends Phaser.Scene {
     // make players pokemon follow em
     this.gridEngine
       .positionChangeFinished()
-      .subscribe(({ charId, exitTile, enterTile }) => {
+      .subscribe(({ charId, exitTile, enterTile, exitLayer }) => {
         if (![this.player.config.id].includes(charId)) {
           return;
         }
@@ -358,13 +359,19 @@ export default class extends Phaser.Scene {
         this.handleWarps(enterTile);
 
         // make the playerMon follow the player
-        // this.playerMon.moveTo(exitTile.x, exitTile.y);
+        if (this.scene.get('Preload').enablePlayerOWPokemon) {
+          this.playerMon.moveTo(exitTile.x, exitTile.y, {
+            targetLayer: exitLayer
+          });
+        }
       });
   }
 
   updateCharacters(time, delta) {
     this.player.update(time, delta);
-    this.playerMon.update(time, delta);
+    if (this.scene.get('Preload').enablePlayerOWPokemon) {
+      this.playerMon.update(time, delta);
+    }
 
     if (this.mon.length > 0) {
       this.mon.forEach(function(mon) {
@@ -385,20 +392,46 @@ export default class extends Phaser.Scene {
       texture: 'red',
       x: x,
       y: y,
-      scene: this
+      scene: this,
+      'seen-radius': 3
     });
     this.registry.set('player', this.player);
-    // this.cameras.main.zoom = 1.6;
     this.cameras.main.startFollow(this.player, true);
-    this.cameras.main.setFollowOffset(-this.player.width, -this.player.height)
+    this.cameras.main.setFollowOffset(-this.player.width, -this.player.height);
 
-    this.playerMon = this.addMonToScene('RNG', x +1, y, {
-      id: 'playerMon',
-      follow: this.player.config.id,
-      collides: false,
-      move: false,
-      spin: false,
-    });
+    // debug for time overlay stuffs
+    if (this.scene.get('TimeOverlay').debug) {
+      this.cameras.main.setSize(400, 300);
+      this.cameras.main.zoom = 0.5;
+
+      // evening
+      let cam2 = this.cameras.add(400, 0, 400, 300);
+      cam2.zoom = 0.5;
+      cam2.startFollow(this.player, true);
+      cam2.setFollowOffset(-this.player.width, -this.player.height);
+
+      // night
+      let cam3 = this.cameras.add(0, 300, 400, 300);
+      cam3.zoom = 0.5;
+      cam3.startFollow(this.player, true);
+      cam3.setFollowOffset(-this.player.width, -this.player.height);
+
+      // morning
+      let cam4 = this.cameras.add(400, 300, 400, 300);
+      cam4.zoom = 0.5;
+      cam4.startFollow(this.player, true);
+      cam4.setFollowOffset(-this.player.width, -this.player.height);
+    }
+
+    if (this.scene.get('Preload').enablePlayerOWPokemon) {
+      this.playerMon = this.addMonToScene('RNG', x +1, y, {
+        id: 'playerMon',
+        follow: this.player.config.id,
+        collides: false,
+        move: false,
+        spin: false,
+      });
+    }
   }
 
   addNPCToScene(name, texture, x, y, config) {

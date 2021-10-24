@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import {Character} from '@Objects';
 
 export default class extends Character {
@@ -10,5 +11,6 @@ export default class extends Character {
     this.handleAutoMoveTiles();
     this.addAutoSpin(delta);
     this.addAutoMove();
+    this.canSeePlayer();
   }
 }

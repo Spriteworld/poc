@@ -1,4 +1,4 @@
-import {GameMap} from '@Scenes';
+import {GameMap} from '@Objects';
 import {HeroHouseF2Map} from '@Maps';
 
 export default class extends GameMap {

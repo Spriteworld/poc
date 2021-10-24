@@ -117,11 +117,9 @@ export default class extends Phaser.Scene {
       } else {
         console.log('enemys '+this.activeMon[this.playerTurn].getName()+'\s turn');
         // call the enemy's attack function
-        let dmg = rnd(1, 6);
         this.actions.enemy = {
-          type: 'attack',
-          target: this.activeMon['player'],
-          dmg: dmg
+          type: 'npc_attack',
+          target: this.activeMon['player']
         };
         console.log('enemy action set!', this.actions.enemy);
         // add timer for the next turn, so will have smooth gameplay
@@ -147,14 +145,18 @@ export default class extends Phaser.Scene {
 
       console.log('order has been decided!: '+ order.join(','));
       order.forEach(player => {
+        if (this.checkEndBattle()) {
+          this.endBattle();
+          return;
+        }
+
         let enemy = player === 'player' ? 'enemy' : 'player';
         switch (this.actions[player].type) {
           case 'attack':
-            console.log(this.activeMon[player].getName() + ' attacks '
-              + this.activeMon[enemy].getName() +' for '
-              + this.actions[player].dmg + ' damage'
-            );
-            this.activeMon[player].attack(this.activeMon[enemy], this.actions[player].dmg);
+            this.activeMon[player].attack(this.actions[player].target, this.actions[player].move);
+          break;
+          case 'npc_attack':
+            this.activeMon[player].attackRandomMove(this.actions[player].target);
           break;
         }
       });
@@ -166,18 +168,16 @@ export default class extends Phaser.Scene {
     console.groupEnd();
   }
 
-  receivePlayerSelection(action) {
+  receivePlayerSelection(action, index) {
     if (action == 'attack') {
       console.group('BattleScene::attack');
-      let dmg = rnd(1, 6);
+      let move = this.activeMon['player']['moves'][index];
       this.actions.player = {
         type: 'attack',
         target: this.activeMon['enemy'],
-        dmg: dmg
+        move: move,
       };
       console.log('player action set!', this.actions.player);
-      // this.activeMon['player'].attack(this.activeMon['enemy'], dmg);
-      // console.log(this.activeMon['player'].getName() + ' attacks ' + this.activeMon['enemy'].getName() +' for '+dmg+' damage');
       console.groupEnd();
     }
     this.time.addEvent({ delay: 1000, callback: this.nextTurn, callbackScope: this });

@@ -1,11 +1,16 @@
 import Phaser from 'phaser';
 import * as Tileset from '@Tileset';
-import { STATS } from '@pokelinkapp/pokemon-data';
-import { NATURES, BasePokemon } from '@pokelinkapp/pokemon-data/src/pokemon';
+import { STATS, NATURES, BasePokemon } from '@pokelinkapp/pokemon-data';
 
 export default class extends Phaser.Scene {
   constructor() {
     super({ key: 'Preload' });
+
+    this.loadOverworld = true;
+    this.enableOWTrainers = true;
+    this.enableOWPokemon = true;
+    this.enablePlayerOWPokemon = true;
+    this.enableAnimations = true;
   }
 
   preload () {
@@ -20,77 +25,90 @@ export default class extends Phaser.Scene {
     var progress = this.add.graphics();
 
     this.load.on('progress', function (value) {
-        progress.clear();
-        progress.fillStyle(0xffffff, 1);
-        progress.fillRect(0, 270, 800 * value, 60);
+      progress.clear();
+      progress.fillStyle(0xffffff, 1);
+      progress.fillRect(0, 270, 800 * value, 60);
     });
 
     this.load.on('complete', function () {
-        progress.destroy();
+      progress.destroy();
     });
 
+    this.load.image('blank', Tileset.blank);
     this.load.image('gen3_inside', Tileset.gen3inside);
     this.load.image('gen3_outside', Tileset.gen3outside);
     this.load.image('rse_inside', Tileset.rseinside);
     this.load.image('rse_outside', Tileset.rseoutside);
     this.load.spritesheet('red', Tileset.red, { frameWidth: 32, frameHeight: 40 });
-    Object.keys(Tileset.trainers).forEach((name) => {
-      this.load.spritesheet(name, Tileset.trainers[name]
-        , { frameWidth: 32, frameHeight: 42 });
-    });
 
-    Object.keys(Tileset.pokemon).forEach((name) => {
-      this.load.spritesheet(name, Tileset.pokemon[name]
-        , { frameWidth: 64, frameHeight: 64 });
-    });
-    Object.keys(Tileset.pokemon_shiny).forEach((name) => {
-      this.load.spritesheet(name, Tileset.pokemon_shiny[name]
-        , { frameWidth: 64, frameHeight: 64 });
-    });
-    // Object.keys(Tileset.pokemon_home).forEach((name) => {
-    //   this.load.image(name, Tileset.pokemon_home[name]);
-    // });
+    if (this.loadOverworld) {
+      if (this.enableOWTrainers) {
+        Object.keys(Tileset.trainers).forEach((name) => {
+          this.load.spritesheet(name, Tileset.trainers[name]
+            , { frameWidth: 32, frameHeight: 42 });
+        });
+      }
+      if (this.enableOWPokemon) {
+        Object.keys(Tileset.pokemon).forEach((name) => {
+          this.load.spritesheet(name, Tileset.pokemon[name]
+            , { frameWidth: 64, frameHeight: 64 });
+        });
+        Object.keys(Tileset.pokemon_shiny).forEach((name) => {
+          this.load.spritesheet(name, Tileset.pokemon_shiny[name]
+            , { frameWidth: 64, frameHeight: 64 });
+        });
+      }
+    } else {
+      // Object.keys(Tileset.pokemon_home).forEach((name) => {
+      //   this.load.image(name, Tileset.pokemon_home[name]);
+      // });
+    }
 
   }
 
   create () {
-    let load = 'overworld';
-    if (load === 'overworld') {
+    if (this.loadOverworld) {
       this.scene.start('Test');
+      this.scene.start('TimeOverlay');
+      this.scene.bringToTop('TimeOverlay');
       this.scene.start('OverworldUI');
       this.scene.bringToTop('OverworldUI');
+      this.createAnimations();
     } else {
       this.scene.start('BattleScene', this.battleData());
     }
 
-    this.createAnimations();
   }
 
   createAnimations() {
-    Object.keys(Tileset.trainers).forEach((name) => {
-      this.anims.create({
-        key: name+'-spin',
-        frames: this.anims.generateFrameNumbers(name, { frames: [0, 4, 12, 8] }),
-        frameRate: 7,
-        repeat: -1
+    if (this.enableOWTrainers) {
+      Object.keys(Tileset.trainers).forEach((name) => {
+        this.anims.create({
+          key: name+'-spin',
+          frames: this.anims.generateFrameNumbers(name, { frames: [0, 4, 12, 8] }),
+          frameRate: 7,
+          repeat: -1
+        });
       });
-    });
-    Object.keys(Tileset.pokemon).forEach((name) => {
-      this.anims.create({
-        key: name+'-spin',
-        frames: this.anims.generateFrameNumbers(name, { frames: [0, 4, 12, 8] }),
-        frameRate: 7,
-        repeat: -1
+    }
+    if (this.enableOWPokemon) {
+      Object.keys(Tileset.pokemon).forEach((name) => {
+        this.anims.create({
+          key: name+'-spin',
+          frames: this.anims.generateFrameNumbers(name, { frames: [0, 4, 12, 8] }),
+          frameRate: 7,
+          repeat: -1
+        });
       });
-    });
-    Object.keys(Tileset.pokemon_shiny).forEach((name) => {
-      this.anims.create({
-        key: name+'-spin',
-        frames: this.anims.generateFrameNumbers(name, { frames: [0, 4, 12, 8] }),
-        frameRate: 7,
-        repeat: -1
+      Object.keys(Tileset.pokemon_shiny).forEach((name) => {
+        this.anims.create({
+          key: name+'-spin',
+          frames: this.anims.generateFrameNumbers(name, { frames: [0, 4, 12, 8] }),
+          frameRate: 7,
+          repeat: -1
+        });
       });
-    });
+    }
   }
 
   battleData() {
@@ -102,37 +120,38 @@ export default class extends Phaser.Scene {
       species: 1,
       level: 5,
       nature: NATURES.HARDY,
+      ability: {
+        name: 'none',
+      },
       currentHp: 10,
       moves: [{
         name: 'Tackle',
-        damage: 2,
         pp: {
           max: 10,
           current: 10
         },
       },{
         name: 'Razor Leaf',
-        damage: 2,
         pp: {
           max: 5,
           current: 5
         },
       }],
       ivs: {
-        [STATS.HP]: 5,
-        [STATS.ATTACK]: 5,
-        [STATS.DEFENSE]: 5,
-        [STATS.SPECIAL_ATTACK]: 5,
-        [STATS.SPECIAL_DEFENSE]: 5,
-        [STATS.SPEED]: 5,
+        [STATS.HP]: 31,
+        [STATS.ATTACK]: 31,
+        [STATS.DEFENSE]: 31,
+        [STATS.SPECIAL_ATTACK]: 31,
+        [STATS.SPECIAL_DEFENSE]: 31,
+        [STATS.SPEED]: 31,
       },
       evs: {
-        [STATS.HP]: 5,
-        [STATS.ATTACK]: 5,
-        [STATS.DEFENSE]: 5,
+        [STATS.HP]: 4,
+        [STATS.ATTACK]: 0,
+        [STATS.DEFENSE]: 4,
         [STATS.SPECIAL_ATTACK]: 5,
-        [STATS.SPECIAL_DEFENSE]: 5,
-        [STATS.SPEED]: 5,
+        [STATS.SPECIAL_DEFENSE]: 6,
+        [STATS.SPEED]: 0,
       },
       exp: 0,
       isShiny: false,
@@ -145,37 +164,38 @@ export default class extends Phaser.Scene {
       species: 25,
       level: 5,
       nature: NATURES.HARDY,
+      ability: {
+        name: 'none',
+      },
       currentHp: 10,
       moves: [{
         name: 'Tackle',
-        damage: 2,
         pp: {
           max: 10,
           current: 10
         },
       },{
         name: 'ThunderBolt',
-        damage: 6,
         pp: {
           max: 10,
           current: 10
         },
       }],
       ivs: {
-        [STATS.HP]: 5,
-        [STATS.ATTACK]: 5,
-        [STATS.DEFENSE]: 5,
-        [STATS.SPECIAL_ATTACK]: 5,
-        [STATS.SPECIAL_DEFENSE]: 5,
-        [STATS.SPEED]: 5,
+        [STATS.HP]: 31,
+        [STATS.ATTACK]: 31,
+        [STATS.DEFENSE]: 31,
+        [STATS.SPECIAL_ATTACK]: 31,
+        [STATS.SPECIAL_DEFENSE]: 31,
+        [STATS.SPEED]: 31,
       },
       evs: {
-        [STATS.HP]: 5,
-        [STATS.ATTACK]: 5,
-        [STATS.DEFENSE]: 5,
-        [STATS.SPECIAL_ATTACK]: 5,
-        [STATS.SPECIAL_DEFENSE]: 5,
-        [STATS.SPEED]: 5,
+        [STATS.HP]: 0,
+        [STATS.ATTACK]: 3,
+        [STATS.DEFENSE]: 0,
+        [STATS.SPECIAL_ATTACK]: 4,
+        [STATS.SPECIAL_DEFENSE]: 0,
+        [STATS.SPEED]: 0,
       },
       exp: 0,
       isShiny: false,

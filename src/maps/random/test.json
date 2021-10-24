@@ -266,6 +266,11 @@
                  "name":"npc1",
                  "properties":[
                         {
+                         "name":"seen-radius",
+                         "type":"int",
+                         "value":3
+                        }, 
+                        {
                          "name":"spin",
                          "type":"bool",
                          "value":true
@@ -293,6 +298,11 @@
                  "name":"npc2",
                  "properties":[
                         {
+                         "name":"seen-radius",
+                         "type":"int",
+                         "value":5
+                        }, 
+                        {
                          "name":"spin",
                          "type":"bool",
                          "value":true
@@ -300,7 +310,7 @@
                         {
                          "name":"spin-rate",
                          "type":"int",
-                         "value":200
+                         "value":400
                         }, 
                         {
                          "name":"texture",
@@ -360,6 +370,11 @@
                          "name":"move-rate",
                          "type":"int",
                          "value":1000
+                        }, 
+                        {
+                         "name":"seen-radius",
+                         "type":"int",
+                         "value":6
                         }, 
                         {
                          "name":"spin",
@@ -817,17 +832,6 @@
                 }, 
                 {
                  "height":32,
-                 "id":46,
-                 "name":"player",
-                 "rotation":0,
-                 "type":"playerSpawn",
-                 "visible":true,
-                 "width":32,
-                 "x":640,
-                 "y":1312
-                }, 
-                {
-                 "height":32,
                  "id":47,
                  "name":"ground->mountains",
                  "properties":[
@@ -957,6 +961,165 @@
                  "width":32,
                  "x":1120,
                  "y":1152
+                }, 
+                {
+                 "height":32,
+                 "id":103,
+                 "name":"npcup",
+                 "properties":[
+                        {
+                         "name":"facing-direction",
+                         "type":"string",
+                         "value":"up"
+                        }, 
+                        {
+                         "name":"seen-radius",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"spin",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"spin-rate",
+                         "type":"int",
+                         "value":200
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"poke_kid"
+                        }],
+                 "rotation":0,
+                 "type":"npc",
+                 "visible":true,
+                 "width":32,
+                 "x":1152,
+                 "y":736
+                }, 
+                {
+                 "height":32,
+                 "id":104,
+                 "name":"npcright",
+                 "properties":[
+                        {
+                         "name":"facing-direction",
+                         "type":"string",
+                         "value":"right"
+                        }, 
+                        {
+                         "name":"seen-radius",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"spin",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"spin-rate",
+                         "type":"int",
+                         "value":200
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"poke_kid"
+                        }],
+                 "rotation":0,
+                 "type":"npc",
+                 "visible":true,
+                 "width":32,
+                 "x":1184,
+                 "y":768
+                }, 
+                {
+                 "height":32,
+                 "id":105,
+                 "name":"npcdown",
+                 "properties":[
+                        {
+                         "name":"facing-direction",
+                         "type":"string",
+                         "value":"down"
+                        }, 
+                        {
+                         "name":"seen-radius",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"spin",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"spin-rate",
+                         "type":"int",
+                         "value":200
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"poke_kid"
+                        }],
+                 "rotation":0,
+                 "type":"npc",
+                 "visible":true,
+                 "width":32,
+                 "x":1152,
+                 "y":800
+                }, 
+                {
+                 "height":32,
+                 "id":106,
+                 "name":"npcleft",
+                 "properties":[
+                        {
+                         "name":"facing-direction",
+                         "type":"string",
+                         "value":"left"
+                        }, 
+                        {
+                         "name":"seen-radius",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"spin",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"spin-rate",
+                         "type":"int",
+                         "value":200
+                        }, 
+                        {
+                         "name":"texture",
+                         "type":"string",
+                         "value":"poke_kid"
+                        }],
+                 "rotation":0,
+                 "type":"npc",
+                 "visible":true,
+                 "width":32,
+                 "x":1120,
+                 "y":768
+                }, 
+                {
+                 "height":32,
+                 "id":114,
+                 "name":"player",
+                 "rotation":0,
+                 "type":"playerSpawn",
+                 "visible":true,
+                 "width":32,
+                 "x":320,
+                 "y":416
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -965,7 +1128,7 @@
          "y":0
         }],
  "nextlayerid":19,
- "nextobjectid":53,
+ "nextobjectid":115,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",

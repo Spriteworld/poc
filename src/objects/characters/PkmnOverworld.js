@@ -9,8 +9,11 @@ export default class extends Character {
   update(time, delta) {
     if (this.ge.created === false) { return; }
     this.handleAutoMoveTiles();
-    this.addAutoSpin(delta);
-    this.addAutoMove();
-    this.handleRun();
+
+    if (this.config.scene.scene.get('Preload').enableOWPokemon) {
+      this.addAutoSpin(delta);
+      this.addAutoMove();
+      this.handleRun();
+    }
   }
 }

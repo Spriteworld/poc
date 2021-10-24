@@ -1,5 +1,4 @@
-import {GameMap} from '@Scenes';
-import {Player, NPC} from '@Objects';
+import {GameMap} from '@Objects';
 import {StarterTownMap} from '@Maps';
 
 export default class extends GameMap {

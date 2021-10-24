@@ -1,10 +1,10 @@
 import OverworldUI from './misc/OverworldUI.js';
+import TimeOverlay from './misc/TimeOverlay.js';
 import Preload from './misc/Preload.js';
 
 import BattleUI from './misc/BattleUI.js';
 import BattleScene from './misc/BattleScene.js';
 
-import GameMap from './maps/GameMap.js';
 import Test from './maps/random/Test.js';
 import Skyland from './maps/random/Skyland.js';
 import PalletTown from './maps/kanto/PalletTown.js';
@@ -13,9 +13,8 @@ import HeroHouseF2 from './maps/kanto/HeroHouseF2.js';
 // import StarterTown from './maps/region/StarterTown.js';
 
 export {
-    OverworldUI, Preload,
+    OverworldUI, TimeOverlay, Preload,
     BattleUI, BattleScene,
-    GameMap,
     Test, Skyland,
     PalletTown, HeroHouseF1, HeroHouseF2,
     // StarterTown

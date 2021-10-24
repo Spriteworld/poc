@@ -1,5 +1,4 @@
-import { STATS } from '@pokelinkapp/pokemon-data';
-
+import { STATS, CalcDamage } from '@pokelinkapp/pokemon-data';
 
 export default class {
   constructor(config, trainer) {
@@ -39,9 +38,23 @@ export default class {
     return this.nickname || this.pokemon.species;
   }
 
-  attack(target, damage) {
-    console.log('BattlePokemon: '+this.getName()+' attack!');
+  attack(target, move) {
+    let damage = CalcDamage.calcDamageRange(this, target, move.move);
+    move.pp.current = move.pp.current-1;
+
+    console.log('BattlePokemon: '
+      + this.getName() + ' uses '
+      + move.move.name + ' against '
+      + target.getName() +' for '
+      + damage + ' damage'
+    );
     target.takeDamage(damage);
+  }
+
+  attackRandomMove(target) {
+    let move = this.moves[Math.floor(Math.random()*this.moves.length)];
+    console.log('BattlePokemon: random pokemon move!', move);
+    this.attack(target, move);
   }
 
   takeDamage(damage) {

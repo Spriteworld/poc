@@ -94,7 +94,7 @@ export default class extends Phaser.Scene {
     // this.pokemonTeamMenu.deselect();
     this.currentMenu = false;
 
-    this.battleScene.receivePlayerSelection('attack');
+    this.battleScene.receivePlayerSelection('attack', index);
   }
 
   remapActivePokemon() {

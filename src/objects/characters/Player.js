@@ -6,6 +6,8 @@ export default class extends Character {
     super(config);
     this.config.cursors = this.config.scene.input.keyboard.createCursorKeys();
     this.textbox = this.config.scene.scene.get('OverworldUI').textbox;
+
+    this.setOrigin(0.5, 0.5);
   }
 
   update() {
@@ -13,9 +15,8 @@ export default class extends Character {
     this.handleMovement();
     this.handleRun();
 
-    // this.handleMovementTiles();
-
     this.handleInteractables();
+    // this.canSeePlayer();
   }
 
   disableMovement() {
