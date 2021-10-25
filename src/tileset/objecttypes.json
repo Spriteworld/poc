@@ -69,6 +69,11 @@
                 "name": "seen-radius",
                 "type": "int",
                 "value": 0
+            },
+            {
+                "name": "seen-character",
+                "type": "string",
+                "value": null
             }
         ]
     },

@@ -14,7 +14,8 @@ export default class extends Phaser.GameObjects.Sprite {
       follow: false,
       collides: true,
       'facing-direction': 'down',
-      'seen-radius': 0
+      'seen-radius': 0,
+      'seen-character': null,
     }, ...config};
 
     this.setName(this.id);
@@ -36,12 +37,11 @@ export default class extends Phaser.GameObjects.Sprite {
     };
     this.seenRect = this.config.scene.add
       .rectangle(this.config.x * 32, this.config.y * 32, 0, 0, this.color.normal, this.color.debug ? 0.4 : 0);
-    this.seenRectClone = Phaser.Geom.Rectangle.Clone(this.seenRect);
-    this.playerRect = this.config.scene.add
+    this.characterRect = this.config.scene.add
       .rectangle(this.config.x * 32, this.config.y * 32, 30, 30, this.color.normal, this.color.debug ? 0.5 : 0);
 
     this.seenRect.setOrigin(0, 0);
-    this.playerRect.setOrigin(0, 0);
+    this.characterRect.setOrigin(0, 0);
   }
 
   characterFramesDef() {
@@ -273,52 +273,64 @@ export default class extends Phaser.GameObjects.Sprite {
     }
   }
 
-  canSeePlayer() {
+  canSeeCharacter() {
     if (this.config['seen-radius'] === 0) { return; }
+    if (this.config['seen-character'] === null) { return; }
 
-    // move the clone
-    let characterBounds = this.getBounds();
-    this.seenRectClone.x = characterBounds.x;
-    this.seenRectClone.y = characterBounds.y+8;
+    if (!this.ge.hasCharacter(this.config['seen-character'])) {
+      console.log(this.config['seen-character'], 'ge doesnt has character');
+      return;
+    }
 
+    let character = this.config.scene.characters.find(char => char.config.id == this.config['seen-character']);
+    if (typeof character === 'undefined') {
+      console.log(character, this.config['seen-character'], 'gamemap doesnt has character');
+      return;
+    }
+
+    let npcBounds = this.getBounds();
     let faceDir = this.getPosInFacingDirection();
     let seenRadiusInTiles = this.config['seen-radius']*32;
     switch(this.getFacingDirection()) {
       case 'left':
         this.seenRect.x = ((faceDir.x+1) * 32) - seenRadiusInTiles;
-        this.seenRect.y = this.seenRectClone.y;
+        this.seenRect.y = npcBounds.y+8;
         this.seenRect.width = seenRadiusInTiles;
         this.seenRect.height = 32;
       break;
 
       case 'right':
         this.seenRect.x = faceDir.x * 32;
-        this.seenRect.y = this.seenRectClone.y;
+        this.seenRect.y = npcBounds.y+8;
         this.seenRect.width = seenRadiusInTiles;
         this.seenRect.height = 32;
       break;
 
       case 'up':
-        this.seenRect.x = this.seenRectClone.x;
+        this.seenRect.x = npcBounds.x;
         this.seenRect.y = ((faceDir.y+1) * 32) - seenRadiusInTiles;
         this.seenRect.width = 32;
         this.seenRect.height = seenRadiusInTiles;
       break;
 
       case 'down':
-        this.seenRect.x = this.seenRectClone.x;
+        this.seenRect.x = npcBounds.x;
         this.seenRect.y = faceDir.y * 32;
         this.seenRect.width = 32;
         this.seenRect.height = seenRadiusInTiles;
       break;
     }
 
-    let playerBounds = this.config.scene.player.getBounds();
-    this.playerRect.x = (playerBounds.x+1);
-    this.playerRect.y = (playerBounds.y+1)+8;
-    let isInside = Phaser.Geom.Rectangle.ContainsPoint(this.seenRect, this.playerRect);
+    let characterBounds = character.getBounds();
+
+    this.characterRect.x = (characterBounds.x+1) +
+      (character.config.type === 'pkmn' ? 16 : 0);
+    this.characterRect.y = (characterBounds.y+1) +
+      (character.config.type === 'pkmn' ? 32 : 8);
+
+    let isInside = Phaser.Geom.Rectangle.ContainsPoint(this.seenRect, this.characterRect);
     if (isInside) {
-      console.log(this.config.id +' saw the player!');
+      // console.log(this.config.id +' can see '+character.config.id+'!');
     }
     this.seenRect.fillColor = isInside ? this.color.selected : this.color.normal;
   }

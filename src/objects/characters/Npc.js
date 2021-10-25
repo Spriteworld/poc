@@ -3,6 +3,7 @@ import {Character} from '@Objects';
 
 export default class extends Character {
   constructor(config) {
+    config.type = 'npc';
     super(config);
   }
 
@@ -11,6 +12,6 @@ export default class extends Character {
     this.handleAutoMoveTiles();
     this.addAutoSpin(delta);
     this.addAutoMove();
-    this.canSeePlayer();
+    this.canSeeCharacter();
   }
 }

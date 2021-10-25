@@ -154,13 +154,7 @@ export default class extends Phaser.Scene {
         {
           id: npc.name,
           scene: this,
-          spin: this.getPropertyValue(npc.properties, 'spin'),
-          'spin-rate': this.getPropertyValue(npc.properties, 'spin-rate'),
-          'facing-direction': this.getPropertyValue(npc.properties, 'facing-direction', 'down'),
-          move: this.getPropertyValue(npc.properties, 'move'),
-          'move-rate': this.getPropertyValue(npc.properties, 'move-rate'),
-          'move-radius': this.getPropertyValue(npc.properties, 'move-radius'),
-          'seen-radius': this.getPropertyValue(npc.properties, 'seen-radius')
+          ...this.remapProps(npc.properties)
         }
       );
     });
@@ -180,13 +174,7 @@ export default class extends Phaser.Scene {
         {
           id: npc.name,
           scene: this,
-          spin: this.getPropertyValue(npc.properties, 'spin'),
-          'spin-rate': this.getPropertyValue(npc.properties, 'spin-rate'),
-          'facing-direction': this.getPropertyValue(npc.properties, 'facing-direction', 'down'),
-          move: this.getPropertyValue(npc.properties, 'move'),
-          'move-rate': this.getPropertyValue(npc.properties, 'move-rate'),
-          'move-radius': this.getPropertyValue(npc.properties, 'move-radius'),
-          'shiny': this.getPropertyValue(npc.properties, 'shiny', false),
+          ...this.remapProps(npc.properties)
         }
       );
     });
@@ -534,6 +522,14 @@ export default class extends Phaser.Scene {
     });
 
     return tiles;
+  }
+
+  remapProps(props) {
+    let values = {};
+    Object.values(props).forEach(prop => {
+      values = {...values, ...{ [prop.name]: prop.value }};
+    });
+    return values;
   }
 
   random_rgba() {

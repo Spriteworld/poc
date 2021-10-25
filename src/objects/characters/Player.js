@@ -3,6 +3,7 @@ import {textBox} from '@Utilities';
 
 export default class extends Character {
   constructor(config) {
+    config.type = 'player';
     super(config);
     this.config.cursors = this.config.scene.input.keyboard.createCursorKeys();
     this.textbox = this.config.scene.scene.get('OverworldUI').textbox;
@@ -16,7 +17,7 @@ export default class extends Character {
     this.handleRun();
 
     this.handleInteractables();
-    // this.canSeePlayer();
+    this.canSeeCharacter();
   }
 
   disableMovement() {
