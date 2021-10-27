@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { Tile } from '@Objects';
 
 export default class extends Phaser.GameObjects.Sprite {
   constructor(config) {
@@ -16,6 +17,8 @@ export default class extends Phaser.GameObjects.Sprite {
       'facing-direction': 'down',
       'seen-radius': 0,
       'seen-character': null,
+      charLayer: 'ground',
+      canRun: true
     }, ...config};
 
     this.setName(this.id);
@@ -29,16 +32,21 @@ export default class extends Phaser.GameObjects.Sprite {
     this.config.scene.add.existing(this);
     this.config.scene.addCharacter(this);
 
+    let character = this.config.scene.characters.find(char => char.config.id == this.config['seen-character']);
+    if (this.ge.isCreated && typeof character === 'undefined') {
+      this.ge.addCharacter(this.characterDef());
+    }
+
     // seen-radius config
     this.color = {
-      debug: true,
+      debug: !true,
       normal: 0x1d7196,
       selected: 0xff0000
     };
     this.seenRect = this.config.scene.add
-      .rectangle(this.config.x * 32, this.config.y * 32, 0, 0, this.color.normal, this.color.debug ? 0.4 : 0);
+      .rectangle(this.config.x * Tile.Width, this.config.y * Tile.Height, 0, 0, this.color.normal, this.color.debug ? 0.4 : 0);
     this.characterRect = this.config.scene.add
-      .rectangle(this.config.x * 32, this.config.y * 32, 30, 30, this.color.normal, this.color.debug ? 0.5 : 0);
+      .rectangle(this.config.x * Tile.Width, this.config.y * Tile.Height, 30, 30, this.color.normal, this.color.debug ? 0.5 : 0);
 
     this.seenRect.setOrigin(0, 0);
     this.characterRect.setOrigin(0, 0);
@@ -71,7 +79,7 @@ export default class extends Phaser.GameObjects.Sprite {
       startPosition: { x: def.x, y: def.y },
       facingDirection: def.facingDirection,
       collides: def.collides,
-      charLayer: 'ground',
+      charLayer: def.charLayer,
     };
   }
 
@@ -100,8 +108,8 @@ export default class extends Phaser.GameObjects.Sprite {
     );
   }
 
-  move(dir) {
-    return this.ge.move(this.config.id, dir.toLowerCase());
+  move(dir, config) {
+    return this.ge.move(this.config.id, dir.toLowerCase(), config);
   }
 
   moveTo(x, y, config) {
@@ -189,6 +197,7 @@ export default class extends Phaser.GameObjects.Sprite {
     if (this.spinningDir !== null || this.slidingDir !== null) {
       return;
     }
+    if (this.config.canRun !== true) { return; }
 
     // run
     let activator = this.config.scene.input.keyboard.addKey('X');
@@ -276,6 +285,7 @@ export default class extends Phaser.GameObjects.Sprite {
   canSeeCharacter() {
     if (this.config['seen-radius'] === 0) { return; }
     if (this.config['seen-character'] === null) { return; }
+    if (this.config['seen-character'].length === 0) { return; }
 
     if (!this.ge.hasCharacter(this.config['seen-character'])) {
       console.log(this.config['seen-character'], 'ge doesnt has character');
@@ -290,33 +300,83 @@ export default class extends Phaser.GameObjects.Sprite {
 
     let npcBounds = this.getBounds();
     let faceDir = this.getPosInFacingDirection();
-    let seenRadiusInTiles = this.config['seen-radius']*32;
+    let tile;
+
+    // find tiles we need to check
+    // check for collision objects
+    let count = this.config['seen-radius'];
+    for (let i=0; i<this.config['seen-radius']; i++) {
+      switch(this.getFacingDirection()) {
+        case 'left':
+          tile = {x: faceDir.x-i, y: faceDir.y};
+        break;
+        case 'right':
+          tile = {x: faceDir.x+i, y: faceDir.y};
+        break;
+        case 'up':
+          tile = {x: faceDir.x, y: faceDir.y-i};
+        break;
+        case 'down':
+          tile = {x: faceDir.x, y: faceDir.y+i};
+        break;
+      }
+      var props = this.scene.getTileProperties(tile.x, tile.y);
+      var check = [
+        this.scene.getValue(props, 'ge_collide', false),
+        this.scene.getValue(props, 'ge_collide_left', false),
+        this.scene.getValue(props, 'ge_collide_right', false),
+        this.scene.getValue(props, 'ge_collide_up', false),
+        this.scene.getValue(props, 'ge_collide_down', false),
+        this.scene.getValue(props, 'sw_stop', false),
+        this.scene.getValue(props, 'sw_slide', false),
+        this.scene.getValue(props, 'sw_spin', false),
+        this.scene.getValue(props, 'sw_jump', false),
+      ].includes(true);
+
+      if (check) {
+        count = i;
+        break;
+      }
+    }
+
+    // count not being the same as the seen-radius
+    // means we hit something with a collision on it
+    // so just see everything upto that point
+    let seenRadiusOverride = count !== this.config['seen-radius']
+      ? count
+      : this.config['seen-radius']
+    ;
+
+    // 32 here is the tile size
+    let seenRadiusInTiles = seenRadiusOverride * 32;
+
+    // calc the actual seen box
     switch(this.getFacingDirection()) {
       case 'left':
-        this.seenRect.x = ((faceDir.x+1) * 32) - seenRadiusInTiles;
+        this.seenRect.x = ((faceDir.x+1) * Tile.Width) - seenRadiusInTiles;
         this.seenRect.y = npcBounds.y+8;
         this.seenRect.width = seenRadiusInTiles;
-        this.seenRect.height = 32;
+        this.seenRect.height = Tile.Height;
       break;
 
       case 'right':
-        this.seenRect.x = faceDir.x * 32;
+        this.seenRect.x = faceDir.x * Tile.Width;
         this.seenRect.y = npcBounds.y+8;
         this.seenRect.width = seenRadiusInTiles;
-        this.seenRect.height = 32;
+        this.seenRect.height = Tile.Height;
       break;
 
       case 'up':
         this.seenRect.x = npcBounds.x;
-        this.seenRect.y = ((faceDir.y+1) * 32) - seenRadiusInTiles;
-        this.seenRect.width = 32;
+        this.seenRect.y = ((faceDir.y+1) * Tile.Height) - seenRadiusInTiles;
+        this.seenRect.width = Tile.Width;
         this.seenRect.height = seenRadiusInTiles;
       break;
 
       case 'down':
         this.seenRect.x = npcBounds.x;
-        this.seenRect.y = faceDir.y * 32;
-        this.seenRect.width = 32;
+        this.seenRect.y = faceDir.y * Tile.Height;
+        this.seenRect.width = Tile.Width;
         this.seenRect.height = seenRadiusInTiles;
       break;
     }

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {Player, NPC, PkmnOverworld, ObjectTypes} from '@Objects';
+import {Player, NPC, PkmnOverworld, ObjectTypes, Tile} from '@Objects';
 
 export default class extends Phaser.Scene {
   constructor(config) {
@@ -77,7 +77,7 @@ export default class extends Phaser.Scene {
   debugObjects() {
     if(this.debug !== true) return;
 
-    // this.add.grid(0, 0, this.config.tilemap.widthInPixels, this.config.tilemap.heightInPixels, 32, 32)
+    // this.add.grid(0, 0, this.config.tilemap.widthInPixels, this.config.tilemap.heightInPixels, Tile.Width, Tile.Height)
     //   .setOrigin(0, 0)
     //   .setOutlineStyle(0x000000)
     //   .setDepth(9999999)
@@ -117,7 +117,7 @@ export default class extends Phaser.Scene {
   }
 
   initSigns() {
-    let signs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'sign');
+    let signs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'sign' && obj.visible);
     if (signs.length === 0) { return; }
 
     signs.forEach((sign) => {
@@ -131,15 +131,15 @@ export default class extends Phaser.Scene {
       return;
     }
 
-    let spawn = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'playerSpawn');
+    let spawn = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'playerSpawn' && obj.visible);
     if (spawn.length === 0) { throw 'No player spawn found'; }
     if (spawn.length > 1) { throw 'Only 1 player spawn can be in the map.'; }
 
-    this.addPlayerToScene(spawn[0].x / 32, spawn[0].y / 32);
+    this.addPlayerToScene(spawn[0].x / Tile.Width, spawn[0].y / Tile.Height);
   }
 
   initNpcs() {
-    let npcs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'npc');
+    let npcs = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'npc' && obj.visible);
     if (npcs.length === 0) { return; }
 
     this.npcs = this.add.group();
@@ -149,8 +149,8 @@ export default class extends Phaser.Scene {
       this.addNPCToScene(
         npc.name,
         this.getPropertyValue(npc.properties, 'texture'),
-        npc.x / 32,
-        npc.y / 32,
+        npc.x / Tile.Width,
+        npc.y / Tile.Height,
         {
           id: npc.name,
           scene: this,
@@ -161,7 +161,7 @@ export default class extends Phaser.Scene {
   }
 
   initPkmn() {
-    let pkmn = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'pkmn');
+    let pkmn = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'pkmn' && obj.visible);
     if (pkmn.length === 0) { return; }
 
     this.pkmn = this.add.group();
@@ -169,8 +169,8 @@ export default class extends Phaser.Scene {
     pkmn.forEach((npc) => {
       this.addMonToScene(
         this.getPropertyValue(npc.properties, 'texture'),
-        npc.x / 32,
-        npc.y / 32,
+        npc.x / Tile.Width,
+        npc.y / Tile.Height,
         {
           id: npc.name,
           scene: this,
@@ -181,27 +181,27 @@ export default class extends Phaser.Scene {
   }
 
   initWarps() {
-    let warps = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'warp');
+    let warps = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'warp' && obj.visible);
     if (warps.length === 0) { return; }
 
     let color = this.random_rgba();
     warps.forEach((obj) => {
       this.registry.get('warps').push({
         name: obj.id,
-        x: obj.x / 32,
-        y: obj.y / 32,
+        x: obj.x / Tile.Width,
+        y: obj.y / Tile.Height,
         obj: obj
       });
     });
   }
 
   initLayerTransitions() {
-    let transitions = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'layerTransition');
+    let transitions = this.config.tilemap.filterObjects('interactions', (obj) => obj.type === 'layerTransition' && obj.visible);
     if (transitions.length === 0) { return; }
 
     transitions.forEach((obj) => {
       this.gridEngine.setTransition(
-        { x: obj.x /32, y: obj.y /32 },
+        { x: obj.x / Tile.Width, y: obj.y / Tile.Height },
         this.getPropertyValue(obj.properties, 'from'),
         this.getPropertyValue(obj.properties, 'to')
       );
@@ -247,8 +247,8 @@ export default class extends Phaser.Scene {
 
   interactTile(map, obj, color) {
     this.registry.get('interactions').push({
-      x: obj.x / 32,
-      y: obj.y / 32,
+      x: obj.x / Tile.Width,
+      y: obj.y / Tile.Height,
       obj: obj
     });
   }
@@ -438,10 +438,12 @@ export default class extends Phaser.Scene {
   }
 
   addMonToScene(monId, x, y, config) {
+    if (config.texture) { delete config.texture; }
+
     if (monId == 'RNG') {
       monId = (Math.floor(Math.random() * this.totalMon) +1);
     }
-    if (monId.length !== 3) {
+    if (monId.length < 3) {
       monId = monId.toString().padStart(3, '0');
     }
 
@@ -480,13 +482,28 @@ export default class extends Phaser.Scene {
   }
 
   getTileProperties(x, y) {
-    var props = [];
+    var props = {};
     this.config.tilemap.getTileLayerNames().forEach(layer => {
       let layerTiles = this.config.tilemap.getTilesWithin(x, y, 1, 1, {}, layer);
 
+      var prop, value;
       layerTiles.forEach(layerTile => {
         if (layerTile) {
-          props = {...props, ...layerTile.properties};
+          Object.entries(layerTile.properties).forEach(prop => {
+            [prop, value] = prop;
+            // if we dont have it, add it
+            if (typeof props[prop] === 'undefined') {
+              props[prop] = value;
+            }
+            // if we already have it and its a bool
+            if (typeof props[prop] === 'boolean') {
+              // make it true
+              if (value === true) {
+                props[prop] = value;
+              }
+              // dont care about falses
+            }
+          });
         }
       });
     });

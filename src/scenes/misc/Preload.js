@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { Tile } from '@Objects';
 import * as Tileset from '@Tileset';
 import { STATS, NATURES, BasePokemon } from '@pokelinkapp/pokemon-data';
 
@@ -39,13 +40,13 @@ export default class extends Phaser.Scene {
     this.load.image('gen3_outside', Tileset.gen3outside);
     this.load.image('rse_inside', Tileset.rseinside);
     this.load.image('rse_outside', Tileset.rseoutside);
-    this.load.spritesheet('red', Tileset.red, { frameWidth: 32, frameHeight: 40 });
+    this.load.spritesheet('red', Tileset.red, { frameWidth: Tile.Width, frameHeight: 40 });
 
     if (this.loadOverworld) {
       if (this.enableOWTrainers) {
         Object.keys(Tileset.trainers).forEach((name) => {
           this.load.spritesheet(name, Tileset.trainers[name]
-            , { frameWidth: 32, frameHeight: 42 });
+            , { frameWidth: Tile.Width, frameHeight: 42 });
         });
       }
       if (this.enableOWPokemon) {

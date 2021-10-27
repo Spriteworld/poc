@@ -1,3 +1,4 @@
+import * as Tile from './Tile.js';
 import Game from './Game.js';
 import GameMap from './GameMap.js';
 
@@ -24,6 +25,7 @@ import NPCScripts from './scripts/npcs.js';
 import * as ObjectTypes from '../tileset/objecttypes.json';
 
 export {
+    Tile,
     Game,
     GameMap,
 
