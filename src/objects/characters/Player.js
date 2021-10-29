@@ -44,16 +44,12 @@ export default class extends Character {
     const position = this.getPosInFacingDirection();
 
     // check if the player is facing an interaction
-    const hasInteraction = interactions.some(function(interaction) {
+    const interaction = interactions.find(function(interaction) {
       return position.x == interaction.x && position.y == interaction.y;
-    }) || false;
+    })?.obj || false;
 
     const activator = this.config.scene.input.keyboard.addKey('Z');
-    if (hasInteraction && activator.isDown) {
-      // get said interaction
-      const interaction = this.config.scene.config.
-        tilemap.filterObjects('interactions', (obj) => position.x == obj.x && position.y == obj.y)[0];
-
+    if (interaction !== false && activator.isDown) {
       console.log('interaction!', interaction);
       // alert the type
       var text = null;
@@ -62,10 +58,10 @@ export default class extends Character {
           text = interaction.properties[0].value;
         break;
         case 'npc':
-          text = NPCScripts[interaction.name] || interaction.name;
+          text = NPCScripts[interaction.id] || interaction.id;
         break;
         case 'pkmn':
-          text = interaction.name;
+          text = interaction.id;
         break;
         default:
           console.log('unknown interaction type', interaction);

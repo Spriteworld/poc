@@ -108,8 +108,8 @@ export default class extends Phaser.GameObjects.Sprite {
     );
   }
 
-  move(dir, config) {
-    return this.ge.move(this.config.id, dir.toLowerCase(), config);
+  move(dir) {
+    return this.ge.move(this.config.id, dir.toLowerCase());
   }
 
   moveTo(x, y, config) {
@@ -331,6 +331,7 @@ export default class extends Phaser.GameObjects.Sprite {
         this.scene.getValue(props, 'sw_slide', false),
         this.scene.getValue(props, 'sw_spin', false),
         this.scene.getValue(props, 'sw_jump', false),
+        // todo: add character checks...shouldnt be able to see thru other characters XD
       ].includes(true);
 
       if (check) {

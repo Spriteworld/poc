@@ -46,8 +46,7 @@ export default class extends GameMap {
     //     this.findMonsFlock(charId);
     //   });
 
-    // console.log([this.config.tilemap.width, this.config.tilemap.height]);
-    // this.spawnFlock('fearow', '022', 33, 14, 'down');
+    this.spawnFlock('fearow', '022', 1, 14, 'right');
   }
 
   update(time, delta) {
@@ -58,32 +57,28 @@ export default class extends GameMap {
       this.npc1.moveTo(4, 20);
     }
 
+    Object.values(this.flocks)
+      .filter(flock => flock.active)
+      .forEach(flock => {
+        Object.values(flock.mon).forEach(mon => {
+          if (mon.visible) {
+            let pos = mon.getPosition();
+            if ([0, this.config.tilemap.width-1].includes(pos.x)
+              || [0, this.config.tilemap.height-1].includes(pos.y)) {
 
-    // Object.values(this.flocks)
-    //   .filter(flock => flock.active)
-    //   .forEach(flock => {
-    //     Object.values(flock.mon).forEach(mon => {
-    //       if (mon.visible) {
-    //         // console.log(mon.config.id);
-    //         let pos = mon.getPosition();
-    //         if ([0, this.config.tilemap.width-1].includes(pos.x)
-    //           || [0, this.config.tilemap.height-1].includes(pos.y)) {
+              mon.setVisible(false);
+              mon.move(flock.direction);
 
-    //           mon.setVisible(false);
-    //           mon.move(flock.direction);
-
-    //           // no mon are visible, disable this flock
-    //           if (flock.mon.every(mon => !mon.visible)) {
-    //             console.log('no mon visible, flock gets disabled');
-    //             flock.active = false;
-    //           }
-    //         } else {
-    //         // console.log(pos.x, pos.y, '...moving');
-    //           mon.move(flock.direction);
-    //         }
-    //       }
-    //     });
-    //   });
+              // no mon are visible, disable this flock
+              if (flock.mon.every(mon => !mon.visible)) {
+                flock.active = false;
+              }
+            } else {
+              mon.move(flock.direction);
+            }
+          }
+        });
+      });
   }
 
   spawnFlock(name, poke, x, y, dir) {
@@ -93,7 +88,7 @@ export default class extends GameMap {
       'spin': false,
       'charLayer': 'sky',
       canRun: false,
-      colides: false,
+      collides: false,
     };
 
     let mon = [];
@@ -104,7 +99,6 @@ export default class extends GameMap {
     mon.push(this.addMonToScene(poke, x+2, y+2, {...pkmnObj, ...{id: 'flock_'+name+'_5'}}));
 
     // reorder the pokemon based on coords
-    console.log('unsroted', mon.map(pkmn => pkmn.config.id));
     switch(dir) {
       case 'left':
       case 'right':
@@ -126,13 +120,6 @@ export default class extends GameMap {
       coords: {x: x, y: y},
       active: true,
     });
-  }
-
-  findMonsFlock(mon) {
-    let test = Object.values(this.flocks).findIndex(flock => {
-      return flock.mon.some(flockmon => flockmon.id === mon);
-    });
-    // console.log('test', test);
   }
 
 }

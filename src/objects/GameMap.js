@@ -36,7 +36,7 @@ export default class extends Phaser.Scene {
     var tilemap = this.make.tilemap({key: this.config.mapName});
     this.config.tilemap = tilemap;
     this.registry.set('scene', this.config.mapName);
-    this.registry.set('triggerToast', this.config.mapName);
+    // this.registry.set('triggerToast', this.config?.mapName);
 
     // all the tilesets!
     let tilesets = [
@@ -121,6 +121,8 @@ export default class extends Phaser.Scene {
     if (signs.length === 0) { return; }
 
     signs.forEach((sign) => {
+      sign.x /= Tile.Width;
+      sign.y /= Tile.Height;
       this.interactTile(this.config.tilemap, sign, 0x00afe4);
     });
   }
@@ -247,8 +249,8 @@ export default class extends Phaser.Scene {
 
   interactTile(map, obj, color) {
     this.registry.get('interactions').push({
-      x: obj.x / Tile.Width,
-      y: obj.y / Tile.Height,
+      x: obj.x,
+      y: obj.y,
       obj: obj
     });
   }
