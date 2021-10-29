@@ -40,13 +40,13 @@ export default class extends Phaser.Scene {
     this.load.image('gen3_outside', Tileset.gen3outside);
     this.load.image('rse_inside', Tileset.rseinside);
     this.load.image('rse_outside', Tileset.rseoutside);
-    this.load.spritesheet('red', Tileset.red, { frameWidth: Tile.Width, frameHeight: 40 });
+    this.load.spritesheet('red', Tileset.red, { frameWidth: Tile.WIDTH, frameHeight: 40 });
 
     if (this.loadOverworld) {
       if (this.enableOWTrainers) {
         Object.keys(Tileset.trainers).forEach((name) => {
           this.load.spritesheet(name, Tileset.trainers[name]
-            , { frameWidth: Tile.Width, frameHeight: 42 });
+            , { frameWidth: Tile.WIDTH, frameHeight: 42 });
         });
       }
       if (this.enableOWPokemon) {

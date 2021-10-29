@@ -44,9 +44,9 @@ export default class extends Phaser.GameObjects.Sprite {
       selected: 0xff0000
     };
     this.seenRect = this.config.scene.add
-      .rectangle(this.config.x * Tile.Width, this.config.y * Tile.Height, 0, 0, this.color.normal, this.color.debug ? 0.4 : 0);
+      .rectangle(this.config.x * Tile.WIDTH, this.config.y * Tile.HEIGHT, 0, 0, this.color.normal, this.color.debug ? 0.4 : 0);
     this.characterRect = this.config.scene.add
-      .rectangle(this.config.x * Tile.Width, this.config.y * Tile.Height, 30, 30, this.color.normal, this.color.debug ? 0.5 : 0);
+      .rectangle(this.config.x * Tile.WIDTH, this.config.y * Tile.HEIGHT, 30, 30, this.color.normal, this.color.debug ? 0.5 : 0);
 
     this.seenRect.setOrigin(0, 0);
     this.characterRect.setOrigin(0, 0);
@@ -354,30 +354,30 @@ export default class extends Phaser.GameObjects.Sprite {
     // calc the actual seen box
     switch(this.getFacingDirection()) {
       case 'left':
-        this.seenRect.x = ((faceDir.x+1) * Tile.Width) - seenRadiusInTiles;
+        this.seenRect.x = ((faceDir.x+1) * Tile.WIDTH) - seenRadiusInTiles;
         this.seenRect.y = npcBounds.y+8;
         this.seenRect.width = seenRadiusInTiles;
-        this.seenRect.height = Tile.Height;
+        this.seenRect.height = Tile.HEIGHT;
       break;
 
       case 'right':
-        this.seenRect.x = faceDir.x * Tile.Width;
+        this.seenRect.x = faceDir.x * Tile.WIDTH;
         this.seenRect.y = npcBounds.y+8;
         this.seenRect.width = seenRadiusInTiles;
-        this.seenRect.height = Tile.Height;
+        this.seenRect.height = Tile.HEIGHT;
       break;
 
       case 'up':
         this.seenRect.x = npcBounds.x;
-        this.seenRect.y = ((faceDir.y+1) * Tile.Height) - seenRadiusInTiles;
-        this.seenRect.width = Tile.Width;
+        this.seenRect.y = ((faceDir.y+1) * Tile.HEIGHT) - seenRadiusInTiles;
+        this.seenRect.width = Tile.WIDTH;
         this.seenRect.height = seenRadiusInTiles;
       break;
 
       case 'down':
         this.seenRect.x = npcBounds.x;
-        this.seenRect.y = faceDir.y * Tile.Height;
-        this.seenRect.width = Tile.Width;
+        this.seenRect.y = faceDir.y * Tile.HEIGHT;
+        this.seenRect.width = Tile.WIDTH;
         this.seenRect.height = seenRadiusInTiles;
       break;
     }

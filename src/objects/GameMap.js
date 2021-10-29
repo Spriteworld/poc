@@ -77,7 +77,7 @@ export default class extends Phaser.Scene {
   debugObjects() {
     if(this.debug !== true) return;
 
-    // this.add.grid(0, 0, this.config.tilemap.widthInPixels, this.config.tilemap.heightInPixels, Tile.Width, Tile.Height)
+    // this.add.grid(0, 0, this.config.tilemap.widthInPixels, this.config.tilemap.heightInPixels, Tile.WIDTH, Tile.HEIGHT)
     //   .setOrigin(0, 0)
     //   .setOutlineStyle(0x000000)
     //   .setDepth(9999999)
@@ -121,8 +121,8 @@ export default class extends Phaser.Scene {
     if (signs.length === 0) { return; }
 
     signs.forEach((sign) => {
-      sign.x /= Tile.Width;
-      sign.y /= Tile.Height;
+      sign.x /= Tile.WIDTH;
+      sign.y /= Tile.HEIGHT;
       this.interactTile(this.config.tilemap, sign, 0x00afe4);
     });
   }
@@ -137,7 +137,7 @@ export default class extends Phaser.Scene {
     if (spawn.length === 0) { throw 'No player spawn found'; }
     if (spawn.length > 1) { throw 'Only 1 player spawn can be in the map.'; }
 
-    this.addPlayerToScene(spawn[0].x / Tile.Width, spawn[0].y / Tile.Height);
+    this.addPlayerToScene(spawn[0].x / Tile.WIDTH, spawn[0].y / Tile.HEIGHT);
   }
 
   initNpcs() {
@@ -151,8 +151,8 @@ export default class extends Phaser.Scene {
       this.addNPCToScene(
         npc.name,
         this.getPropertyValue(npc.properties, 'texture'),
-        npc.x / Tile.Width,
-        npc.y / Tile.Height,
+        npc.x / Tile.WIDTH,
+        npc.y / Tile.HEIGHT,
         {
           id: npc.name,
           scene: this,
@@ -171,8 +171,8 @@ export default class extends Phaser.Scene {
     pkmn.forEach((npc) => {
       this.addMonToScene(
         this.getPropertyValue(npc.properties, 'texture'),
-        npc.x / Tile.Width,
-        npc.y / Tile.Height,
+        npc.x / Tile.WIDTH,
+        npc.y / Tile.HEIGHT,
         {
           id: npc.name,
           scene: this,
@@ -190,8 +190,8 @@ export default class extends Phaser.Scene {
     warps.forEach((obj) => {
       this.registry.get('warps').push({
         name: obj.id,
-        x: obj.x / Tile.Width,
-        y: obj.y / Tile.Height,
+        x: obj.x / Tile.WIDTH,
+        y: obj.y / Tile.HEIGHT,
         obj: obj
       });
     });
@@ -203,7 +203,7 @@ export default class extends Phaser.Scene {
 
     transitions.forEach((obj) => {
       this.gridEngine.setTransition(
-        { x: obj.x / Tile.Width, y: obj.y / Tile.Height },
+        { x: obj.x / Tile.WIDTH, y: obj.y / Tile.HEIGHT },
         this.getPropertyValue(obj.properties, 'from'),
         this.getPropertyValue(obj.properties, 'to')
       );
@@ -350,7 +350,7 @@ export default class extends Phaser.Scene {
 
         // make the playerMon follow the player
         if (this.scene.get('Preload').enablePlayerOWPokemon) {
-          this.playerMon.moveTo(exitTile.x, exitTile.y, {
+          this.playerMon.moveTo(exitTile.X, exitTile.Y, {
             targetLayer: exitLayer
           });
         }
