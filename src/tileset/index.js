@@ -4,6 +4,9 @@ import gen3outside from './gen3_outside.png';
 import rseinside from './rse_inside.png';
 import rseoutside from './rse_outside.png';
 import red from './characters/red.png';
+import * as ow_pokemon_dimensions from './overworld/pokemon/files.json';
+import * as ow_pokemon_shiny_dimensions from './overworld/pokemon_shiny/files.json';
+import * as bs_normal_dimensions from './battlescene/normal/files.json';
 
 function importAll(r, suffix) {
   let images = {};
@@ -16,7 +19,7 @@ function importAll(r, suffix) {
 var trainers = importAll(require.context('./characters/', false, /\.(png)$/));
 var pokemon = importAll(require.context('./overworld/pokemon/', false, /\.(png)$/));
 var pokemon_shiny = importAll(require.context('./overworld/pokemon_shiny/', false, /\.(png)$/), 's');
-var pokemon_home = importAll(require.context('./battlescene/normal/', false, /\.(png)$/), 's');
+var pokemon_home = importAll(require.context('./battlescene/normal/', false, /\.(png)$/));
 
 export {
   blank,
@@ -30,4 +33,8 @@ export {
   pokemon,
   pokemon_shiny,
   pokemon_home,
+
+  ow_pokemon_dimensions,
+  ow_pokemon_shiny_dimensions,
+  bs_normal_dimensions,
 };

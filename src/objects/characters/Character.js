@@ -17,8 +17,8 @@ export default class extends Phaser.GameObjects.Sprite {
       'facing-direction': 'down',
       'seen-radius': 0,
       'seen-character': null,
-      charLayer: 'ground',
-      canRun: true
+      'char-layer': 'ground',
+      'can-run': true
     }, ...config};
 
     this.setName(this.id);
@@ -79,7 +79,7 @@ export default class extends Phaser.GameObjects.Sprite {
       startPosition: { x: def.x, y: def.y },
       facingDirection: def.facingDirection,
       collides: def.collides,
-      charLayer: def.charLayer,
+      'char-layer': def['char-layer'],
     };
   }
 
@@ -197,7 +197,7 @@ export default class extends Phaser.GameObjects.Sprite {
     if (this.spinningDir !== null || this.slidingDir !== null) {
       return;
     }
-    if (this.config.canRun !== true) { return; }
+    if (this.config['can-run'] !== true) { return; }
 
     // run
     let activator = this.config.scene.input.keyboard.addKey('X');

@@ -45,18 +45,24 @@ export default class extends Phaser.Scene {
     if (this.loadOverworld) {
       if (this.enableOWTrainers) {
         Object.keys(Tileset.trainers).forEach((name) => {
-          this.load.spritesheet(name, Tileset.trainers[name]
-            , { frameWidth: Tile.WIDTH, frameHeight: 42 });
+          this.load.spritesheet(name, Tileset.trainers[name], {
+            frameWidth: Tile.WIDTH,
+            frameHeight: 42
+          });
         });
       }
       if (this.enableOWPokemon) {
         Object.keys(Tileset.pokemon).forEach((name) => {
-          this.load.spritesheet(name, Tileset.pokemon[name]
-            , { frameWidth: 64, frameHeight: 64 });
+          this.load.spritesheet(name, Tileset.pokemon[name], {
+            frameWidth: Tileset.ow_pokemon_dimensions[name].width / 4,
+            frameHeight: Tileset.ow_pokemon_dimensions[name].height / 4
+          });
         });
         Object.keys(Tileset.pokemon_shiny).forEach((name) => {
-          this.load.spritesheet(name, Tileset.pokemon_shiny[name]
-            , { frameWidth: 64, frameHeight: 64 });
+          this.load.spritesheet(name, Tileset.pokemon_shiny[name], {
+            frameWidth: Tileset.ow_pokemon_shiny_dimensions[name].width / 4,
+            frameHeight: Tileset.ow_pokemon_shiny_dimensions[name].height / 4
+          });
         });
       }
     } else {

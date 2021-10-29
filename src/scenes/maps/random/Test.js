@@ -36,7 +36,13 @@ export default class extends GameMap {
         }
       });
 
-    this.flock = new Flock(this, 'fearow', '022', 1, 14, Direction.RIGHT);
+    this.flock = new Flock(this, 'fearow', '022', 1, 14, Direction.RIGHT, [
+      [1,0,0],
+      [0,1,0],
+      [0,0,1],
+      [0,1,0],
+      [1,0,0],
+    ]);
   }
 
   update(time, delta) {
