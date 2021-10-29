@@ -11,6 +11,22 @@
         ]
     },
     {
+        "color": "#ff7f14dd",
+        "name": "layerTransition",
+        "properties": [
+            {
+                "name": "from",
+                "type": "string",
+                "value": "ground"
+            },
+            {
+                "name": "to",
+                "type": "string",
+                "value": ""
+            }
+        ]
+    },
+    {
         "color": "#ff550000",
         "name": "npc",
         "properties": [
@@ -48,6 +64,16 @@
                 "name": "texture",
                 "type": "string",
                 "value": ""
+            },
+            {
+                "name": "seen-radius",
+                "type": "int",
+                "value": 0
+            },
+            {
+                "name": "seen-character",
+                "type": "string",
+                "value": null
             }
         ]
     },
@@ -74,6 +100,11 @@
                 "name": "move-rate",
                 "type": "int",
                 "value": 500
+            },
+            {
+                "name": "shiny",
+                "type": "bool",
+                "value": false
             },
             {
                 "name": "spin",
@@ -104,9 +135,25 @@
         ]
     },
     {
+        "color": "#ffff0000",
+        "name": "playerSpawn",
+        "properties": [
+            {
+                "name": "facing-direction",
+                "type": "string",
+                "value": "down"
+            }
+        ]
+    },
+    {
         "color": "#ff00ffff",
         "name": "warp",
         "properties": [
+            {
+                "name": "layer",
+                "type": "string",
+                "value": ""
+            },
             {
                 "name": "warp",
                 "type": "string",

@@ -129,6 +129,17 @@
                  "width":32,
                  "x":128,
                  "y":288
+                }, 
+                {
+                 "height":32,
+                 "id":4,
+                 "name":"player",
+                 "rotation":0,
+                 "type":"playerSpawn",
+                 "visible":true,
+                 "width":32,
+                 "x":320,
+                 "y":96
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -137,10 +148,10 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":4,
+ "nextobjectid":5,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.6.0",
+ "tiledversion":"1.7.2",
  "tileheight":32,
  "tilesets":[
         {

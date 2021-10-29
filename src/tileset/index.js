@@ -1,3 +1,4 @@
+import blank from './blank.png';
 import gen3inside from './gen3_inside.png';
 import gen3outside from './gen3_outside.png';
 import rseinside from './rse_inside.png';
@@ -15,9 +16,10 @@ function importAll(r, suffix) {
 var trainers = importAll(require.context('./characters/', false, /\.(png)$/));
 var pokemon = importAll(require.context('./overworld/pokemon/', false, /\.(png)$/));
 var pokemon_shiny = importAll(require.context('./overworld/pokemon_shiny/', false, /\.(png)$/), 's');
-// var pokemon_home = importAll(require.context('./battlescene/normal/', false, /\.(png)$/), 's');
+var pokemon_home = importAll(require.context('./battlescene/normal/', false, /\.(png)$/), 's');
 
 export {
+  blank,
   gen3inside,
   gen3outside,
   rseinside,
@@ -27,5 +29,5 @@ export {
 
   pokemon,
   pokemon_shiny,
-  // pokemon_home,
+  pokemon_home,
 };

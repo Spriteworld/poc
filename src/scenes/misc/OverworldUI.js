@@ -4,7 +4,7 @@ import {PauseMenu} from '@Objects';
 
 export default class extends Phaser.Scene {
   constructor() {
-    super({ key: 'UI' });
+    super({ key: 'OverworldUI' });
 
   }
 

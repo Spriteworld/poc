@@ -1,0 +1,20 @@
+{
+    "maps": [
+        {
+            "fileName": "pallet.json",
+            "height": 672,
+            "width": 768,
+            "x": 768,
+            "y": 1344
+        },
+        {
+            "fileName": "route1.json",
+            "height": 1344,
+            "width": 768,
+            "x": 768,
+            "y": 0
+        }
+    ],
+    "onlyShowAdjacentMaps": false,
+    "type": "world"
+}

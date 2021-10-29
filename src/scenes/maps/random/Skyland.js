@@ -1,11 +1,11 @@
 import {GameMap} from '@Objects';
-import {StarterTownMap} from '@Maps';
+import {SkylandMap} from '@Maps';
 
 export default class extends GameMap {
   constructor() {
     super({
-      mapName: 'StarterTown',
-      map: StarterTownMap
+      mapName: 'Skyland',
+      map: SkylandMap
     });
   }
 
@@ -15,13 +15,11 @@ export default class extends GameMap {
 
   create () {
     this.loadMap();
-    this.addPlayerToScene(6, 5);
-
     this.createCharacters();
   }
 
-  update() {
-    this.player.update();
+  update(time, delta) {
+    this.updateCharacters(time, delta);
   }
-}
 
+}

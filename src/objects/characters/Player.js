@@ -3,18 +3,21 @@ import {textBox} from '@Utilities';
 
 export default class extends Character {
   constructor(config) {
+    config.type = 'player';
     super(config);
     this.config.cursors = this.config.scene.input.keyboard.createCursorKeys();
-    this.textbox = this.config.scene.scene.get('UI').textbox;
+    this.textbox = this.config.scene.scene.get('OverworldUI').textbox;
+
+    this.setOrigin(0.5, 0.5);
   }
 
   update() {
+    this.handleAutoMoveTiles();
     this.handleMovement();
     this.handleRun();
 
-    // this.handleMovementTiles();
-
     this.handleInteractables();
+    this.canSeeCharacter();
   }
 
   disableMovement() {
@@ -41,16 +44,12 @@ export default class extends Character {
     const position = this.getPosInFacingDirection();
 
     // check if the player is facing an interaction
-    const hasInteraction = interactions.some(function(interaction) {
+    const interaction = interactions.find(function(interaction) {
       return position.x == interaction.x && position.y == interaction.y;
-    }) || false;
+    })?.obj || false;
 
     const activator = this.config.scene.input.keyboard.addKey('Z');
-    if (hasInteraction && activator.isDown) {
-      // get said interaction
-      const interaction = this.config.scene.config.
-        tilemap.filterObjects('interactions', (obj) => position.x == obj.x && position.y == obj.y)[0];
-
+    if (interaction !== false && activator.isDown) {
       console.log('interaction!', interaction);
       // alert the type
       var text = null;
@@ -59,10 +58,10 @@ export default class extends Character {
           text = interaction.properties[0].value;
         break;
         case 'npc':
-          text = NPCScripts[interaction.name] || interaction.name;
+          text = NPCScripts[interaction.id] || interaction.id;
         break;
         case 'pkmn':
-          text = interaction.name;
+          text = interaction.id;
         break;
         default:
           console.log('unknown interaction type', interaction);
@@ -72,19 +71,6 @@ export default class extends Character {
       this.scene.registry.set('interaction-active', true);
       this.textbox.start(text, 150);
     }
-  }
-
-  handleMovementTiles() {
-    let playerPos = this.getPosInFacingDirection();
-    let tile = this.config.scene.getTileProperties(playerPos.x, playerPos.y);
-    if (tile.length === 0) { return; }
-    // console.log(tile);
-    // check for ice
-
-    // check for spinners
-    // check for rapids(water)
-
-    //
   }
 
 }

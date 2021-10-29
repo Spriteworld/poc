@@ -11,6 +11,7 @@ export default class extends Phaser.GameObjects.Container {
     this.config.menuItemIndex = 0;
     this.config.x = x;
     this.config.y = y;
+    this.config.selected = false;
 
     scene.add.existing(this);
   }
@@ -19,6 +20,7 @@ export default class extends Phaser.GameObjects.Container {
     let menuItem = new MenuItem(this.config.scene, 0, this.config.menuItems.length*20, item);
     this.config.menuItems.push(menuItem);
     this.add(menuItem);
+    return menuItem;
   }
 
   moveSelectionUp() {
@@ -44,11 +46,13 @@ export default class extends Phaser.GameObjects.Container {
     this.config.menuItems[this.config.menuItemIndex].deselect();
     this.config.menuItemIndex = index;
     this.config.menuItems[this.config.menuItemIndex].select();
+    this.config.selected = true;
   }
 
   deselect() {
     this.config.menuItems[this.config.menuItemIndex].deselect();
     this.config.menuItemIndex = 0;
+    this.config.selected = false;
   }
 
   confirm() {
@@ -66,8 +70,7 @@ export default class extends Phaser.GameObjects.Container {
   remap(units) {
     this.clear();
     for(var i = 0; i < units.length; i++) {
-      var unit = units[i];
-      unit.setMenuItem(this.config.addMenuItem(unit.type));
+      this.addMenuItem(units[i]);
     }
     this.config.menuItemIndex = 0;
   }

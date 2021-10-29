@@ -5,32 +5,39 @@
   "main": "src/index.js",
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
-    "start": "webpack-dev-server --config webpack/dev.js"
+    "start": "webpack-dev-server --config webpack/dev.js",
+    "test": "jest --watchAll --verbose",
+    "qtest": "jest --bail=1 --verbose"
   },
   "author": "xLink <xLink@cybershade.org>",
   "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
-    "babel-loader": "^8.2.2",
+    "@babel/core": "^7.15.8",
+    "@babel/plugin-transform-modules-commonjs": "^7.15.4",
+    "@babel/preset-env": "^7.15.8",
+    "babel-jest": "^27.3.1",
+    "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^3.0.0",
     "file-loader": "^4.3.0",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^27.3.1",
+    "jest-canvas-mock": "^2.3.1",
+    "locutus": "^2.0.15",
     "raw-loader": "^3.1.0",
+    "source-map-support": "^0.5.20",
     "terser-webpack-plugin": "^2.3.8",
+    "ts-jest": "^27.0.7",
+    "tweakpane": "^3.0.5",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "grid-engine": "^2.9.1",
-    "locutus": "^2.0.15",
+    "@pokelinkapp/pokemon-data": "git+https://github.com/pokelinkapp/data.git",
+    "grid-engine": "^2.10.4",
     "phaser": "^3.55.2",
     "phaser-animated-tiles": "^2.0.2",
-    "phaser-plugin-debug-draw": "^7.0.0",
-    "phaser-plugin-inspector": "^1.0.1",
     "phaser-tiled-json-external-loader": "^0.1.1",
-    "phaser3-rex-plugins": "^1.1.59",
-    "tweakpane": "^3.0.5"
+    "phaser3-rex-plugins": "^1.1.61"
   }
 }

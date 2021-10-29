@@ -17,3 +17,4 @@ https://www.deviantart.com/aveontrainer
 https://reliccastle.com/threads/1648/
 https://www.pokecommunity.com/showthread.php?t=407655
 https://www.pokecommunity.com/showthread.php?t=159678
+https://reliccastle.com/resources/722/
