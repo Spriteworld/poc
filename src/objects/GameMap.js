@@ -350,7 +350,7 @@ export default class extends Phaser.Scene {
 
         // make the playerMon follow the player
         if (this.scene.get('Preload').enablePlayerOWPokemon) {
-          this.playerMon.moveTo(exitTile.X, exitTile.Y, {
+          this.playerMon.moveTo(exitTile.x, exitTile.y, {
             targetLayer: exitLayer
           });
         }
@@ -444,7 +444,7 @@ export default class extends Phaser.Scene {
 
     let rng = false;
     if (monId == 'RNG') {
-      monId = (Math.floor(Math.random() * this.totalMon) +1);
+      monId = Math.floor(Math.random() * this.totalMon);
       rng = true;
     }
     if (monId.length < 3) {
@@ -466,7 +466,7 @@ export default class extends Phaser.Scene {
       y: y,
       scene: this,
       spin: true,
-      'spin-rate': (Math.floor(Math.random() * 1000) +1)
+      'spin-rate': Phaser.Math.Between(0, 1000)
     }, ...config };
 
     let pkmn = new PkmnOverworld(pkmnDef);

@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import { BattlePokemon, BattleTrainer, BattleTeam } from '@Objects';
-import { rnd } from '@Utilities';
 import { STATS } from '@pokelinkapp/pokemon-data';
 
 export default class extends Phaser.Scene {
@@ -137,7 +136,7 @@ export default class extends Phaser.Scene {
       if (playerSpeed > enemySpeed) { order = ['player', 'enemy']; }
       if (playerSpeed < enemySpeed) { order = ['enemy', 'player']; }
       if (playerSpeed == enemySpeed) {
-        order = rnd(1, 2) === 1
+        order = Phaser.Math.Between(1, 2) === 1
           ? ['player', 'enemy']
           : ['enemy', 'player']
         ;

@@ -25464,11 +25464,6 @@
          "id":2789,
          "properties":[
                 {
-                 "name":"ge_alwaysTop",
-                 "type":"bool",
-                 "value":true
-                }, 
-                {
                  "name":"ge_collide",
                  "type":"bool",
                  "value":false
@@ -25478,11 +25473,6 @@
          "id":2790,
          "properties":[
                 {
-                 "name":"ge_alwaysTop",
-                 "type":"bool",
-                 "value":true
-                }, 
-                {
                  "name":"ge_collide",
                  "type":"bool",
                  "value":false
@@ -25491,11 +25481,6 @@
         {
          "id":2791,
          "properties":[
-                {
-                 "name":"ge_alwaysTop",
-                 "type":"bool",
-                 "value":true
-                }, 
                 {
                  "name":"ge_collide",
                  "type":"bool",
