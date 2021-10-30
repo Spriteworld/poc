@@ -18,7 +18,7 @@ export default class extends Phaser.Scene {
     let events = {
       'interactions': [],
       'warps': [],
-      'interaction-active': false
+      'textbox-active': false
     };
     Object.keys(events).forEach(eventKey => {
       if (this.registry.has(eventKey) === false) {
@@ -56,7 +56,7 @@ export default class extends Phaser.Scene {
 
     //
     // do something if interaction == false
-    this.registry.events.on('changedata-interaction-active', function(parent, value) {
+    this.registry.events.on('changedata-textbox-active', function(parent, value) {
       let activeScene = this.scene.get(this.registry.get('scene'));
       if (value === true) {
         this.textbox.setVisible(true);

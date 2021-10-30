@@ -1,4 +1,4 @@
-import {Character, NPCScripts} from '@Objects';
+import {Character, NPCScripts, Direction} from '@Objects';
 import {textBox} from '@Utilities';
 
 export default class extends Character {
@@ -33,7 +33,7 @@ export default class extends Character {
   handleInteractables() {
     // ignore the showing textbox code if were still typing shiz
     // console.log(this.textbox);
-    if (this.scene.registry.get('interaction-active') === true) {
+    if (this.scene.registry.get('textbox-active') === true) {
       return;
     }
 
@@ -51,6 +51,23 @@ export default class extends Character {
     const activator = this.config.scene.input.keyboard.addKey('Z');
     if (interaction !== false && activator.isDown) {
       console.log('interaction!', interaction);
+
+      let look = '';
+      switch(this.getFacingDirection().toUpperCase()) {
+        case Direction.LEFT:
+          look = Direction.RIGHT;
+        break;
+        case Direction.RIGHT:
+          look = Direction.LEFT;
+        break;
+        case Direction.UP:
+          look = Direction.DOWN;
+        break;
+        case Direction.DOWN:
+          look = Direction.UP;
+        break;
+      }
+
       // alert the type
       var text = null;
       switch (interaction.type) {
@@ -59,16 +76,25 @@ export default class extends Character {
         break;
         case 'npc':
           text = NPCScripts[interaction.id] || interaction.id;
+          var char = Object.values(this.config.scene.characters)
+            .find(obj => obj.config.id === interaction.id)
+          ;
+          char?.look(look.toLowerCase());
+          char?.stopSpin(true);
         break;
         case 'pkmn':
           text = interaction.id;
+          var char = Object.values(this.config.scene.mon)
+            .find(obj => obj.config.id === interaction.id)
+          ;
+          char?.look(look.toLowerCase());
         break;
         default:
           console.log('unknown interaction type', interaction);
       }
 
       if (text === null) { return; }
-      this.scene.registry.set('interaction-active', true);
+      this.scene.registry.set('textbox-active', true);
       this.textbox.start(text, 150);
     }
   }

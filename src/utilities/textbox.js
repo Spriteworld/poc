@@ -4,27 +4,30 @@ var createTextBox = function (scene, x, y, config) {
     var fixedWidth = scene.getValue(config, 'fixedWidth', 0);
     var fixedHeight = scene.getValue(config, 'fixedHeight', 0);
     var textBox = scene.rexUI.add.textBox({
-      x: x,
-      y: y,
+        x: x,
+        y: y,
 
-      background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, 0x000000)
-            .setStrokeStyle(2, 0xffffff),
-      icon: null,
+        background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, 0x000000)
+              .setStrokeStyle(2, 0xffffff),
+        icon: null,
 
-      // text: getBuiltInText(scene, wrapWidth, fixedWidth, fixedHeight),
-      text: getBBcodeText(scene, wrapWidth, fixedWidth, fixedHeight),
+        // text: getBuiltInText(scene, wrapWidth, fixedWidth, fixedHeight),
+        text: getBBcodeText(scene, wrapWidth, fixedWidth, fixedHeight),
 
-      action: scene.add.image(0, 0, 'nextPage').setTint(0x7b5e57).setVisible(false),
+        action: scene.add.image(0, 0, 'nextPage').setTint(0x7b5e57).setVisible(false),
 
-      space: {
-        left: 20,
-        right: 20,
-        top: 20,
-        bottom: 20,
-        icon: 10,
-        text: 10,
-      }
-    }) .setOrigin(0) .layout();
+        space: {
+          left: 20,
+          right: 20,
+          top: 20,
+          bottom: 20,
+          icon: 10,
+          text: 10,
+        }
+      })
+      .setOrigin(0)
+      .layout()
+    ;
 
     scene.plugins.get('rexAnchor').add(textBox, {
       bottom: '100%-10%',
@@ -34,7 +37,16 @@ var createTextBox = function (scene, x, y, config) {
     textBox
       .setInteractive()
       .on('complete', function () {
-        this.registry.set('interaction-active', false);
+        this.scene.get(this.registry.get('scene'))
+          .time
+          .addEvent({
+            delay: 500,
+            callbackScope: this,
+            callback: () => {
+              this.registry.set('textbox-active', false);
+            }
+          })
+        ;
       }, scene)
     ;
 

@@ -442,12 +442,16 @@ export default class extends Phaser.Scene {
   addMonToScene(monId, x, y, config) {
     if (config.texture) { delete config.texture; }
 
+    let rng = false;
     if (monId == 'RNG') {
       monId = (Math.floor(Math.random() * this.totalMon) +1);
+      rng = true;
     }
     if (monId.length < 3) {
       monId = monId.toString().padStart(3, '0');
     }
+
+    if (rng) console.info('mon got RNGd', monId, config.id, config);
 
     // check for shiny
     let texture = monId.toString();
@@ -524,7 +528,11 @@ export default class extends Phaser.Scene {
     this.player.look(playerLocation.dir);
 
     // get the pokemon to be in the right spot
-    this.gridEngine.setPosition(this.playerMon.config.id, this.player.getPosInBehindDirection(), playerLocation.layer);
+    this.gridEngine.setPosition(
+      this.playerMon.config.id,
+      this.player.getPosInBehindDirection(),
+      playerLocation.layer
+    );
   }
 
   getTilesWithProperty(property) {

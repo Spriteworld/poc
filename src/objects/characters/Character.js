@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { Tile } from '@Objects';
+import { Tile, Direction } from '@Objects';
 
 export default class extends Phaser.GameObjects.Sprite {
   constructor(config) {
@@ -273,13 +273,27 @@ export default class extends Phaser.GameObjects.Sprite {
 
       let dir = 'down';
       switch (Math.floor(Math.random() * 4) +1) {
-        case 1: dir = 'up'; break;
-        case 2: dir = 'down'; break;
-        case 3: dir = 'left'; break;
-        case 4: dir = 'right'; break;
+        case 1: dir = Direction.UP; break;
+        case 2: dir = Direction.DOWN; break;
+        case 3: dir = Direction.LEFT; break;
+        case 4: dir = Direction.RIGHT; break;
       }
-      this.look(dir);
+      this.look(dir.toLowerCase());
     }
+  }
+
+  stopSpin(restart=false) {
+    this.config.spin = false;
+
+    if (restart) {
+      let textbox = this.config.scene.scene.get('OverworldUI').textbox;
+
+      textbox.on('complete', () => this.startSpin());
+    }
+  }
+
+  startSpin() {
+    this.config.spin = true;
   }
 
   canSeeCharacter() {
